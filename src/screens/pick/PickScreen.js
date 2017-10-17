@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {View, TextInput, TouchableHighlight} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import ListChuyen from './components/ListChuyen';
+
 
 class PickScreen extends Component{
     constructor(props){
@@ -16,12 +18,11 @@ class PickScreen extends Component{
             { this.state.isShowSearchBox === true ?
                 (<View style={styles.searchbox}>
                     <TextInput placeholder={"Lộ trình tìm kiếm"} style={styles.input}/>
-                    <Ionicons name="ios-search-outline" size={15} color={"#fff"}/>
-                    
+                    <Ionicons name="ios-search-outline" size={15} color={"#90A4AE"}/>
                 </View>)
                 :
                 (<View style={styles.listChuyenXe}>
-                
+                    <ListChuyen listchuyenxe />
                 </View>)
             }
             </View>
