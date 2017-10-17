@@ -26,9 +26,9 @@ export default TabNavigator(
   {
     Home: {
       screen: HomeScreen,
-      title: 'Trang chủ',
       navigationOptions: ({ navigation }) => ({
         headerStyle: NavbarDefaultStyle,
+        title: 'Trang chủ',
         headerLeft: (
           <AvatarButton feedback="opacity">
             <Ionicons name="md-contact" size={35} color={'#fff'} />

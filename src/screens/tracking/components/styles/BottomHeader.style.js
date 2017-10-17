@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     modal: {
-        marginBottom: 0,
+        marginBottom: '5%',
         position:'absolute'
     }
 });
