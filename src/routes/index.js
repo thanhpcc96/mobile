@@ -1,11 +1,11 @@
 import React from 'react';
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // import Screen
 import HomeTab from './HomeTab';
 import TrackingTabs from './TrackingTab';
-import { LoginScreen, RegisterScreen } from '../screens'
+import { LoginScreen, RegisterScreen, TrackingScreen } from '../screens'
 
 const NavbarDefaultStyle = {
     backgroundColor: '#4E94E5',
@@ -26,9 +26,9 @@ const Tabs = TabNavigator({
         navigationOptions: () => ({
             headerStyle: NavbarDefaultStyle,
             tabBarIcon: ({ tintColor }) => (
-              <Ionicons name="ios-send" size={30} color={tintColor} />
+                <Ionicons name="ios-send" size={30} color={tintColor} />
             ),
-          }),
+        }),
     }
 }, {
         swipeEnabled: false,
@@ -47,8 +47,7 @@ const Tabs = TabNavigator({
         },
     }
 );
-
-export default (Navigator = StackNavigator({
+const MyNavigator = StackNavigator({
     Tabs: {
         screen: Tabs
     },
@@ -63,4 +62,18 @@ export default (Navigator = StackNavigator({
         mode: 'modal',
         initialRouteName: 'Tabs'
     },
+);
+
+export default (Nav = DrawerNavigator({
+    Na: {
+        screen: MyNavigator
+    },
+    Setting: {
+        screen: TrackingScreen
+    }
+}, {
+        drawerWidth: 200,
+        drawerPosition: 'right'
+    }
 ));
+

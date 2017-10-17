@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, UIManager, View } from 'react-native';
+import { AsyncStorage, UIManager, View, StatusBar } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import HomeScreen from './src/screens/home/HomeScreen';
@@ -9,6 +9,8 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 // `EStyleSheet.build(Colors)`
+
+StatusBar.setBarStyle('dark-content');
 
 export default class App extends React.Component {
   render() {
