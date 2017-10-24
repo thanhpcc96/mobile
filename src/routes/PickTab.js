@@ -3,12 +3,12 @@ import { StackNavigator } from 'react-navigation';
 
 // Import Screen
 import {
-    TrackingScreen
+    PickScreen
 } from '../screens'
 const PickTab = StackNavigator(
     {
-        HomeScreen: {
-            screen: TrackingScreen
+        PickScreen: {
+            screen: PickScreen
         }
     },
     {

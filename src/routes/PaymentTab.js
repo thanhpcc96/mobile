@@ -3,12 +3,12 @@ import { StackNavigator } from 'react-navigation';
 
 // Import Screen
 import {
-    TrackingScreen
+    PaymentScreen
 } from '../screens'
 const PaymentTab = StackNavigator(
     {
-        HomeScreen: {
-            screen: TrackingScreen
+        PaymentScreen: {
+            screen: PaymentScreen
         }
     },
     {

@@ -8,11 +8,14 @@ const styles = StyleSheet.create({
         top: 0,
         flexDirection: 'row',
         minHeight: 40,
-        width: '100%'
+        width: '100%',
+        alignItems: 'center'
     },
     input:{
-        width: '90%',
-        color: '#90A4AE'
+        width: '80%',
+        paddingLeft: '20%',
+        color: '#90A4AE',
+        backgroundColor:'#4E94E5'
     }
 });
 

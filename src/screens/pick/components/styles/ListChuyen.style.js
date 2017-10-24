@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
     //F7F9FC
     chuyenxeCardTopContainer: {
         flex: 0.3,
-        positios: 'relative',
+        position: 'relative',
         backgroundColor: '#82AACB'
     },
     chuyenxeCardTitle: {
         fontSize: 20,
-        fontWeight: 100,
+        //fontWeight: 100,
         color: '#fff',
         top: '1%',
         left: '1.5%'

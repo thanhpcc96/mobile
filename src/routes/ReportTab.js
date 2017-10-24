@@ -1,19 +1,17 @@
-import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import React from "react";
+import { StackNavigator } from "react-navigation";
 
 // Import Screen
-import {
-    TrackingScreen
-} from '../screens'
+import { ReportScreen } from "../screens";
 const ReportTab = StackNavigator(
-    {
-        HomeScreen: {
-            screen: TrackingScreen
-        }
-    },
-    {
-        headerMode: 'screen',
-        headerBackTitle: null
+  {
+    ReportScreen: {
+      screen: ReportScreen
     }
-)
+  },
+  {
+    headerMode: "screen",
+    headerBackTitle: null
+  }
+);
 export default ReportTab;
