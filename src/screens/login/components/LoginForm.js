@@ -5,13 +5,17 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert,
+  Alert
   //CheckBox
 } from "react-native";
+import { CheckBox } from "react-native-elements";
 import PropTypes from "prop-types";
 
 import styles from "./styles/LoginForm.style";
 class Form extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerBackTitle: null
+  });
   static propTypes = {
     gotoRegister: PropTypes.func.isRequired,
     gotoForgot: PropTypes.func.isRequired
@@ -23,7 +27,9 @@ class Form extends React.Component {
     this.state = {
       email: "",
       password: "",
-      isVisibleButtonLogin: false
+      isVisibleButtonLogin: false,
+      isUser: false, // true la client
+      typeUser: "client"
     };
   }
   _validateEmail = value => {
@@ -31,6 +37,7 @@ class Form extends React.Component {
     return re.test(value);
   };
   _setStateEmail = value => {
+    
     this.setState({
       email: value
     });
@@ -55,15 +62,29 @@ class Form extends React.Component {
   }
   _handlerSubmit() {
     if (this._validateEmail && this.state.password > 5) {
-      Alert.alert('Se xu ly login sau',"Neu vey thanh con kha kha roi");
+      Alert.alert("Sẽ xử lý sau", "Tốt rồi không lỗi");
       //   this.props.handleSubmit({
       //     email: this.state.email,
       //     password: this.state.password
       //   });
     } else {
-      Alert.alert("khogn phu hop em oi", "Mat khau ko fu dai, email ko chuan");
+      Alert.alert("Dữ liệu nhập quá tồi", "Email không đúng hoặc mật khẩu ngắn");
     }
   }
+  _setTypeUser = () => {
+    this.setState({
+      isUser: !this.state.isUser
+    });
+    if (this.state.isUser) {
+      this.setState({
+        typeUser: "user"
+      });
+    } else {
+      this.setState({
+        typeUser: "client"
+      });
+    }
+  };
 
   render() {
     return (
@@ -73,14 +94,23 @@ class Form extends React.Component {
             style={[styles.textinput, { marginTop: 20 }]}
             placeholder="Email"
             onChangeText={value => this._setStateEmail(value)}
+            placeholderTextColor={'#fff'}
           />
           <TextInput
             style={[styles.textinput, { marginTop: 30 }]}
             placeholder="Password"
             secureTextEntry={true}
             onChangeText={value => this._setStatePassword(value)}
+            placeholderTextColor={'#fff'}
           />
-          
+          <CheckBox
+            checked={this.state.isUser}
+            title="Tôi là nhân viên Hải Âu!"
+            style={styles.checkBox}
+            textStyle={{ color: "#FFF" }}
+            checkedColor="#FFF"
+            onIconPress={() => this._setTypeUser()}
+          />
         </View>
         <View style={styles.buttonGroup}>
           <TouchableOpacity
@@ -100,7 +130,7 @@ class Form extends React.Component {
               }
             >
               {" "}
-              Dang nhap
+              Đăng nhập
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -110,15 +140,15 @@ class Form extends React.Component {
             ]}
             onPress={this.props.gotoRegister}
           >
-            <Text style={styles.textButton}> Dang ky</Text>
+            <Text style={styles.textButton}> Đăng ký</Text>
           </TouchableOpacity>
           <View style={styles.forgot}>
-            <Text style={styles.textForgot}>Khoi phuc mat khau? </Text>
+            <Text style={styles.textForgot}>Quên tài khoản? </Text>
             <Text
               style={[styles.textForgot, { textDecorationLine: "underline" }]}
               onPress={this.props.gotoForgot}
             >
-              Khoi phuc ngay
+              Khôi phục ngay!
             </Text>
           </View>
         </View>

@@ -14,7 +14,7 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
 }
 // `EStyleSheet.build(Colors)`
 
-StatusBar.setBarStyle("dark-content");
+StatusBar.setBarStyle("light-content");
 
 export default class App extends React.Component {
   state = {

@@ -2,10 +2,37 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  backgroundContainer: {
+    alignSelf: "stretch",
+    flex: 1,
+    justifyContent: "center"
+  },
+  header: {
+    flex: 0.1,
+    backgroundColor: "transparent",
+    justifyContent: "center"
+  },
+  logoContainer: {
+    flex: 0.3,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  logoImg: {
+    width: 100,
+    height: 50
+  },
+  formContainer: {
+    flex: 0.6,
+    justifyContent: "center",
+    alignItems: "center"
+    //backgroundColor: "red"
   },
   formGroup: {
-    flex: 0.5,
+    flex: 0.4,
     justifyContent: "flex-start",
     alignItems: "stretch"
     //backgroundColor:'green'
@@ -16,15 +43,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(253,255,255,0.2)",
     color: "#fff",
     borderRadius: 5,
-    paddingLeft: 10,
-  },
-  checkBox: {
-    backgroundColor: "transparent",
-    marginTop: "5%",
-    marginLeft: 10,
+    paddingLeft: 10
   },
   buttonGroup: {
-    flex: 0.5,
+    flex: 0.6,
     justifyContent: "flex-start",
     alignItems: "stretch"
   },
@@ -53,5 +75,4 @@ const styles = StyleSheet.create({
     fontSize: 16
   }
 });
-
 export default styles;

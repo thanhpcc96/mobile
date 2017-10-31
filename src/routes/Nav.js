@@ -17,7 +17,11 @@ import TrackingTabs from "./TrackingTab";
 import PickTab from "./PickTab";
 import PaymentTab from "./PaymentTab";
 import ReportTab from "./ReportTab";
-import { LoginScreen, RegisterScreen, TrackingScreen } from "../screens";
+import { LoginScreen, RegisterScreen, ForgotScreen } from "../screens";
+
+// import components
+import NavBar from "../common/NavBar";
+import NavButton from "../common/NavBarButton";
 
 // const addPickButton = styled(Touchable)`marginbottom: 10;`;
 
@@ -105,6 +109,9 @@ export default StackNavigator(
     },
     Register: {
       screen: RegisterScreen
+    },
+    Forgot: {
+      screen: ForgotScreen
     }
   },
   {

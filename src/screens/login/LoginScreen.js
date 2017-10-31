@@ -48,7 +48,7 @@ class LoginScreen extends Component {
           <View style={styles.formContainer}>
             <LoginForm
               gotoRegister={() => this.props.navigation.navigate("Register")}
-              gotoForgot={() => this.props.navigation.navigate("Home")}
+              gotoForgot={() => this.props.navigation.navigate("Forgot")}
               
             />
           </View>
