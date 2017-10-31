@@ -3,11 +3,12 @@ import {
   Text,
   View,
   TouchableOpacity,
-  StyleSheet,
   ScrollView,
   Dimensions
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
+import styles from "./styles/PaymentScreen.style";
 
 const { width, height } = Dimensions.get("window");
 
@@ -87,7 +88,11 @@ class PaymentScreen extends Component {
             <View style={styles.menuContentItem}>
               <TouchableOpacity>
                 <View style={styles.menuItemInItem}>
-                  <Ionicons name="ios-close-circle-outline" size={35} color={'#FC9A7D'} />
+                  <Ionicons
+                    name="ios-close-circle-outline"
+                    size={35}
+                    color={"#FC9A7D"}
+                  />
                 </View>
                 <View style={styles.menuItemInItem}>
                   <Text>Lịch sử hủy vé</Text>
@@ -99,7 +104,7 @@ class PaymentScreen extends Component {
                 <Ionicons
                   name="ios-checkmark-circle-outline"
                   size={35}
-                  color={'#80B9FB'}
+                  color={"#80B9FB"}
                 />
                 <Text>Lịch sử giữ chỗ</Text>
               </TouchableOpacity>
@@ -112,173 +117,3 @@ class PaymentScreen extends Component {
   }
 }
 export default PaymentScreen;
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#FCFCFE"
-  },
-  /** Phần thông tin số dư */
-  balaceContainer: {
-    width: width * 96 / 100,
-    flex: 1,
-    borderColor: "#D0CCCC",
-    borderWidth: 0.5,
-    backgroundColor: "#FCFCFE",
-    marginTop: 10
-  },
-  balaceTextTitleContainer: {
-    height: 40,
-    justifyContent: "center",
-    paddingLeft: "3%"
-  },
-  balaceTextTitle: {
-    color: "#52685F",
-    fontSize: 27
-  },
-  balaceContentContainner: {
-    margin: "1%",
-    flexDirection: "row"
-  },
-  balaceContentLeft: {
-    flex: 2,
-    borderRightColor: "#D0CCCC",
-    borderRightWidth: 1
-  },
-  balaceAmount: {
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: 40,
-    marginVertical: "2%",
-    paddingVertical: "2.5%"
-  },
-  amountText: {
-    color: "#52685F",
-    fontSize: 25,
-    fontWeight: "bold"
-  },
-  balaceContentInfo: {
-    flexDirection: "row",
-    paddingVertical: "1.5%",
-    marginTop: 10
-    //backgroundColor:'red'
-  },
-  buttonRechange: {
-    paddingLeft: 5
-  },
-  infoLastHistory: {
-    paddingHorizontal: "5%",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  contentRight: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  buttonHistory: {
-    backgroundColor: "#24EB8B",
-    width: 90,
-    height: 80,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  textButton: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "bold"
-  },
-
-  /*** Phần thông tin lịch sử giao dịch*/
-  historyTranferPayment: {
-    flex: 1,
-    width: width * 96 / 100,
-    backgroundColor: "#24EB8B",
-    marginTop: 15
-  },
-  historyTitleContainer: {
-    height: 40,
-    justifyContent: "center",
-    paddingLeft: "3%"
-  },
-  historyTextTitle: {
-    color: "#fff",
-    fontSize: 27
-  },
-  historyContentContainner: {
-    margin: "1%",
-    flexDirection: "row"
-  },
-  historyContentLeft: {
-    flex: 2,
-    borderRightColor: "#FFF",
-    borderRightWidth: 1
-  },
-  scrollviewItem: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#FFF"
-  },
-  scrollviewItemText: {
-    color: "#fff",
-    fontSize: 17
-  },
-  historyContentRight: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  historyButton: {
-    backgroundColor: "#FFF",
-    width: 90,
-    height: 80,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  historyButtonText: {
-    color: "#24EB8B",
-    fontSize: 20,
-    fontWeight: "bold"
-  },
-  /** Phan danh muc thanh toan */
-  MenuPaymentContainer: {
-    flex: 1,
-    width: width * 96 / 100,
-    marginTop: 15
-  },
-  MenuTitleContainer: {
-    height: 40,
-    justifyContent: "center",
-    paddingLeft: "3%"
-  },
-  menuTextTitle: {
-    color: "#52685F",
-    fontSize: 27
-  },
-  menuContentContainer: {
-    flexDirection: "row",
-    marginTop:10,
-    marginLeft:5
-  },
-  menuContentItem: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  menuContentItemWithBorder: {
-    flex: 1,
-    borderRightColor: "#D0CCCC",
-    borderLeftColor: "#D0CCCC",
-    borderRightWidth: 0.5,
-    borderLeftWidth: 0.5,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  menuContentItemText: {
-    color: "#52685F",
-    fontSize: 15
-  }
-});

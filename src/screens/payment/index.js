@@ -1,5 +1,5 @@
-import PaymentScreen from './PaymentScreen'
+import PaymentScreen from './PaymentScreen';
 
 export {
-    PaymentScreen,
-}
+  PaymentScreen,
+};

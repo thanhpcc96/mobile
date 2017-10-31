@@ -1,3 +1,3 @@
-import ReportScreen from "./ReportScreen";
+import ReportScreen from './ReportScreen';
 
 export { ReportScreen };

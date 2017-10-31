@@ -17,6 +17,9 @@ import styles from './styles/HomeScreen.style';
 
 class HomeScreen extends Component {
   render() {
+    console.log('====================================');
+    console.log(this.props);
+    console.log('====================================');
     return (
       <View style={styles.root}>
         <View style={styles.timerNotification}>

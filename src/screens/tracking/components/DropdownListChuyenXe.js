@@ -1,12 +1,12 @@
-import React from "react";
-import { View, Text, Picker } from "react-native";
+import React from 'react';
+import { View, Text, Picker } from 'react-native';
 
 const fakeData = [
-  { chuyenxeID: 1, value: "Ha Noi, Hai Phong" },
-  { chuyenxeID: 2, value: "Hai Phong, Ha Noi" },
-  { chuyenxeID: 3, value: "Thai binh" },
-  { chuyenxeID: 4, value: "Ha Noi, Thai Binh" },
-  { chuyenxeID: 5, value: "Ha Noi, Hai Phong" }
+  { chuyenxeID: 1, value: 'Ha Noi, Hai Phong' },
+  { chuyenxeID: 2, value: 'Hai Phong, Ha Noi' },
+  { chuyenxeID: 3, value: 'Thai binh' },
+  { chuyenxeID: 4, value: 'Ha Noi, Thai Binh' },
+  { chuyenxeID: 5, value: 'Ha Noi, Hai Phong' },
 ];
 let selectedID = 1;
 const DropdownListChuyenXe = () => (

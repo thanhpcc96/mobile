@@ -1,5 +1,4 @@
 import LoginScreen from './LoginScreen';
+import LoginReducer from './reducer';
 
-export {
-    LoginScreen,
-}
+export { LoginScreen, LoginReducer };

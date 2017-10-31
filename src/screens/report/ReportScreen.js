@@ -1,13 +1,70 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 
-class ReportScreen extends Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>ReportScreen</Text>
-            </View>
-        )
-    }
+import SwipeableList from './components/swiperList';
+import listData from './test';
+
+const { width } = Dimensions.get('window');
+
+export default class ReportScreen extends Component {
+  render() {
+    return (
+      <View style={styles.root}>
+        <View style={styles.litsContainer}>
+          <View style={styles.listTitleContainer}>
+            <Text style={styles.listTitleText}>Danh sach chuyen</Text>
+          </View>
+
+          <View style={styles.listContentContainer} >
+            <SwipeableList data={listData} />
+          </View>
+        </View>
+        <View style={{ flex: 1 }} />
+      </View>
+    );
+  }
 }
-export default ReportScreen;
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  litsContainer: {
+    flex: 3,
+    width: width * 96 / 100,
+    marginTop: 10,
+    backgroundColor: '#4E94E5',
+  },
+  listTitleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingLeft: '3%',
+  },
+  listTitleText: {
+    color: '#fff',
+    fontSize: 27,
+  },
+  listContentContainer: {
+    marginHorizontal: 3,
+    flex: 8,
+  },
+  itemList: {
+    height: 50,
+    paddingVertical: '3%',
+    paddingLeft: 10,
+    borderBottomColor: '#fff',
+    borderBottomWidth: 0.5,
+  },
+  itemText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+});

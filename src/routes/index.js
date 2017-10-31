@@ -1,128 +1,32 @@
-import React from "react";
-import {
-  StackNavigator,
-  TabNavigator,
-  DrawerNavigator
-} from "react-navigation";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import styled from "styled-components/native";
-import Touchable from "@appandflow/touchable";
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { addNavigationHelpers } from "react-navigation";
+import Nav from "./Nav";
+import { LoginScreen } from "../screens";
 
-// import Screen
-import HomeTab from "./HomeTab";
-import TrackingTabs from "./TrackingTab";
-import PickTab from "./PickTab";
-import PaymentTab from "./PaymentTab";
-import ReportTab from "./ReportTab";
-import { LoginScreen, RegisterScreen, TrackingScreen } from "../screens";
+// @connect(state => ({
+//   navigation: state.navigation,
+//   user: state.user
+// }))
+class AppNavigator extends PureComponent<Props, void> {
+  state = {};
+  // ref={nav => {
+  //   this.navigator = nav ? nav.props.navigation : nav;
+  // }}
 
-// const addPickButton = styled(Touchable)`marginbottom: 10;`;
-
-const NavbarDefaultStyle = {
-  backgroundColor: "#4E94E5"
-};
-
-const Tabs = TabNavigator(
-  {
-    HomeTab: {
-      screen: HomeTab,
-      navigationOptions: {
-        headerStyle: NavbarDefaultStyle,
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="md-home" size={35} color={tintColor} />
-        )
-      }
-    },
-    TrackingTab: {
-      screen: TrackingTabs,
-      navigationOptions: () => ({
-        headerStyle: NavbarDefaultStyle,
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="ios-send" size={35} color={tintColor} />
-        )
-      })
-    },
-    PickTab: {
-      screen: PickTab,
-      navigationOptions: () => ({
-        headerStyle: NavbarDefaultStyle,
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons
-            name="md-add-circle"
-            size={60}
-            color={"#4E94E5"}
-            style={{ marginBottom: 10 }}
-          />
-        )
-      })
-    },
-    PaymentTab: {
-      screen: PaymentTab,
-      navigationOptions: () => ({
-        headerStyle: NavbarDefaultStyle,
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="ios-card" size={35} color={tintColor} />
-        )
-      })
-    },
-    ReportTab: {
-      screen: ReportTab,
-      navigationOptions: () => ({
-        headerStyle: NavbarDefaultStyle,
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="ios-paper-outline" size={30} color={tintColor} />
-        )
-      })
+  render() {
+    const nav = addNavigationHelpers({
+      dispatch: this.props.dispatch,
+      state: this.props.nav
+    });
+    if (this.props.user.isLogged) {
+      return <Nav navigation={nav} />;
     }
-  },
-  {
-    swipeEnabled: false,
-    animationEnabled: false,
-    tabBarPosition: "bottom",
-    tabBarOptions: {
-      showLabel: false,
-      showIcon: true,
-      inactiveTintColor: "#7A7474",
-      activeTintColor: "#4E94E5",
-      pressColor: "#4E94E5",
-      indicatorStyle: { backgroundColor: "#4E94E5" },
-      style: {
-        backgroundColor: "#FDF8F8"
-      }
-    }
+    return <Nav navigation={nav} />;
   }
-);
-const MyNavigator = StackNavigator(
-  {
-    Tabs: {
-      screen: Tabs
-    },
-    Login: {
-      screen: LoginScreen
-    },
-    Register: {
-      screen: RegisterScreen
-    }
-  },
-  {
-    headerMode: "none",
-    mode: "modal",
-    initialRouteName: "Tabs"
-  }
-);
-
-export default (Nav = DrawerNavigator(
-  {
-    Na: {
-      screen: MyNavigator
-    },
-    Setting: {
-      screen: TrackingScreen
-    }
-  },
-  {
-    drawerWidth: 200,
-    drawerPosition: "right"
-  }
-));
+}
+export default connect(state => ({
+  nav: state.nav,
+  user: state.user
+}))(AppNavigator);
+export const router = Nav.router;
