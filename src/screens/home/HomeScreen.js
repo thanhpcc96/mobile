@@ -1,25 +1,25 @@
 // @flow
 /*eslint-disable */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   ImageBackground,
-  ScrollView,
-} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+  ScrollView
+} from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 // import Component
-import { TimerNotification, MainSelect } from './components';
+import { TimerNotification, MainSelect } from "./components";
 
-import styles from './styles/HomeScreen.style';
+import styles from "./styles/HomeScreen.style";
 
 class HomeScreen extends Component {
   render() {
-    console.log('====================================');
+    console.log("====================================");
     console.log(this.props);
-    console.log('====================================');
+    console.log("====================================");
     return (
       <View style={styles.root}>
         <View style={styles.timerNotification}>
@@ -30,7 +30,7 @@ class HomeScreen extends Component {
             <ImageBackground
               source={{
                 uri:
-                  'http://images4.fanpop.com/image/photos/16100000/Cute-Kitten-kittens-16123158-500-313.jpg',
+                  "http://images4.fanpop.com/image/photos/16100000/Cute-Kitten-kittens-16123158-500-313.jpg"
               }}
               style={styles.avata}
             />
@@ -45,7 +45,7 @@ class HomeScreen extends Component {
             </View>
           </View>
           <View style={styles.mainMenuPrimary}>
-            <MainSelect />
+            <MainSelect navigation={this.props.navigation} />
           </View>
         </View>
       </View>

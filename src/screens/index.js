@@ -11,6 +11,7 @@ import { RegisterScreen } from "./register";
 import { PickScreen } from "./pick";
 import { PaymentScreen } from "./payment";
 import { ReportScreen } from "./report";
+import { TicketSVGScreen } from "./ticketSVG";
 
 export {
   LoginScreen,
@@ -23,5 +24,6 @@ export {
   RegisterScreen,
   PickScreen,
   PaymentScreen,
-  ReportScreen
+  ReportScreen,
+  TicketSVGScreen
 };

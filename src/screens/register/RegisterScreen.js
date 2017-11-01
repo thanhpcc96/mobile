@@ -177,7 +177,8 @@ class Register extends Component {
                     ? [styles.buttonForm, { backgroundColor: "#4E94E5" }]
                     : [styles.buttonForm, { backgroundColor: "#6A8CB3" }]
                 }
-                disabled={!this.state.isVisibleButtonLogin}
+                disabled={this.state.isVisibleButtonLogin}
+                onPress={()=> this._handlerSubmit()}
               >
                 <Text
                   style={
