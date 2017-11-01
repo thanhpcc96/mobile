@@ -1,6 +1,10 @@
 /*eslint-disable */
 import { LoginScreen, LoginReducer } from "./login";
-import { ForgotScreen } from "./forgot";
+import {
+  ForgotScreen,
+  ChangePassScreen,
+  ConfirmCodeForgotScreen
+} from "./forgot";
 import { HomeScreen } from "./home";
 import { TrackingScreen } from "./tracking";
 import { RegisterScreen } from "./register";
@@ -12,6 +16,8 @@ export {
   LoginScreen,
   LoginReducer,
   ForgotScreen,
+  ChangePassScreen,
+  ConfirmCodeForgotScreen,
   HomeScreen,
   TrackingScreen,
   RegisterScreen,

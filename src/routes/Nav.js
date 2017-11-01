@@ -17,7 +17,13 @@ import TrackingTabs from "./TrackingTab";
 import PickTab from "./PickTab";
 import PaymentTab from "./PaymentTab";
 import ReportTab from "./ReportTab";
-import { LoginScreen, RegisterScreen, ForgotScreen } from "../screens";
+import {
+  LoginScreen,
+  RegisterScreen,
+  ForgotScreen,
+  ConfirmCodeForgotScreen,
+  ChangePassScreen
+} from "../screens";
 
 // import components
 import NavBar from "../common/NavBar";
@@ -112,6 +118,12 @@ export default StackNavigator(
     },
     Forgot: {
       screen: ForgotScreen
+    },
+    ConfirmCode: {
+      screen: ConfirmCodeForgotScreen
+    },
+    ChangePass: {
+      screen: ChangePassScreen
     }
   },
   {
