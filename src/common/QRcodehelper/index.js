@@ -126,8 +126,7 @@ export default class QRCode extends PureComponent {
   }
 
   render () {
-    const { size, color, backgroundColor, logo, getRef } = this.props
-
+    const { size, color, backgroundColor, logo, getRef } = this.props;
     return (
       <View>
         <Svg ref={getRef} width={size} height={size}>
