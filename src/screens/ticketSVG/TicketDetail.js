@@ -4,18 +4,37 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  CameraRoll
+  CameraRoll,
+  Alert,
+  ScrollView
 } from "react-native";
 import { takeSnapshotAsync } from "expo";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import NavBarButton from "../../common/NavBarButton";
 import QRcode from "../../common/QRcodehelper";
 class TicketDetail extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: "#4A90E2"
+    },
+    headerTitle: navigation.state.params.tenve,
+    headerTitleStyle: {
+      color: "#FFF"
+    },
+    headerBackTitleStyle: {
+      color: "#FFF"
+    },
+    headerLeft: (
+      <NavBarButton
+        icon="ios-arrow-back"
+        onPress={() => navigation.goBack()}
+        style={{ paddingLeft: 10 }}
+      />
+    )
+  });
   constructor(props) {
     super(props);
-    this.state = {
-      cameraRollUri: null
-    };
   }
   _saveToCameraRollAsync = async () => {
     let result = await takeSnapshotAsync(this._containerCapture, {
@@ -24,7 +43,11 @@ class TicketDetail extends Component {
     });
 
     let saveResult = await CameraRoll.saveToCameraRoll(result, "photo");
-    this.setState({ cameraRollUri: saveResult });
+    if (result) {
+      Alert.alert("Lưu thành công", "Đã lưu vào cuộn camera của bạn");
+    } else {
+      Alert.alert("Thất bại", "Thiếu quyền truy cập");
+    }
   };
 
   render() {
@@ -54,7 +77,10 @@ class TicketDetail extends Component {
               <Text style={styles.textPrimary}>40.000 VND</Text>
             </View>
 
-            <TouchableOpacity style={styles.buttonSave} onPress={this._saveToCameraRollAsync}>
+            <TouchableOpacity
+              style={styles.buttonSave}
+              onPress={this._saveToCameraRollAsync}
+            >
               <Ionicons
                 name="md-download"
                 size={30}
@@ -66,11 +92,31 @@ class TicketDetail extends Component {
           </View>
         </View>
 
-        <View style={{ flex: 1.5, backgroundColor: "green" }}>
-          <Text>Phan 2</Text>
-        </View>
-        <View style={{ flex: 1.5, backgroundColor: "blue" }}>
-          <Text>Phan 3</Text>
+        <View style={styles.thongTin}>
+          <View style={styles.thongTinTitleContainer}>
+            <Text style={styles.thongTinTitleText}>Chi tiết</Text>
+          </View>
+          <View style={styles.thongTinContentContainer}>
+            <ScrollView>
+            <Text style={styles.text}>Lộ trình</Text>
+            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Từ Hưng Yên đến Hà Nội</Text>
+            <Text style={styles.text}>Thời gian đặt vé</Text>
+            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>6:39:50 22/11/2017</Text>
+            <Text style={styles.text}>Loại vé</Text>
+            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Vé giữ chỗ</Text>
+            <Text style={styles.text}>Trạng thái</Text>
+            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Chưa thanh toán</Text>
+            <Text style={styles.text}>Chuyến xe</Text>
+            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>HN-HP1234</Text>
+            <Text style={styles.text}>Biển số</Text>
+            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>16 K8-1737 </Text>
+            <Text style={styles.text}>Tài xé </Text>
+            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Bùi Đức Chiều</Text>
+            <Text style={styles.text}>Phụ xe </Text>
+            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Bùi Đình Nghĩa</Text>
+            </ScrollView>
+            
+          </View>
         </View>
       </View>
     );
@@ -112,7 +158,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     left: 0,
-    right: 0
+    right:5,
+    borderRadius:5
   },
   iconDownload: {
     marginLeft: 5
@@ -122,6 +169,31 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 20,
     color: "#fff"
+  },
+  thongTin: {
+    flex: 3,
+    backgroundColor: "#FFF"
+  },
+  thongTinTitleContainer: {
+    height: 20,
+    paddingLeft: 10,
+    position: "relative",
+    //
+  },
+  thongTinTitleText: {
+    color: "#3E3E3E",
+    fontSize: 17,
+    fontWeight: "bold"
+  },
+  thongTinContentContainer: {
+    position: "relative",
+    //top: 0,
+    marginTop: 10,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingLeft: '10%',
+    alignSelf: "stretch"
   }
 });
 export default TicketDetail;

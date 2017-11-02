@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity
 } from "react-native";
-import { Constants, FileSystem } from "expo";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import QRCode from "../../common/QRcodehelper";
 import NavBarButton from "../../common/NavBarButton";
@@ -61,7 +60,7 @@ class TicketSVGScreen extends Component {
               </View>
             </View>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={()=> this.props.navigation.navigate('Ticketdetail')}>
+              <TouchableOpacity style={styles.button} onPress={()=> this.props.navigation.navigate('Ticketdetail',{tenve:'Ha Noi Hai phong'})}>
                 <Text style={styles.textButton}> Chi tiết </Text>
               </TouchableOpacity>
             </View>
