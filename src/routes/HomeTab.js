@@ -6,7 +6,7 @@ import NavBar from "../common/NavBar";
 import NavButton from "../common/NavBarButton";
 
 // Import Screen
-import { HomeScreen, TicketSVGScreen, TicketDetail } from "../screens";
+import { HomeScreen, TicketSVGScreen, TicketDetail,ProfileScreen } from "../screens";
 
 const HomeTab = StackNavigator(
   {
@@ -46,6 +46,9 @@ const HomeTab = StackNavigator(
     },
     Ticketdetail:{
       screen: TicketDetail
+    },
+    Profile:{
+      screen: ProfileScreen
     }
   },
   {

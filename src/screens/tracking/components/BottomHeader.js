@@ -10,12 +10,12 @@ const BottomHeader = () => (
   <View style={styles.modal}>
     <Tabs>
       <Tab heading={<TabHeading><Icon ios="ios-bus" android="md-bus" /><Text>Thông tin</Text></TabHeading>}>
-        <View>
+        <View style={{height: 100}}>
           <Text>Tab 1</Text>
         </View>
       </Tab>
       <Tab heading={<TabHeading><Icon ios="ios-options-outline" android="ios-options-outline" /><Text>Giao thông</Text></TabHeading>}>
-        <View>
+        <View style={{height: 100}}>
           <Text>Tab 2</Text>
         </View>
       </Tab>

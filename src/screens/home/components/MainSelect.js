@@ -49,7 +49,7 @@ const MainSelect = ({ navigation }) => (
           <Ionicons color={"#3E3E3E"} name="ios-arrow-forward" size={20} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.selectItem}>
+      <TouchableOpacity style={styles.selectItem} onPress={() => navigation.navigate('Profile')}>
         <View style={styles.iconFirt}>
           <Ionicons color={"#3E3E3E"} name="md-person" size={35} />
         </View>
