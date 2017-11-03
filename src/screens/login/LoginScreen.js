@@ -33,6 +33,7 @@ class LoginScreen extends Component {
   };
 
   render() {
+    
     if (this.props.isLoading) {
       return <LoadingScreen color={"#4E94E5"} />;
     }
@@ -49,6 +50,7 @@ class LoginScreen extends Component {
             <LoginForm
               gotoRegister={() => this.props.navigation.navigate("Register")}
               gotoForgot={() => this.props.navigation.navigate("Forgot")}
+              navigation={this.props.navigation}
               
             />
           </View>

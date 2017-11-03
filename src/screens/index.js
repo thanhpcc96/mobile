@@ -12,7 +12,7 @@ import { PickScreen } from "./pick";
 import { PaymentScreen } from "./payment";
 import { ReportScreen } from "./report";
 import { TicketSVGScreen,TicketDetail} from "./ticketSVG";
-import { ProfileScreen } from "./profile";
+import { ProfileScreen,UpdateProfileScreen } from "./profile";
 
 
 export {
@@ -29,5 +29,6 @@ export {
   ReportScreen,
   TicketSVGScreen,
   TicketDetail,
-  ProfileScreen
+  ProfileScreen,
+  UpdateProfileScreen
 };

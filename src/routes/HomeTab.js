@@ -6,7 +6,13 @@ import NavBar from "../common/NavBar";
 import NavButton from "../common/NavBarButton";
 
 // Import Screen
-import { HomeScreen, TicketSVGScreen, TicketDetail,ProfileScreen } from "../screens";
+import {
+  HomeScreen,
+  TicketSVGScreen,
+  TicketDetail,
+  ProfileScreen,
+  UpdateProfileScreen
+} from "../screens";
 
 const HomeTab = StackNavigator(
   {
@@ -34,7 +40,7 @@ const HomeTab = StackNavigator(
                 icon="md-contact"
                 style={{ width: 33, height: 33, marginLeft: -5 }}
                 iconSize={33}
-                onPress={() => navigation.navigate("HomeScreen")}
+                onPress={() => navigation.navigate("Profile")}
               />
             }
           />
@@ -44,11 +50,14 @@ const HomeTab = StackNavigator(
     SVG: {
       screen: TicketSVGScreen
     },
-    Ticketdetail:{
+    Ticketdetail: {
       screen: TicketDetail
     },
-    Profile:{
+    Profile: {
       screen: ProfileScreen
+    },
+    UpdateProfile:{
+      screen: UpdateProfileScreen
     }
   },
   {

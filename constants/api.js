@@ -47,12 +47,9 @@ class UserAPI {
       const res = await axios.post(this.pathUserAcount + "login", { ...args });
       return res;
     } catch (err) {
-        throw err
+      throw err;
     }
   }
 }
 
-export {
-    ClientAPI,
-    UserAPI
-}
+export { ClientAPI, UserAPI };

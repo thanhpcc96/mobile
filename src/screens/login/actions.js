@@ -1,14 +1,14 @@
-import { ClientAPI, UserAPI } from '../../../constants/api';
+import { ClientAPI, UserAPI } from "../../../constants/api";
 
 const userAPI = new UserAPI();
 const clientAPI = new ClientAPI();
 
-export const POST_LOGIN_USER = 'POST_LOGIN_USER';
-export const POST_LOGIN_USER_SUCCESS = 'POST_LOGIN_USER_SUCCESS';
-export const POST_LOGIN_USER_ERROR = 'POST_LOGIN_USER_ERROR';
-export const POST_LOGIN_CLIENT = 'POST_LOGIN_CLIENT';
-export const POST_LOGIN_CLIENT_SUCCESS = 'POST_LOGIN_CLIENT_SUCCESS';
-export const POST_LOGIN_CLIENT_ERROR = 'POST_LOGIN_CLIENT_ERROR';
+export const POST_LOGIN_USER = "POST_LOGIN_USER";
+export const POST_LOGIN_USER_SUCCESS = "POST_LOGIN_USER_SUCCESS";
+export const POST_LOGIN_USER_ERROR = "POST_LOGIN_USER_ERROR";
+export const POST_LOGIN_CLIENT = "POST_LOGIN_CLIENT";
+export const POST_LOGIN_CLIENT_SUCCESS = "POST_LOGIN_CLIENT_SUCCESS";
+export const POST_LOGIN_CLIENT_ERROR = "POST_LOGIN_CLIENT_ERROR";
 
 export const postLoginClient = args => async dispatch => {
   dispatch({ type: POST_LOGIN_CLIENT });
@@ -22,28 +22,31 @@ export const postLoginClient = args => async dispatch => {
 
 function loginSuccess(typeUser, data) {
   const typeAction =
-    typeUser === 'client' ? POST_LOGIN_CLIENT_SUCCESS : POST_LOGIN_USER_SUCCESS;
+    typeUser === "client" ? POST_LOGIN_CLIENT_SUCCESS : POST_LOGIN_USER_SUCCESS;
   return {
     type: typeAction,
     user: data.user,
-    token: data.token,
+    token: data.token
   };
 }
 function loginError(typeUser, error) {
   const typeAction =
-    typeUser === 'client' ? POST_LOGIN_CLIENT_ERROR : POST_LOGIN_USER_ERROR;
+    typeUser === "client" ? POST_LOGIN_CLIENT_ERROR : POST_LOGIN_USER_ERROR;
   return {
     type: typeAction,
-    error,
+    error
   };
 }
 
 export function postLogin(email, password, typeUser) {
-  if (typeUser === 'client') {
+  if (typeUser === "client") {
     return async dispatch => {
       dispatch({ type: POST_LOGIN_CLIENT });
       try {
         const data = await clientAPI.postLogin({ email, password });
+        console.log('===============cccc=====================');
+        console.log(data);
+        console.log('====================================');
         return dispatch(loginSuccess(typeUser, data));
       } catch (err) {
         return dispatch(loginError(typeUser, err));

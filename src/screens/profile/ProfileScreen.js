@@ -4,9 +4,15 @@ import {
   Text,
   StyleSheet,
   TouchableHighlight,
-  Image
+  Image,
+  ScrollView
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  SimpleLineIcons,
+  Entypo
+} from "@expo/vector-icons";
 
 import NavBarButton from "../../common/NavBarButton";
 class ProfileScreen extends Component {
@@ -45,10 +51,46 @@ class ProfileScreen extends Component {
         </View>
         <View style={styles.infoConatiner}>
           <View style={styles.infoHeaderContainer}>
-            <Text style={styles.infoHederText}> Thong tin ca nhan</Text>
-            <TouchableHighlight style={styles.buttonEdit} underlayColor={"#B3E5FC"}>
-              <Ionicons name="md-create" color={'#FFF'} size={20} />
+            <Text style={styles.infoHederText}>Thông tin tài khoản</Text>
+            <TouchableHighlight
+              style={styles.buttonEdit}
+              underlayColor={"#B3E5FC"}
+              onPress={()=> this.props.navigation.navigate('UpdateProfile')}
+            >
+              <Ionicons name="md-create" color={"#FFF"} size={20} />
             </TouchableHighlight>
+          </View>
+          <View style={styles.listInfo}>
+            <ScrollView>
+              <View style={styles.infoItem}>
+                <MaterialCommunityIcons
+                  name="email-outline"
+                  color={"#0288D1"}
+                  size={25}
+                />
+                <Text style={styles.textInfo}> thanhpcc1996@gmail.com</Text>
+              </View>
+              <View style={styles.infoItem}>
+                <MaterialCommunityIcons
+                  name="gender-male-female"
+                  color={"#0288D1"}
+                  size={25}
+                />
+                <Text style={styles.textInfo}> Nữ</Text>
+              </View>
+              <View style={styles.infoItem}>
+                <Entypo
+                  name="address"
+                  color={"#0288D1"}
+                  size={25}
+                />
+                <Text style={styles.textInfo}>Văn Lâm, Hưng Yên</Text>
+              </View>
+              <View style={styles.infoItem}>
+                <SimpleLineIcons name="phone" color={"#0288D1"} size={25} />
+                <Text style={styles.textInfo}> 01672454407</Text>
+              </View>
+            </ScrollView>
           </View>
         </View>
       </View>
@@ -110,10 +152,32 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#29B6F6",
     marginRight: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderWidth: 1.5,
-    borderColor:'#FFF'
+    borderColor: "#FFF"
+  },
+  listInfo: {
+    position: "absolute",
+    top: 65,
+    left: 5,
+    right: 5,
+    bottom: 5
+    //backgroundColor: "green"
+  },
+  infoItem: {
+    height: 50,
+    flexDirection: "row",
+    paddingLeft: 10,
+    alignItems: "center",
+    borderColor: "#B3E5FC",
+    borderWidth: 1,
+    marginTop: 10
+  },
+  textInfo: {
+    color: "#0288D1",
+    fontSize: 20,
+    marginLeft: 10
   }
 });
 export default ProfileScreen;

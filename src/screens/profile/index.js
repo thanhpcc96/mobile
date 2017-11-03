@@ -1,5 +1,4 @@
-import ProfileScreen from './ProfileScreen';
+import ProfileScreen from "./ProfileScreen";
+import UpdateProfileScreen from "./UpdateProfileScreen";
 
-export {
-    ProfileScreen
-}
+export { ProfileScreen, UpdateProfileScreen };

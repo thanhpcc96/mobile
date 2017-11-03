@@ -62,7 +62,7 @@ const MainSelect = ({ navigation }) => (
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.selectItem}>
+      <TouchableOpacity style={styles.selectItem} onPress={() => navigation.navigate('PaymentTab')}>
         <View style={styles.iconFirt}>
           <Ionicons color={"#3E3E3E"} name="ios-list-box-outline" size={35} />
         </View>
@@ -72,23 +72,6 @@ const MainSelect = ({ navigation }) => (
         <View style={styles.badgeLabelContainer}>
           <View style={styles.badgeLabel}>
             <Text style={styles.badgeLabelText}>9</Text>
-          </View>
-        </View>
-        <View style={styles.iconArow}>
-          <Ionicons color={"#3E3E3E"} name="ios-arrow-forward" size={20} />
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.selectItem}>
-        <View style={styles.iconFirt}>
-          <Ionicons color={"#3E3E3E"} name="ios-megaphone" size={35} />
-        </View>
-        <View style={styles.textContanier}>
-          <Text style={styles.textStyleCenter}>Khuyến mại cho bạn</Text>
-        </View>
-        <View style={styles.badgeLabelContainer}>
-          <View style={styles.badgeLabel}>
-            <Text style={styles.badgeLabelText}>0</Text>
           </View>
         </View>
         <View style={styles.iconArow}>

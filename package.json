@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@appandflow/touchable": "^1.2.2",
+    "@expo/vector-icons": "^6.1.0",
     "axios": "^0.17.0",
     "expo": "^21.0.0",
     "native-base": "^2.3.3",

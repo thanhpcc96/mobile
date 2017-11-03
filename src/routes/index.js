@@ -8,7 +8,7 @@ import { LoginScreen } from "../screens";
 //   navigation: state.navigation,
 //   user: state.user
 // }))
-class AppNavigator extends PureComponent<Props, void> {
+class AppNavigator extends PureComponent {
   state = {};
   // ref={nav => {
   //   this.navigator = nav ? nav.props.navigation : nav;
@@ -22,7 +22,7 @@ class AppNavigator extends PureComponent<Props, void> {
     if (this.props.user.isLogged) {
       return <Nav navigation={nav} />;
     }
-    return <Nav navigation={nav} />;
+    return <LoginScreen navigation={nav} />;
   }
 }
 export default connect(state => ({

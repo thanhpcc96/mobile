@@ -10,16 +10,23 @@ import {
 } from "react-native";
 import { CheckBox } from "react-native-elements";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
+import { postLogin } from "../actions";
 import styles from "./styles/LoginForm.style";
+
+@connect(
+  state => ({
+    isLoading: state.user.isLoading
+  }),
+  { postLogin }
+)
 class Form extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerBackTitle: null
-  });
   static propTypes = {
     gotoRegister: PropTypes.func.isRequired,
-    gotoForgot: PropTypes.func.isRequired
-    // handleSubmit: PropTypes.func.isRequired
+    gotoForgot: PropTypes.func.isRequired,
+    navigation: PropTypes.object
+    //handleSubmit: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -37,7 +44,6 @@ class Form extends React.Component {
     return re.test(value);
   };
   _setStateEmail = value => {
-    
     this.setState({
       email: value
     });
@@ -61,14 +67,23 @@ class Form extends React.Component {
     }
   }
   _handlerSubmit() {
-    if (this._validateEmail && this.state.password > 5) {
-      Alert.alert("Sẽ xử lý sau", "Tốt rồi không lỗi");
+    if (this._validateEmail(this.state.email) && this.state.password > 5) {
+      //Alert.alert("Sẽ xử lý sau", "Tốt rồi không lỗi");
       //   this.props.handleSubmit({
       //     email: this.state.email,
       //     password: this.state.password
+
       //   });
+      console.log("====================================");
+      console.log("Vao day roi");
+      console.log("====================================");
+      this.props.postLogin(this.state.email, this.state.password, "client");
+      this.props.navigation.navigate("Tabs");
     } else {
-      Alert.alert("Dữ liệu nhập quá tồi", "Email không đúng hoặc mật khẩu ngắn");
+      Alert.alert(
+        "Dữ liệu nhập quá tồi",
+        "Email không đúng hoặc mật khẩu ngắn"
+      );
     }
   }
   _setTypeUser = () => {
@@ -94,14 +109,14 @@ class Form extends React.Component {
             style={[styles.textinput, { marginTop: 20 }]}
             placeholder="Email"
             onChangeText={value => this._setStateEmail(value)}
-            placeholderTextColor={'#fff'}
+            placeholderTextColor={"#fff"}
           />
           <TextInput
             style={[styles.textinput, { marginTop: 30 }]}
             placeholder="Password"
             secureTextEntry={true}
             onChangeText={value => this._setStatePassword(value)}
-            placeholderTextColor={'#fff'}
+            placeholderTextColor={"#fff"}
           />
           <CheckBox
             checked={this.state.isUser}

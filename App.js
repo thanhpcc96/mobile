@@ -2,7 +2,7 @@ import Expo, { AppLoading } from "expo";
 import React from "react";
 import { AsyncStorage, UIManager, StatusBar } from "react-native";
 import { Provider } from "react-redux";
-import { persistStore } from "redux-persist";
+//import { persistStore } from "redux-persist";
 import EStyleSheet from "react-native-extended-stylesheet";
 import store from "./src/redux/store";
 
@@ -21,17 +21,17 @@ export default class App extends React.Component {
     fontLoaded: false,
     ready: false
   };
-  componentDidMount() {
-    //this._loadAssetAsync();
-    persistStore(
-      store,
-      {
-        storage: AsyncStorage,
-        whitelist: ["user"]
-      },
-      () => this.setState({ ready: true })
-    );
-  }
+  // componentDidMount() {
+  //   //this._loadAssetAsync();
+  //   persistStore(
+  //     store,
+  //     {
+  //       storage: AsyncStorage,
+  //       whitelist: ["user"]
+  //     },
+  //     () => this.setState({ ready: true })
+  //   );
+  // }
 
   async _loadAssetAsync() {
     try {
