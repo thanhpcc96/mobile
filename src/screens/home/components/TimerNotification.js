@@ -1,10 +1,10 @@
 // @flow
 /* eslint-disable */
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React, { Component } from "react";
+import { View, Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-import styles from './styles/TimerNotification.style';
+import styles from "./styles/TimerNotification.style";
 
 class TimerNotification extends Component {
   render() {
@@ -15,7 +15,7 @@ class TimerNotification extends Component {
           <Text style={styles.timeCountDown}> Con lai 10h</Text>
         </View>
         <View style={styles.containerIconBell}>
-          <Ionicons name="ios-notifications" color={'#fff'} size={30} />
+          <Ionicons name="ios-notifications" color={"#fff"} size={30} />
         </View>
       </View>
     );

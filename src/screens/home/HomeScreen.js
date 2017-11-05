@@ -8,24 +8,26 @@ import {
   ImageBackground,
   ScrollView
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { connect } from 'react-redux';
-import { getInfoProfileAction } from '../profile/action'
+import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import { getInfoProfileAction } from "../profile/action";
 
 // import Component
 import { TimerNotification, MainSelect } from "./components";
 
 import styles from "./styles/HomeScreen.style";
 
-
-@connect(state=>({
-  profile: state.profile,
-}),{
-  getInfoProfileAction
-})
+@connect(
+  state => ({
+    profile: state.profile
+  }),
+  {
+    getInfoProfileAction
+  }
+)
 class HomeScreen extends Component {
-  componentDidMount(){
-    this.props.getInfoProfileAction('client');
+  componentDidMount() {
+    this.props.getInfoProfileAction("client");
   }
   render() {
     return (

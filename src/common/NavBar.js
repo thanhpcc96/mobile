@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { Constants } from "expo";
 
 type Props = {
   style: Object,
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     right: 0,
     height: 64,
     backgroundColor: "#0B6EE0",
-    paddingTop: 20,
+    paddingTop: Constants.statusBarHeight,
     flexDirection: "row"
   },
   left: {

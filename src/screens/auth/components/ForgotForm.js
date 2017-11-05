@@ -12,9 +12,9 @@ import {
 
 import styled from "styled-components/native";
 import Touchable from "@appandflow/touchable";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
-const BackButton = styled(Touchable)`marginLeft: 10;`;
+const BackButton = styled(Touchable)`marginleft: 10;`;
 
 class ForgotScreen extends Component {
   static navigationOptions = () => ({

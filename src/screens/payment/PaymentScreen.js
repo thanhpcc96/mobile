@@ -6,7 +6,7 @@ import {
   ScrollView,
   Dimensions
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import styles from "./styles/PaymentScreen.style";
 

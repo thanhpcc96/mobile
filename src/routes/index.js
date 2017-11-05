@@ -22,7 +22,7 @@ class AppNavigator extends PureComponent {
     if (this.props.user.isLogged) {
       return <Nav navigation={nav} />;
     }
-    return <AuthScreen />;
+    return <Nav navigation={nav} />;
   }
 }
 export default connect(state => ({

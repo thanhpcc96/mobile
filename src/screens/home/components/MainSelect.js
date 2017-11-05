@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import { View, TouchableOpacity, Text, ScrollView } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import styles from "./styles/MainSelect.style";
@@ -29,7 +29,10 @@ const MainSelect = ({ navigation }) => (
           <Ionicons color={"#3E3E3E"} name="ios-arrow-forward" size={20} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.selectItem} onPress={()=> navigation.navigate('SVG')}>
+      <TouchableOpacity
+        style={styles.selectItem}
+        onPress={() => navigation.navigate("SVG")}
+      >
         <View style={styles.iconFirt}>
           <MaterialCommunityIcons
             color={"#3E3E3E"}
@@ -49,7 +52,10 @@ const MainSelect = ({ navigation }) => (
           <Ionicons color={"#3E3E3E"} name="ios-arrow-forward" size={20} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.selectItem} onPress={() => navigation.navigate('Profile')}>
+      <TouchableOpacity
+        style={styles.selectItem}
+        onPress={() => navigation.navigate("Profile")}
+      >
         <View style={styles.iconFirt}>
           <Ionicons color={"#3E3E3E"} name="md-person" size={35} />
         </View>
@@ -62,7 +68,10 @@ const MainSelect = ({ navigation }) => (
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.selectItem} onPress={() => navigation.navigate('PaymentTab')}>
+      <TouchableOpacity
+        style={styles.selectItem}
+        onPress={() => navigation.navigate("PaymentTab")}
+      >
         <View style={styles.iconFirt}>
           <Ionicons color={"#3E3E3E"} name="ios-list-box-outline" size={35} />
         </View>

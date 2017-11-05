@@ -9,7 +9,7 @@ import {
   ScrollView
 } from "react-native";
 import { takeSnapshotAsync } from "expo";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import NavBarButton from "../../common/NavBarButton";
 import QRcode from "../../common/QRcodehelper";

@@ -6,7 +6,7 @@ import {
   DrawerNavigator
 } from "react-navigation";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import styled from "styled-components/native";
 import Touchable from "@appandflow/touchable";
