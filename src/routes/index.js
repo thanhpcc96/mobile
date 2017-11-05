@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { addNavigationHelpers } from "react-navigation";
 import Nav from "./Nav";
-import { LoginScreen } from "../screens";
+import { AuthScreen } from "../screens";
 
 // @connect(state => ({
 //   navigation: state.navigation,
@@ -22,7 +22,7 @@ class AppNavigator extends PureComponent {
     if (this.props.user.isLogged) {
       return <Nav navigation={nav} />;
     }
-    return <LoginScreen navigation={nav} />;
+    return <AuthScreen />;
   }
 }
 export default connect(state => ({

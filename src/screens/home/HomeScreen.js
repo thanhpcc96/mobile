@@ -9,17 +9,25 @@ import {
   ScrollView
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { connect } from 'react-redux';
+import { getInfoProfileAction } from '../profile/action'
 
 // import Component
 import { TimerNotification, MainSelect } from "./components";
 
 import styles from "./styles/HomeScreen.style";
 
+
+@connect(state=>({
+  profile: state.profile,
+}),{
+  getInfoProfileAction
+})
 class HomeScreen extends Component {
+  componentDidMount(){
+    this.props.getInfoProfileAction('client');
+  }
   render() {
-    console.log("====================================");
-    console.log(this.props);
-    console.log("====================================");
     return (
       <View style={styles.root}>
         <View style={styles.timerNotification}>

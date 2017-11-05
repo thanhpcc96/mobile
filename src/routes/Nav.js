@@ -18,7 +18,7 @@ import PickTab from "./PickTab";
 import PaymentTab from "./PaymentTab";
 import ReportTab from "./ReportTab";
 import {
-  LoginScreen,
+  AuthScreen,
   RegisterScreen,
   ForgotScreen,
   ConfirmCodeForgotScreen,
@@ -105,25 +105,11 @@ const Tabs = TabNavigator(
     }
   }
 );
+
 export default StackNavigator(
   {
     Tabs: {
       screen: Tabs
-    },
-    Login: {
-      screen: LoginScreen
-    },
-    Register: {
-      screen: RegisterScreen
-    },
-    Forgot: {
-      screen: ForgotScreen
-    },
-    ConfirmCode: {
-      screen: ConfirmCodeForgotScreen
-    },
-    ChangePass: {
-      screen: ChangePassScreen
     }
   },
   {

@@ -13,8 +13,21 @@ import {
   SimpleLineIcons,
   Entypo
 } from "@expo/vector-icons";
-
+import { connect } from "react-redux";
+import LoadingScreen from "../../common/LoadingScreen";
+import ListInfo from "./components/ListInfo";
 import NavBarButton from "../../common/NavBarButton";
+import { getInfoProfileAction } from "./action";
+
+@connect(
+  state => ({
+    isLoading: state.profile.isLoading,
+    profile: state.profile
+  }),
+  {
+    getInfoProfileAction
+  }
+)
 class ProfileScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerStyle: {
@@ -35,64 +48,22 @@ class ProfileScreen extends Component {
       />
     )
   });
+  state = {};
+
+  componentDidMount() {
+    // this.props.getInfoProfileAction("client");
+  }
+
   render() {
+    console.log('====================================');
+    console.log(this.props.isLoading);
+    console.log('====================================');
+    if (this.props.isLoading===true || this.props.profile.error) {
+      return <LoadingScreen color={"#4E94E5"} />;
+    }
     return (
       <View style={styles.root}>
-        <View style={styles.avatarContainer}>
-          <TouchableHighlight style={styles.imageConatiner}>
-            <Image
-              source={require("../../../assets/avatar.jpg")}
-              style={styles.image}
-            />
-          </TouchableHighlight>
-          <View style={styles.fullname}>
-            <Text style={styles.fullnameText}>Hao Nguyen</Text>
-          </View>
-        </View>
-        <View style={styles.infoConatiner}>
-          <View style={styles.infoHeaderContainer}>
-            <Text style={styles.infoHederText}>Thông tin tài khoản</Text>
-            <TouchableHighlight
-              style={styles.buttonEdit}
-              underlayColor={"#B3E5FC"}
-              onPress={()=> this.props.navigation.navigate('UpdateProfile')}
-            >
-              <Ionicons name="md-create" color={"#FFF"} size={20} />
-            </TouchableHighlight>
-          </View>
-          <View style={styles.listInfo}>
-            <ScrollView>
-              <View style={styles.infoItem}>
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  color={"#0288D1"}
-                  size={25}
-                />
-                <Text style={styles.textInfo}> thanhpcc1996@gmail.com</Text>
-              </View>
-              <View style={styles.infoItem}>
-                <MaterialCommunityIcons
-                  name="gender-male-female"
-                  color={"#0288D1"}
-                  size={25}
-                />
-                <Text style={styles.textInfo}> Nữ</Text>
-              </View>
-              <View style={styles.infoItem}>
-                <Entypo
-                  name="address"
-                  color={"#0288D1"}
-                  size={25}
-                />
-                <Text style={styles.textInfo}>Văn Lâm, Hưng Yên</Text>
-              </View>
-              <View style={styles.infoItem}>
-                <SimpleLineIcons name="phone" color={"#0288D1"} size={25} />
-                <Text style={styles.textInfo}> 01672454407</Text>
-              </View>
-            </ScrollView>
-          </View>
-        </View>
+        <ListInfo info={this.props.profile.info.result} />
       </View>
     );
   }

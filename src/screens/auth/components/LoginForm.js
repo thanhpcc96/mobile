@@ -24,7 +24,6 @@ import styles from "./styles/LoginForm.style";
 class Form extends React.Component {
   static propTypes = {
     gotoRegister: PropTypes.func.isRequired,
-    gotoForgot: PropTypes.func.isRequired,
     navigation: PropTypes.object
     //handleSubmit: PropTypes.func.isRequired
   };
@@ -78,7 +77,7 @@ class Form extends React.Component {
       console.log("Vao day roi");
       console.log("====================================");
       this.props.postLogin(this.state.email, this.state.password, "client");
-      this.props.navigation.navigate("Tabs");
+      //this.props.navigation.navigate("Tabs");
     } else {
       Alert.alert(
         "Dữ liệu nhập quá tồi",
@@ -102,6 +101,9 @@ class Form extends React.Component {
   };
 
   render() {
+   console.log('====================================');
+   console.log(this.props);
+   console.log('====================================');
     return (
       <View style={styles.root}>
         <View style={styles.formGroup}>
@@ -153,7 +155,7 @@ class Form extends React.Component {
               styles.buttonForm,
               { backgroundColor: "rgba(253,255,255,0.3)" }
             ]}
-            onPress={this.props.gotoRegister}
+            onPress={()=>this.props.gotoRegister()}
           >
             <Text style={styles.textButton}> Đăng ký</Text>
           </TouchableOpacity>

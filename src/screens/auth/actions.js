@@ -1,4 +1,4 @@
-import { ClientAPI, UserAPI } from "../../../constants/api";
+import { ClientAPI, UserAPI, setAuthHeader } from "../../../constants/api";
 
 const userAPI = new UserAPI();
 const clientAPI = new ClientAPI();
@@ -6,27 +6,24 @@ const clientAPI = new ClientAPI();
 export const POST_LOGIN_USER = "POST_LOGIN_USER";
 export const POST_LOGIN_USER_SUCCESS = "POST_LOGIN_USER_SUCCESS";
 export const POST_LOGIN_USER_ERROR = "POST_LOGIN_USER_ERROR";
+/* Client Type */
 export const POST_LOGIN_CLIENT = "POST_LOGIN_CLIENT";
 export const POST_LOGIN_CLIENT_SUCCESS = "POST_LOGIN_CLIENT_SUCCESS";
 export const POST_LOGIN_CLIENT_ERROR = "POST_LOGIN_CLIENT_ERROR";
 
-export const postLoginClient = args => async dispatch => {
-  dispatch({ type: POST_LOGIN_CLIENT });
-  try {
-    const res = await clientAPI.postLogin(args);
-    return dispatch({ type: POST_LOGIN_CLIENT_SUCCESS });
-  } catch (e) {
-    return dispatch({ type: POST_LOGIN_CLIENT_ERROR });
-  }
-};
+export const POST_REGISTER_CLIENT = "POST_REGISTER_CLIENT";
+export const POST_REGISTER_CLIENT_SUCCESS = "POST_REGISTER_CLIENT_SUCCESS";
+export const POST_REGISTER_CLIENT_ERROR = "POST_REGISTER_CLIENT_ERROR";
 
 function loginSuccess(typeUser, data) {
   const typeAction =
     typeUser === "client" ? POST_LOGIN_CLIENT_SUCCESS : POST_LOGIN_USER_SUCCESS;
+
+  setAuthHeader(data.data.token);
   return {
     type: typeAction,
-    user: data.user,
-    token: data.token
+    user: data.data,
+    token: data.data.token
   };
 }
 function loginError(typeUser, error) {
@@ -38,15 +35,18 @@ function loginError(typeUser, error) {
   };
 }
 
+/**
+ * 
+ * @param {String} email 
+ * @param {String} password 
+ * @param {String} typeUser 
+ */
 export function postLogin(email, password, typeUser) {
   if (typeUser === "client") {
     return async dispatch => {
       dispatch({ type: POST_LOGIN_CLIENT });
       try {
         const data = await clientAPI.postLogin({ email, password });
-        console.log('===============cccc=====================');
-        console.log(data);
-        console.log('====================================');
         return dispatch(loginSuccess(typeUser, data));
       } catch (err) {
         return dispatch(loginError(typeUser, err));
@@ -61,5 +61,36 @@ export function postLogin(email, password, typeUser) {
     } catch (err) {
       return dispatch(loginError(typeUser, err));
     }
+  };
+}
+/**
+ * 
+ * @param {*} fullname 
+ * @param {*} email 
+ * @param {*} phone 
+ * @param {*} password 
+ */
+export function postRegisterAction(fullname, email, phone, password) {
+  return async dispatch => {
+    dispatch({ type: POST_REGISTER_CLIENT });
+    try {
+      const data = await clientAPI.postRegister({
+        fullname,
+        email,
+        phone,
+        password
+      });
+      return dispatch(registerSuccess(data));
+    } catch (err) {
+      return dispatch({ type: POST_REGISTER_CLIENT_ERROR, error: err });
+    }
+  };
+}
+function registerSuccess(data) {
+  setAuthHeader(data.data.token);
+  return {
+    type: POST_REGISTER_CLIENT_SUCCESS,
+    user: data.data,
+    token: data.data.token
   };
 }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-import { LoginScreen, LoginReducer } from "./login";
+import { AuthScreen, AuthReducer } from "./auth";
 import {
   ForgotScreen,
   ChangePassScreen,
@@ -12,12 +12,12 @@ import { PickScreen } from "./pick";
 import { PaymentScreen } from "./payment";
 import { ReportScreen } from "./report";
 import { TicketSVGScreen,TicketDetail} from "./ticketSVG";
-import { ProfileScreen,UpdateProfileScreen } from "./profile";
+import { ProfileScreen,UpdateProfileScreen, ProfileReducer } from "./profile";
 
 
 export {
-  LoginScreen,
-  LoginReducer,
+  AuthScreen,
+  AuthReducer,
   ForgotScreen,
   ChangePassScreen,
   ConfirmCodeForgotScreen,
@@ -30,5 +30,6 @@ export {
   TicketSVGScreen,
   TicketDetail,
   ProfileScreen,
-  UpdateProfileScreen
+  UpdateProfileScreen,
+  ProfileReducer
 };

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import LoginForm from "./components/LoginForm";
+import { LoginForm, RegisterForm, ForgotForm } from "./components";
 
 import { postLogin } from "./actions";
 import LoadingScreen from "../../common/LoadingScreen";
@@ -22,18 +22,24 @@ import LoadingScreen from "../../common/LoadingScreen";
 //   }),
 //   { postLogin }
 // )
-class LoginScreen extends Component {
+
+initState = {
+  isShowRegister: false,
+  isShowForgot: false,
+  isShowLogin: true
+};
+class AuthScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerBackTitle: null
   });
-  state = {};
+  state = initState;
 
-  _postLogin = async value => {
-    await this.props.postLogin(value);
-  };
+  _goBack = () => this.setState({ ...initState });
 
   render() {
-    
+    console.log("===============login=====================");
+    console.log(this.props);
+    console.log("====================================");
     if (this.props.isLoading) {
       return <LoadingScreen color={"#4E94E5"} />;
     }
@@ -44,15 +50,25 @@ class LoginScreen extends Component {
           style={styles.backgroundContainer}
         >
           <View style={styles.logoContainer}>
-            <Image source={require("../../../assets/logo.png")} />
+            <Image
+              source={require("../../../assets/logo.png")}
+              resizeMode={"contain"}
+              style={styles.logoImg}
+            />
           </View>
           <View style={styles.formContainer}>
-            <LoginForm
-              gotoRegister={() => this.props.navigation.navigate("Register")}
-              gotoForgot={() => this.props.navigation.navigate("Forgot")}
-              navigation={this.props.navigation}
-              
-            />
+            {this.state.isShowRegister ? (
+              <RegisterForm goBack={() => this._goBack()} />
+            ) : this.state.isShowForgot ? (
+              <ForgotForm goBack={() => this._goBack()} />
+            ) : (
+              <LoginForm
+                gotoRegister={() =>
+                  this.setState({ isShowRegister: true, isShowForgot: false })}
+                gotoForgot={() =>
+                  this.setState({ isShowForgot: true, isShowRegister: false })}
+              />
+            )}
           </View>
         </Image>
       </View>
@@ -66,7 +82,7 @@ export default connect(
   {
     postLogin
   }
-)(LoginScreen);
+)(AuthScreen);
 
 const styles = StyleSheet.create({
   root: {
@@ -80,25 +96,25 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   logoContainer: {
-    flex: 0.3,
+    flex: 0.2,
     justifyContent: "center",
     alignItems: "center"
   },
   logoImg: {
-    width: 100,
-    height: 50
+    width: 160,
+    height: 80
   },
   formContainer: {
-    flex: 0.7,
+    flex: 0.8,
     justifyContent: "center",
     alignItems: "center"
     //backgroundColor: "red"
   },
   formGroup: {
-    flex: 0.4,
+    flex: 0.3,
     justifyContent: "flex-start",
-    alignItems: "stretch"
-    //backgroundColor:'green'
+    alignItems: "stretch",
+    backgroundColor: "green"
   },
   textinput: {
     height: 63,
@@ -109,7 +125,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   buttonGroup: {
-    flex: 0.6,
+    flex: 0.7,
     justifyContent: "flex-start",
     alignItems: "stretch"
   },

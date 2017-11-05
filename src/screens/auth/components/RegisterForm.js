@@ -15,17 +15,24 @@ import { connect } from "react-redux";
 
 import styled from "styled-components/native";
 import Touchable from "@appandflow/touchable";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
+
+import { postRegisterAction } from "../actions";
 
 // import styles from "./styles/ForgotScreen.style";
 
 const BackButton = styled(Touchable)`marginLeft: 10;`;
 
-
-class Register extends Component {
-  static navigationOptions = () => ({
-    headerBackTitle: null
-  });
+@connect(
+  state => (
+    {
+      isLoading: state.user.isLoading
+    }
+  ),{
+    postRegisterAction
+  }
+)
+class RegisterForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +49,8 @@ class Register extends Component {
     return chuan.test(value);
   };
   _validatePhone = value => {
-    const chuan = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}/;
+    const chuan = /^[0-9-+]+$/;
+    
     return chuan.test(value);
   };
   _setStateEmail = value => {
@@ -93,12 +101,16 @@ class Register extends Component {
     }
   }
   _handlerSubmit() {
+    console.log('=============state form dang ky====================');
+    console.log(this.state);
+    console.log('====================================');
     if (
       this._validateEmail(this.state.email) &&
       this._validatePhone(this.state.phone)
     ) {
       if (this.state.password === this.state.confirmpassword) {
-        Alert.alert("Xử lý thành công!", "Vui lòng kiểm tra email của bạn");
+        this.props.postRegisterAction(this.state.fullname, this.state.email,this.state.phone,this.state.password)
+        Alert.alert("Xử lý thành công!", "Dang ky thanh cong");
       } else {
         Alert.alert("Lỗi!", "Password xác nhận không khớp");
       }
@@ -109,101 +121,89 @@ class Register extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <Image
-          source={require("../../../assets/background.png")}
-          style={styles.backgroundContainer}
-        >
-          <View style={styles.header}>
-            <BackButton
-              feedback="opacity"
-              onPress={() => this.props.navigation.goBack()}
-              style={{ marginTop: "5%" }}
-            >
-              <Ionicons name="md-arrow-back" color={"#fff"} size={30} />
-            </BackButton>
-          </View>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require("../../../assets/logo.png")}
-              style={styles.logoImg}
-              resizeMode={"contain"}
-            />
-          </View>
-          <View style={styles.formContainer}>
-            <View style={styles.formGroup}>
-              <ScrollView>
-                <View style={styles.inputContainer}>
-                  <Ionicons name="ios-person" color={"#FFF"} size={35} />
-                  <TextInput
-                    placeholderTextColor="#FFF"
-                    style={styles.textinput}
-                    placeholder="Họ và tên"
-                    onChangeText={value => this._setStateFullName(value)}
-                  />
-                </View>
+        <View style={styles.header}>
+          <BackButton
+            feedback="opacity"
+            onPress={this.props.goBack}
+            style={{ marginTop: "5%" }}
+          >
+            <Ionicons name="md-arrow-back" color={"#fff"} size={30} />
+          </BackButton>
+        </View>
+        <View style={styles.formContainer}>
+          <View style={styles.formGroup}>
+            <ScrollView>
+              <View style={styles.inputContainer}>
+                <Ionicons name="ios-person" color={"#FFF"} size={35} />
+                <TextInput
+                  placeholderTextColor="#FFF"
+                  style={styles.textinput}
+                  placeholder="Họ và tên"
+                  onChangeText={value => this._setStateFullName(value)}
+                />
+              </View>
 
-                <View style={styles.inputContainer}>
-                  <Ionicons name="ios-mail" color={"#FFF"} size={35} />
-                  <TextInput
-                    placeholderTextColor="#FFF"
-                    style={styles.textinput}
-                    placeholder="Email"
-                    onChangeText={value => this._setStateEmail(value)}
-                  />
-                </View>
-                <View style={styles.inputContainer}>
-                  <Ionicons name="ios-call" color={"#FFF"} size={35} />
-                  <TextInput
-                    placeholderTextColor="#FFF"
-                    style={styles.textinput}
-                    placeholder="Số điện thoại"
-                    onChangeText={value => this._setStatePhone(value)}
-                  />
-                </View>
-                <View style={styles.inputContainer}>
-                  <Ionicons name="ios-lock" color={"#FFF"} size={35} />
-                  <TextInput
-                    placeholderTextColor="#FFF"
-                    style={styles.textinput}
-                    placeholder="Password"
-                    onChangeText={value => this._setStatePassword(value)}
-                  />
-                </View>
-                <View style={styles.inputContainer}>
-                  <Ionicons name="ios-lock" color={"#FFF"} size={35} />
-                  <TextInput
-                    placeholderTextColor="#FFF"
-                    style={styles.textinput}
-                    placeholder="Xác nhận password"
-                    onChangeText={value => this._setStateConfirmPassword(value)}
-                  />
-                </View>
-              </ScrollView>
-            </View>
-            <View style={styles.buttonGroup}>
-              <TouchableOpacity
+              <View style={styles.inputContainer}>
+                <Ionicons name="ios-mail" color={"#FFF"} size={35} />
+                <TextInput
+                  placeholderTextColor="#FFF"
+                  style={styles.textinput}
+                  placeholder="Email"
+                  onChangeText={value => this._setStateEmail(value)}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Ionicons name="ios-call" color={"#FFF"} size={35} />
+                <TextInput
+                  placeholderTextColor="#FFF"
+                  style={styles.textinput}
+                  placeholder="Số điện thoại"
+                  onChangeText={value => this._setStatePhone(value)}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Ionicons name="ios-lock" color={"#FFF"} size={35} />
+                <TextInput
+                  placeholderTextColor="#FFF"
+                  style={styles.textinput}
+                  placeholder="Password"
+                  onChangeText={value => this._setStatePassword(value)}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Ionicons name="ios-lock" color={"#FFF"} size={35} />
+                <TextInput
+                  placeholderTextColor="#FFF"
+                  style={styles.textinput}
+                  placeholder="Xác nhận password"
+                  onChangeText={value => this._setStateConfirmPassword(value)}
+                />
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              style={
+                this.state.isVisibleButtonRegister
+                  ? [styles.buttonForm, { backgroundColor: "#4E94E5" }]
+                  : [styles.buttonForm, { backgroundColor: "#6A8CB3" }]
+              }
+              disabled={this.state.isVisibleButtonLogin}
+              onPress={() => this._handlerSubmit()}
+            >
+              <Text
                 style={
                   this.state.isVisibleButtonRegister
-                    ? [styles.buttonForm, { backgroundColor: "#4E94E5" }]
-                    : [styles.buttonForm, { backgroundColor: "#6A8CB3" }]
+                    ? styles.textButton
+                    : [styles.textButton, { color: "#B2B0B0" }]
                 }
-                disabled={this.state.isVisibleButtonLogin}
-                onPress={() => this._handlerSubmit()}
               >
-                <Text
-                  style={
-                    this.state.isVisibleButtonRegister
-                      ? styles.textButton
-                      : [styles.textButton, { color: "#B2B0B0" }]
-                  }
-                >
-                  {" "}
-                  Đăng ký ngay
-                </Text>
-              </TouchableOpacity>
-            </View>
+                {" "}
+                Đăng ký ngay
+              </Text>
+            </TouchableOpacity>
           </View>
-        </Image>
+        </View>
       </View>
     );
   }
@@ -222,8 +222,10 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 0.1,
+    flexDirection: "row",
     backgroundColor: "transparent",
-    justifyContent: "center"
+    justifyContent: "flex-start",
+    alignItems: "center"
   },
   logoContainer: {
     flex: 0.1,
@@ -235,13 +237,13 @@ const styles = StyleSheet.create({
     height: 70
   },
   formContainer: {
-    flex: 0.8,
+    flex: 0.9,
     justifyContent: "center",
     alignItems: "center"
     //backgroundColor: "red"
   },
   formGroup: {
-    flex: 0.8,
+    flex: 0.7,
     justifyContent: "flex-start",
     alignItems: "stretch"
     //backgroundColor:'green'
@@ -264,7 +266,7 @@ const styles = StyleSheet.create({
     color: "#FFF"
   },
   buttonGroup: {
-    flex: 0.2,
+    flex: 0.3,
     justifyContent: "flex-start",
     alignItems: "stretch"
   },
@@ -294,4 +296,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Register;
+export default RegisterForm;

@@ -13,6 +13,13 @@ if (__DEV__) {
 }
 
 axios.defaults.baseURL = url;
+export function setAuthHeader(token) {
+  if (token) {
+    axios.defaults.headers.common["Authorization"] = token;
+  } else {
+    delete axios.defaults.headers.common["Authorization"];
+  }
+}
 
 class ClientAPI {
   constructor() {
@@ -33,6 +40,14 @@ class ClientAPI {
       return res;
     } catch (err) {
       throw err;
+    }
+  }
+  async getInfoProfile() {
+    try {
+      const res = await axios.get(`${this.path}profile`);
+      return res;
+    } catch (err) {
+      return err;
     }
   }
 }
