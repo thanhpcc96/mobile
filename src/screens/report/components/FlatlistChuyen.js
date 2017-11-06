@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { TextInput, FlatList, TouchableOpacity } from "react-native";
 import { SwipeRow, View, Text, Icon, Button, Content } from "native-base";
-import Modal from "react-native-modal";
-import { Rating } from "react-native-elements";
-import { Entypo } from "@expo/vector-icons";
+
+import ModalComment from "./ModalComent";
+import ModalRating from "./ModalRating";
+
+import ListData from "../test";
+
 class ListChuyen extends Component {
   constructor(props) {
     super(props);
@@ -12,67 +15,30 @@ class ListChuyen extends Component {
       isShowModalRating: false
     };
   }
-  _renderModalComment() {
-    return (
-      <Modal
-        isVisible={this.state.isShowModalComment}
-        avoidKeyboard={true}
-        onBackdropPress={() => this.setState({ isShowModalComment: false })}
-        backdropColor={"transparent"}
-        children={
-          <View>
-            <View style={styles.titleModal}>
-              <Text style={styles.titleModalText}>Comment!</Text>
-            </View>
-            <View style={styles.modalContent}>
-              <View style={styles.commentContainer}>
-                <TextInput
-                  multiline={true}
-                  style={styles.textinput}
-                  placeholder={"Xin nhập ý kiến"}
-                />
-                <TouchableOpacity style={styles.commentButton}>
-                  <Entypo name="forward" color={"#fff"} size={30} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        }
-      />
-    );
-  }
-  _renderModalRating() {
-    return (
-      <Modal
-        isVisible={this.state.isShowModalRating}
-        onBackdropPress={() => this.setState({ isShowModalRating: false })}
-        backdropColor={"transparent"}
-        children={
-          <View>
-            <View style={styles.titleModal}>
-              <Text style={styles.titleModalText}>Vote chuyen xe</Text>
-            </View>
-            <View style={styles.modalContent}>
-              <Rating
-                showRating
-                type="star"
-                fractions={1}
-                startingValue={3.6}
-                imageSize={40}
-              />
-            </View>
-          </View>
-        }
-      />
-    );
-  }
+  _renderModalComment = () => (
+    <ModalComment
+      dataChuyen={{ id: "chuyen001" }}
+      isShowModalComment={this.state.isShowModalComment}
+      onBackdropPress={() => this.setState({ isShowModalComment: false })}
+    />
+  );
+
   _setShowModal = typeModal => {
     this.setState({
       isShowModalComment: typeModal === "Comment",
       isShowModalRating: typeModal === "Rating"
     });
   };
-  _renderRow = () => (
+
+  _renderModalRating = () => (
+    <ModalRating
+      dataChuyen={{ id: "chuyen001" }}
+      isShowModalRating={this.state.isShowModalRating}
+      onBackdropPress={() => this.setState({ isShowModalRating: false })}
+    />
+  );
+
+  _renderRow = item => (
     <SwipeRow
       leftOpenValue={75}
       rightOpenValue={-75}
@@ -82,8 +48,15 @@ class ListChuyen extends Component {
         </Button>
       }
       body={
-        <View>
-          <Text>SwipeRow Body Text 2</Text>
+        <View
+          style={{
+            height: 80,
+            width: "90%",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <Text>Chuyen fake {item.key}</Text>
         </View>
       }
       right={
@@ -97,7 +70,13 @@ class ListChuyen extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Content scrollEnabled={false}>{this._renderRow()}</Content>
+        <FlatList
+          data={[{ key: "a" }, { key: "b" }]}
+          renderItem={({ item }) => {
+            console.log(JSON.stringify(item));
+            return this._renderRow(item);
+          }}
+        />
         {this._renderModalComment()}
         {this._renderModalRating()}
       </View>

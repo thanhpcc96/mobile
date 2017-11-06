@@ -28,6 +28,13 @@ class TicketSVGScreen extends Component {
         onPress={() => navigation.goBack()}
         style={{ paddingLeft: 10 }}
       />
+    ),
+    headerRight: (
+      <NavBarButton
+        icon="md-qr-scanner"
+        onPress={() => navigation.navigate("Scanner")}
+        style={{ paddingRight: 10 }}
+      />
     )
   });
   constructor(props) {
@@ -60,7 +67,13 @@ class TicketSVGScreen extends Component {
               </View>
             </View>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={()=> this.props.navigation.navigate('Ticketdetail',{tenve:'Ha Noi Hai phong'})}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() =>
+                  this.props.navigation.navigate("Ticketdetail", {
+                    tenve: "Ha Noi Hai phong"
+                  })}
+              >
                 <Text style={styles.textButton}> Chi tiết </Text>
               </TouchableOpacity>
             </View>

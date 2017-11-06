@@ -1,3 +1,4 @@
+/*eslint-disable */
 import React, { Component } from 'react';
 import {
   Alert,
@@ -39,7 +40,6 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-
         {this.state.hasCameraPermission === null
           ? <Text>Requesting for camera permission</Text>
           : this.state.hasCameraPermission === false

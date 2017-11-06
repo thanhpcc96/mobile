@@ -11,9 +11,8 @@ import { RegisterScreen } from "./register";
 import { PickScreen } from "./pick";
 import { PaymentScreen } from "./payment";
 import { ReportScreen } from "./report";
-import { TicketSVGScreen,TicketDetail} from "./ticketSVG";
-import { ProfileScreen,UpdateProfileScreen, ProfileReducer } from "./profile";
-
+import { TicketSVGScreen, TicketDetail, ScannerQRCode } from "./ticketSVG";
+import { ProfileScreen, UpdateProfileScreen, ProfileReducer } from "./profile";
 
 export {
   AuthScreen,
@@ -29,6 +28,7 @@ export {
   ReportScreen,
   TicketSVGScreen,
   TicketDetail,
+  ScannerQRCode,
   ProfileScreen,
   UpdateProfileScreen,
   ProfileReducer

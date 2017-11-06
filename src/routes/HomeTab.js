@@ -10,6 +10,7 @@ import {
   HomeScreen,
   TicketSVGScreen,
   TicketDetail,
+  ScannerQRCode,
   ProfileScreen,
   UpdateProfileScreen
 } from "../screens";
@@ -53,10 +54,13 @@ const HomeTab = StackNavigator(
     Ticketdetail: {
       screen: TicketDetail
     },
+    Scanner: {
+      screen: ScannerQRCode
+    },
     Profile: {
       screen: ProfileScreen
     },
-    UpdateProfile:{
+    UpdateProfile: {
       screen: UpdateProfileScreen
     }
   },
