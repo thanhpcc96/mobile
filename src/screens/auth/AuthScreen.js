@@ -1,3 +1,4 @@
+/*eslint-disable */
 import React, { Component } from "react";
 import {
   Text,
@@ -26,7 +27,8 @@ import LoadingScreen from "../../common/LoadingScreen";
 initState = {
   isShowRegister: false,
   isShowForgot: false,
-  isShowLogin: true
+  isShowLogin: true,
+  isNhanvien: false,
 };
 class AuthScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -37,12 +39,6 @@ class AuthScreen extends Component {
   _goBack = () => this.setState({ ...initState });
 
   render() {
-    console.log("===============login=====================");
-    console.log(this.props);
-    console.log("====================================");
-    if (this.props.isLoading) {
-      return <LoadingScreen color={"#4E94E5"} />;
-    }
     return (
       <View style={styles.root}>
         <Image
@@ -67,6 +63,9 @@ class AuthScreen extends Component {
                   this.setState({ isShowRegister: true, isShowForgot: false })}
                 gotoForgot={() =>
                   this.setState({ isShowForgot: true, isShowRegister: false })}
+                  gotoUser={() =>
+                    this.setState({ isNhanvien :true , isShowRegister: false, isShowForgot :false})}
+                    // toi ve sua
               />
             )}
           </View>

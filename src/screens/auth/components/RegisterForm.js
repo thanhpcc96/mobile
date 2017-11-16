@@ -26,7 +26,8 @@ const BackButton = styled(Touchable)`marginLeft: 10;`;
 @connect(
   state => (
     {
-      isLoading: state.user.isLoading
+      isLoading: state.user.isLoading,
+      error: state.user.error
     }
   ),{
     postRegisterAction
@@ -100,7 +101,7 @@ class RegisterForm extends Component {
       });
     }
   }
-  _handlerSubmit() {
+  _handlerSubmit(e) {
     console.log('=============state form dang ky====================');
     console.log(this.state);
     console.log('====================================');
@@ -109,14 +110,14 @@ class RegisterForm extends Component {
       this._validatePhone(this.state.phone)
     ) {
       if (this.state.password === this.state.confirmpassword) {
-        this.props.postRegisterAction(this.state.fullname, this.state.email,this.state.phone,this.state.password)
-        Alert.alert("Xử lý thành công!", "Dang ky thanh cong");
+        this.props.postRegisterAction(this.state.fullname, this.state.email,this.state.phone,this.state.password);
       } else {
         Alert.alert("Lỗi!", "Password xác nhận không khớp");
       }
     } else {
       Alert.alert("Lỗi!", "Hãy đảm bảo bạn nhập đúng email");
     }
+    e.preventDefault();
   }
   render() {
     return (
@@ -188,8 +189,8 @@ class RegisterForm extends Component {
                   ? [styles.buttonForm, { backgroundColor: "#4E94E5" }]
                   : [styles.buttonForm, { backgroundColor: "#6A8CB3" }]
               }
-              disabled={this.state.isVisibleButtonLogin}
-              onPress={() => this._handlerSubmit()}
+              disabled={this.state.isVisibleButtonLogin && this.props.isLoading }
+              onPress={(e) => this._handlerSubmit(e)}
             >
               <Text
                 style={
@@ -206,6 +207,11 @@ class RegisterForm extends Component {
         </View>
       </View>
     );
+  }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.error){
+      alert('Dang ky that bai');
+    }
   }
 }
 

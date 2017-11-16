@@ -9,7 +9,7 @@ import {
 
 const INITSTATE = {
   isLoading: false,
-  info: {},
+  info: null,
   typeUser: null,
   error: null
 };
@@ -26,7 +26,8 @@ export default function(state = INITSTATE, action) {
         ...state,
         isLoading: false,
         info: action.data,
-        typeUser: "client"
+        typeUser: "client",
+        error: null
       };
     case CLIENT_GET_INFO_ERROR:
       return {
@@ -45,7 +46,8 @@ export default function(state = INITSTATE, action) {
         ...state,
         isLoading: false,
         info: action.data,
-        typeUser: "user"
+        typeUser: "user",
+        error: null
       };
     case USER_GET_INFO_ERROR:
       return {

@@ -33,7 +33,8 @@ export default (state = INITIAL_STATE, action) => {
         isLoading: false,
         token: action.token,
         info: action.user,
-        typeUser: "client"
+        typeUser: "client",
+        error: null
       };
     case POST_LOGIN_CLIENT_ERROR:
       return {
@@ -53,10 +54,8 @@ export default (state = INITIAL_STATE, action) => {
         isLoading: false,
         token: action.token,
         info: action.user,
-        typeUser: {
-          type: "user",
-          role: action.user.role
-        }
+        typeUser: 'user',
+        error: null
       };
     case POST_LOGIN_USER_ERROR:
       return {
@@ -77,7 +76,8 @@ export default (state = INITIAL_STATE, action) => {
         isLogged: true,
         token: action.token,
         info: action.user,
-        typeUser: "client"
+        typeUser: "client",
+        error: null
       };
     case POST_REGISTER_CLIENT_ERROR:
       return {

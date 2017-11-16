@@ -8,7 +8,6 @@ import {
   Alert
   //CheckBox
 } from "react-native";
-import { CheckBox } from "react-native-elements";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -22,7 +21,7 @@ import styles from "./styles/LoginForm.style";
   }),
   { postLogin }
 )
-class Form extends React.Component {
+class UserForm extends React.Component {
   static propTypes = {
     gotoRegister: PropTypes.func.isRequired,
     navigation: PropTypes.object
@@ -35,8 +34,6 @@ class Form extends React.Component {
       email: "",
       password: "",
       isDisableButtonLogin: false,
-      isClient: true, // true la client
-      typeUser: 'client'
     };
     this._setTypeUser.bind(this)
   }
@@ -78,7 +75,7 @@ class Form extends React.Component {
       console.log("====================================");
       console.log("Vao day roi");
       console.log("====================================");
-      this.props.postLogin(this.state.email, this.state.password, this.state.typeUser);
+      this.props.postLogin(this.state.email, this.state.password,'user');
       //this.props.navigation.navigate("Tabs");
     } else {
       Alert.alert(
@@ -88,19 +85,7 @@ class Form extends React.Component {
     }
     e.preventDefault();
   }
-  _setTypeUser() {
-    
-    this.setState({
-      isClient: ! this.state.isClient 
-    });
-    this.setState({
-      typeUser: this.state.isClient === false ? 'user' : 'client'
-    });
-    
   
-    
-  };
-
   render() {
     return (
       <View style={styles.root}>
@@ -146,30 +131,13 @@ class Form extends React.Component {
               Đăng nhập
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.buttonForm,
-              { backgroundColor: "rgba(253,255,255,0.3)" }
-            ]}
-            onPress={()=>this.props.gotoRegister()}
-          >
-            <Text style={styles.textButton}> Đăng ký</Text>
-          </TouchableOpacity>
           <View style={styles.forgot}>
-            <Text style={styles.textForgot}>Quên tài khoản? </Text>
+            <Text style={styles.textForgot}>Bạn là khách hàng? </Text>
             <Text
               style={[styles.textForgot, { textDecorationLine: "underline" }]}
-              onPress={this.props.gotoForgot}
+              onPress={this.props.gotoLogin}
             >
-              Khôi phục ngay!
-            </Text>
-          </View>
-          <View style={styles.forgot}>
-            <Text
-              style={[styles.textForgot, { textDecorationLine: "underline" }]}
-              onPress={this.props.gotoUser}
-            >
-             Đăng nhập nhân viên!
+             Đăng nhập!
             </Text>
           </View>
         </View>
@@ -182,4 +150,4 @@ class Form extends React.Component {
     }
   }
 }
-export default Form;
+export default UserForm;

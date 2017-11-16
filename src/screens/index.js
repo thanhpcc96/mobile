@@ -8,7 +8,7 @@ import {
 import { HomeScreen } from "./home";
 import { TrackingScreen } from "./tracking";
 import { RegisterScreen } from "./register";
-import { PickScreen } from "./pick";
+import { PickScreen,PickReducer } from "./pick";
 import { PaymentScreen } from "./payment";
 import { ReportScreen } from "./report";
 import { TicketSVGScreen, TicketDetail, ScannerQRCode } from "./ticketSVG";
@@ -24,6 +24,7 @@ export {
   TrackingScreen,
   RegisterScreen,
   PickScreen,
+  PickReducer,
   PaymentScreen,
   ReportScreen,
   TicketSVGScreen,

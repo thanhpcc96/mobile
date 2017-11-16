@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { ClientAPI, UserAPI, setAuthHeader } from "../../../constants/api";
 
 const userAPI = new UserAPI();

@@ -1,11 +1,11 @@
-import React from "react";
-import { StackNavigator } from "react-navigation";
-import { Text } from "react-native";
+import React from 'react';
+import { StackNavigator } from 'react-navigation';
+import { Text } from 'react-native';
 
 // Import Screen
-import { PickScreen } from "../screens";
-import NavBar from "../common/NavBar";
-import NavButton from "../common/NavBarButton";
+import { PickScreen } from '../screens';
+import NavBar from '../common/NavBar';
+import NavButton from '../common/NavBarButton';
 
 const PickTab = StackNavigator(
   {
@@ -18,24 +18,24 @@ const PickTab = StackNavigator(
               <NavButton
                 icon="md-search"
                 iconSize={28}
-                onPress={() => navigation.navigate("Login")}
+                onPress={() => navigation.navigate('Login')}
                 style={{ paddingLeft: 10 }}
               />
             }
             middle={
-              <Text style={{ fontWeight: "500", fontSize: 20, color: "#fff" }}>
-                {" "}
-                Pick vé ngay{" "}
+              <Text style={{ fontWeight: '500', fontSize: 20, color: '#fff' }}>
+                {' '}
+                Đặt vé{' '}
               </Text>
             }
           />
-        )
-      })
-    }
+        ),
+      }),
+    },
   },
   {
-    headerMode: "screen",
-    headerBackTitle: null
+    headerMode: 'screen',
+    headerBackTitle: null,
   }
 );
 export default PickTab;

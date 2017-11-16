@@ -1,18 +1,30 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   View,
   TouchableOpacity,
   ScrollView,
-  Dimensions
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+  Dimensions,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-import styles from "./styles/PaymentScreen.style";
+import styles from './styles/PaymentScreen.style';
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window');
 
 class PaymentScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: '#4A90E2',
+    },
+    headerTitle: 'Thanh toán',
+    headerTitleStyle: {
+      color: '#FFF',
+    },
+    headerBackTitleStyle: {
+      color: '#FFF',
+    },
+  });
   render() {
     return (
       <View style={styles.root}>
@@ -29,13 +41,13 @@ class PaymentScreen extends Component {
 
               <View style={styles.balaceContentInfo}>
                 <View style={styles.buttonRechange}>
-                  <Ionicons name="md-git-compare" size={40} color={"#24EB8B"} />
+                  <Ionicons name="md-git-compare" size={40} color={'#24EB8B'} />
                 </View>
                 <View style={styles.infoLastHistory}>
-                  <Text style={{ color: "#BFBDC3" }}>
+                  <Text style={{ color: '#BFBDC3' }}>
                     Nạp tài khoản lần cuối
                   </Text>
-                  <Text style={{ color: "#929096" }}>22/09/2017 9:00 am</Text>
+                  <Text style={{ color: '#929096' }}>22/09/2017 9:00 am</Text>
                 </View>
               </View>
             </View>
@@ -91,7 +103,7 @@ class PaymentScreen extends Component {
                   <Ionicons
                     name="ios-close-circle-outline"
                     size={35}
-                    color={"#FC9A7D"}
+                    color={'#FC9A7D'}
                   />
                 </View>
                 <View style={styles.menuItemInItem}>
@@ -104,7 +116,7 @@ class PaymentScreen extends Component {
                 <Ionicons
                   name="ios-checkmark-circle-outline"
                   size={35}
-                  color={"#80B9FB"}
+                  color={'#80B9FB'}
                 />
                 <Text>Lịch sử giữ chỗ</Text>
               </TouchableOpacity>

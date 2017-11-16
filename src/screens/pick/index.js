@@ -1,5 +1,4 @@
-import PickScreen from './PickScreen';
+import PickScreen from "./PickScreen";
+import PickReducer from "./reducer";
 
-export {
-  PickScreen,
-};
+export { PickScreen, PickReducer };

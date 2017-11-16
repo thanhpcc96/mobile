@@ -22,7 +22,7 @@ const Itemchuyen = () => (
       <View style={styles.chuyenxeItemTitle}>
         <Text style={styles.itemTitleText}>Hải Phòng- Hà Nội</Text>
         <View style={styles.itemTitleTimer}>
-            <Clock deadline={"2017-11-06 06:43:44"} />
+            <Clock deadline={"2017-11-09 12:43:44"} />
         </View>
       </View>
       <View style={styles.cardContainer}>

@@ -8,6 +8,7 @@ import {
   ImageBackground,
   ScrollView
 } from "react-native";
+import SleekLoad from 'react-native-sleek-loading-indicator';
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { getInfoProfileAction } from "../profile/action";
@@ -19,17 +20,24 @@ import styles from "./styles/HomeScreen.style";
 
 @connect(
   state => ({
-    profile: state.profile
+    profile: state.profile.info,
+    typeUser: state.user.typeUser
   }),
   {
     getInfoProfileAction
   }
 )
 class HomeScreen extends Component {
+  state={
+    isLoadingData: true
+  }
   componentDidMount() {
-    this.props.getInfoProfileAction("client");
+    this.props.getInfoProfileAction(this.props.typeUser);
   }
   render() {
+    if(this.state.isLoadingData){
+      return <SleekLoad loading={this.state.isLoadingData} text={"dang tai du lieu"}/>;
+    }
     return (
       <View style={styles.root}>
         <View style={styles.timerNotification}>
@@ -48,10 +56,10 @@ class HomeScreen extends Component {
           <View />
           <View style={styles.statusClient}>
             <View style={styles.textItemStatus}>
-              <Text style={styles.textItem}>Thanh Pham</Text>
+              <Text style={styles.textItem}>{this.props.profile.result.info.fullname || "Khong xac dinh"}</Text>
             </View>
             <View style={styles.textItemStatus}>
-              <Text style={styles.textItem}>100</Text>
+              <Text style={styles.textItem}>{this.props.profile.result.scoreFriendly || '10'}</Text>
             </View>
           </View>
           <View style={styles.mainMenuPrimary}>
@@ -60,6 +68,13 @@ class HomeScreen extends Component {
         </View>
       </View>
     );
+  }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.profile){
+      this.setState({
+          isLoadingData: false
+      })
+    }
   }
 }
 export default HomeScreen;
