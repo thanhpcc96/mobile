@@ -4,6 +4,7 @@ import { Text } from "react-native";
 
 import NavBar from "../common/NavBar";
 import NavButton from "../common/NavBarButton";
+import { logOutAction } from '../screens/auth/actions'
 
 // Import Screen
 import {
@@ -24,7 +25,7 @@ const HomeTab = StackNavigator(
           <NavBar
             right={
               <NavButton
-                icon="ios-menu"
+                icon="ios-log-in"
                 iconSize={33}
                 onPress={() => navigation.navigate("Login")}
                 style={{ paddingLeft: 10 }}

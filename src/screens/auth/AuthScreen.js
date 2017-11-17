@@ -11,7 +11,12 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import { LoginForm, RegisterForm, ForgotForm } from "./components";
+import {
+  LoginForm,
+  RegisterForm,
+  ForgotForm,
+  UserLoginForm
+} from "./components";
 
 import { postLogin } from "./actions";
 import LoadingScreen from "../../common/LoadingScreen";
@@ -28,7 +33,7 @@ initState = {
   isShowRegister: false,
   isShowForgot: false,
   isShowLogin: true,
-  isNhanvien: false,
+  isNhanvien: false
 };
 class AuthScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -57,15 +62,21 @@ class AuthScreen extends Component {
               <RegisterForm goBack={() => this._goBack()} />
             ) : this.state.isShowForgot ? (
               <ForgotForm goBack={() => this._goBack()} />
+            ) : this.state.isNhanvien ? (
+              <UserLoginForm goBack={() => this._goBack()} />
             ) : (
               <LoginForm
                 gotoRegister={() =>
                   this.setState({ isShowRegister: true, isShowForgot: false })}
                 gotoForgot={() =>
                   this.setState({ isShowForgot: true, isShowRegister: false })}
-                  gotoUser={() =>
-                    this.setState({ isNhanvien :true , isShowRegister: false, isShowForgot :false})}
-                    // toi ve sua
+                gotoUser={() =>
+                  this.setState({
+                    isNhanvien: true,
+                    isShowRegister: false,
+                    isShowForgot: false
+                  })}
+                // toi ve sua
               />
             )}
           </View>

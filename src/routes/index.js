@@ -1,13 +1,16 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { addNavigationHelpers } from 'react-navigation';
-import Nav from './Nav';
+import createNav from './Nav';
 import { AuthScreen } from '../screens';
 
 // @connect(state => ({
 //   navigation: state.navigation,
 //   user: state.user
 // }))
+
+const router = createNav().router;
+const Nav = createNav();
 class AppNavigator extends PureComponent {
   state = {};
   // ref={nav => {
@@ -19,14 +22,20 @@ class AppNavigator extends PureComponent {
       dispatch: this.props.dispatch,
       state: this.props.nav,
     });
+    
     if (this.props.user.isLogged) {
+      console.log('====================================');
+      console.log(this.props.user);
+      console.log('====================================');
+      
       return <Nav navigation={nav} />;
     }
-    return <AuthScreen />;
+    return <Nav navigation={nav} />;
+    // return <AuthScreen />;
   }
 }
 export default connect(state => ({
   nav: state.nav,
   user: state.user,
 }))(AppNavigator);
-export const router = Nav.router;
+export { router };

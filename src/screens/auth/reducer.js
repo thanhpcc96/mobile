@@ -7,7 +7,8 @@ import {
   POST_LOGIN_USER_SUCCESS,
   POST_REGISTER_CLIENT,
   POST_REGISTER_CLIENT_ERROR,
-  POST_REGISTER_CLIENT_SUCCESS
+  POST_REGISTER_CLIENT_SUCCESS,
+  LOGGED_OUT
 } from "./actions";
 
 const INITIAL_STATE = {
@@ -85,6 +86,16 @@ export default (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.error
       };
+    case LOGGED_OUT:
+      return {
+        ...state,
+        isLoading: false,
+        isLogged: false,
+        token: null,
+        typeUser: null,
+        error: null,
+        info: {},
+      }
     default:
       return state;
   }

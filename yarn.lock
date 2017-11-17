@@ -3550,6 +3550,10 @@ minimist@~0.0.1:
   dependencies:
     minimist "0.0.8"
 
+moment@^2.19.0:
+  version "2.19.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.2.tgz#8a7f774c95a64550b4c7ebd496683908f9419dbe"
+
 moment@^2.19.1:
   version "2.19.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.1.tgz#56da1a2d1cbf01d38b7e1afc31c10bcfa1929167"
@@ -4271,6 +4275,25 @@ react-native-gesture-handler@1.0.0-alpha.22:
 react-native-maps@0.15.3:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.15.3.tgz#5d9e0a8e30ecc51dc755b7a3b9d6b6ed5e2dd08c"
+
+react-native-modal-datetime-picker@^4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-4.13.0.tgz#bcf9f62c691befb133bf6fd6e5d6189d397608ef"
+  dependencies:
+    moment "^2.19.0"
+    prop-types "15.5.10"
+    react-native-modal "3.1.0"
+
+react-native-modal-dropdown@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-dropdown/-/react-native-modal-dropdown-0.5.0.tgz#f6c4cd4d077792e56902b43b14d83959f5f40f46"
+
+react-native-modal@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-3.1.0.tgz#3e6911152e9dcd6e15457cf0c24d7fd833c4a57a"
+  dependencies:
+    prop-types "15.5.10"
+    react-native-animatable "^1.2.3"
 
 react-native-modal@^4.1.1:
   version "4.1.1"

@@ -16,6 +16,8 @@ export const POST_REGISTER_CLIENT = "POST_REGISTER_CLIENT";
 export const POST_REGISTER_CLIENT_SUCCESS = "POST_REGISTER_CLIENT_SUCCESS";
 export const POST_REGISTER_CLIENT_ERROR = "POST_REGISTER_CLIENT_ERROR";
 
+export const LOGGED_OUT = "LOGGED_OUT";
+
 function loginSuccess(typeUser, data) {
   const typeAction =
     typeUser === "client" ? POST_LOGIN_CLIENT_SUCCESS : POST_LOGIN_USER_SUCCESS;
@@ -86,6 +88,10 @@ export function postRegisterAction(fullname, email, phone, password) {
       return dispatch({ type: POST_REGISTER_CLIENT_ERROR, error: err });
     }
   };
+}
+export function logOutAction() {
+  setAuthHeader();
+  return dispatch => dispatch({ type: LOGGED_OUT });
 }
 function registerSuccess(data) {
   setAuthHeader(data.data.token);

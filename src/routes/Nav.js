@@ -6,8 +6,7 @@ import {
   DrawerNavigator
 } from "react-navigation";
 
-import { Ionicons } from "@expo/vector-icons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import Touchable from "@appandflow/touchable";
 
@@ -106,18 +105,81 @@ const Tabs = TabNavigator(
   }
 );
 
-export default StackNavigator(
+const UserTab = TabNavigator(
   {
-    Tabs: {
-      screen: Tabs
+    UserHomeTab: {
+      screen: HomeTab,
+      navigationOptions: {
+        headerStyle: NavbarDefaultStyle,
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="md-home" size={35} color={tintColor} />
+        )
+      }
+    },
+    UserTrackingTab: {
+      screen: TrackingTabs,
+      navigationOptions: () => ({
+        headerStyle: NavbarDefaultStyle,
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="ios-send" size={35} color={tintColor} />
+        )
+      })
+    },
+    UserTimelineTab: {
+      screen: TrackingTabs,
+      navigationOptions: () => ({
+        headerStyle: NavbarDefaultStyle,
+        tabBarIcon: ({ tintColor }) => (
+          <MaterialCommunityIcons
+            name="table-edit"
+            size={30}
+            color={tintColor}
+          />
+        )
+      })
     }
   },
   {
-    headerMode: "none",
-    mode: "modal",
-    initialRouteName: "Tabs"
+    swipeEnabled: false,
+    animationEnabled: false,
+    tabBarPosition: "bottom",
+    tabBarOptions: {
+      showLabel: false,
+      showIcon: true,
+      inactiveTintColor: "#7A7474",
+      activeTintColor: "#4E94E5",
+      pressColor: "#4E94E5",
+      indicatorStyle: { backgroundColor: "#4E94E5" },
+      style: {
+        backgroundColor: "#FDF8F8"
+      }
+    }
   }
 );
+export default function createNav(typeUser) {
+  return StackNavigator({
+    Tabs: {
+      screen: Tabs
+    },
+    UserTabs: {
+      screen: UserTab
+    }
+  },config(typeUser));
+}
+const config = typeUser => {
+  if (typeUser) {
+    return {
+      headerMode: "none",
+      mode: "modal",
+      initialRouteName: typeUser === "client" ? "Tabs" : "UserTabs"
+    };
+  }
+  return {
+    headerMode: "none",
+    mode: "modal",
+    //initialRouteName: typeUser === 'client' ? "Tabs" :'UserTabs'
+  }
+};
 
 // export default (Nav = DrawerNavigator(
 //   {

@@ -23,7 +23,6 @@ import styles from "./styles/LoginForm.style";
 )
 class UserForm extends React.Component {
   static propTypes = {
-    gotoRegister: PropTypes.func.isRequired,
     navigation: PropTypes.object
     //handleSubmit: PropTypes.func.isRequired
   };
@@ -35,7 +34,6 @@ class UserForm extends React.Component {
       password: "",
       isDisableButtonLogin: false,
     };
-    this._setTypeUser.bind(this)
   }
   _validateEmail = value => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -92,7 +90,7 @@ class UserForm extends React.Component {
         <View style={styles.formGroup}>
           <TextInput
             style={[styles.textinput, { marginTop: 20 }]}
-            placeholder="Email"
+            placeholder="Email Nhân viên"
             onChangeText={value => this._setStateEmail(value)}
             placeholderTextColor={"#fff"}
             autoCapitalize='none'
@@ -128,14 +126,14 @@ class UserForm extends React.Component {
               }
             >
               {" "}
-              Đăng nhập
+              Đăng nhập NV
             </Text>
           </TouchableOpacity>
           <View style={styles.forgot}>
             <Text style={styles.textForgot}>Bạn là khách hàng? </Text>
             <Text
               style={[styles.textForgot, { textDecorationLine: "underline" }]}
-              onPress={this.props.gotoLogin}
+              onPress={this.props.goBack}
             >
              Đăng nhập!
             </Text>
