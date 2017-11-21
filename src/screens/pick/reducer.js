@@ -3,7 +3,7 @@ import { List } from "immutable";
 import {
   BOOKING_CHUYEN,
   GET_LIST_CHUYEN,
-  CHUYEN_XE_UPDATE,
+  LIST_CHUYEN_HAD_CHANGED,
   GET_LIST_CHUYEN_ERR,
   GET_LIST_CHUYEN_SUCCESS
 } from "./action";
@@ -11,7 +11,8 @@ import {
 const initialState = {
   isLoading: false,
   chuyens: List([]),
-  err: null
+  err: null,
+  isbooking: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,22 +26,33 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        chuyens: action.res.result
+        chuyens: action.items.result,
+        err: null
       };
     case GET_LIST_CHUYEN_ERR:
       return {
         ...state,
-        isLoading: false
+        isLoading: false,
+        err: action.error,
+
       };
-    case CHUYEN_XE_UPDATE:
-      state.chuyens.forEach(chuyen => {
-        if (chuyen._id === action._id) {
-          chuyen.chongoi = action.chongoi;
+    case LIST_CHUYEN_HAD_CHANGED:
+      state.chuyens.forEach( chuyen => {
+        if (chuyen._id.toString() === action.chuyenHadChanged.idChuyen.toString()) {
+          chuyen.chongoi = action.chuyenHadChanged.dadat;
         }
       });
       return {
-        ...state
+        ...state,
+        isLoading: false,
+        error: null
       };
+    case BOOKING_CHUYEN:
+      return {
+        ...state,
+        isbooking: true,
+        err: null,
+      }
     default:
       return state;
   }

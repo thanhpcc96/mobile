@@ -18,17 +18,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#4E94E5"
   },
   searchConatiner: {
-    height: 60,
+    marginTop:5,
+    height: 30,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+  contentSearch: {
+    flex: 0.8,
+    borderRadius: 6
+  },
+  searchButtonContainer: {
+    flex: 0.2,
+    
   },
   textInput: {
     marginLeft: 15,
     backgroundColor: "#DCEDC8",
     color: "#AB47BC",
-    paddingLeft: '2%',
-    paddingRight: '2%',
+    paddingLeft: "2%",
+    paddingRight: "2%",
     borderRadius: 10
   },
   pickTime: {
@@ -50,14 +59,16 @@ const styles = StyleSheet.create({
     paddingLeft: "1%",
     paddingRight: "1%"
   },
-  btnSearch:{
+  btnSearch: {
     borderRadius: 10,
-    justifyContent:'center',
-    alignItems:'center',
-    marginLeft: 15,
-    backgroundColor: '#0277BD',
-    paddingLeft: '5%',
-    paddingRight: '5%'
+    justifyContent: "center",
+    alignItems: "center",
+    // marginLeft: 15,
+    backgroundColor: "#0277BD",
+    paddingLeft: "5%",
+    paddingRight: "5%",
+    paddingTop: 3,
+    paddingBottom: 3,
   }
 });
 

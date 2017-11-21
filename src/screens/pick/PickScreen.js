@@ -1,3 +1,4 @@
+/*eslint-disable */
 import React, { Component } from "react";
 import {
   View,
@@ -5,7 +6,8 @@ import {
   TouchableHighlight,
   Text,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity, 
+  NetInfo
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
@@ -16,18 +18,21 @@ import ModalDropdown from "react-native-modal-dropdown";
 import {
   loadDataChuyenFromSocket,
   pickChuyenXe,
-  initialChuyen,
-  updateList
+  resultLoadingChuyen,
+  reloadDatachuyenChanged
 } from "./action";
 import ListChuyen from "./components/ListChuyen";
 import styles from "./styles/PickScreen.style";
 import NavBar from "../../common/NavBar";
 import NavButton from "../../common/NavBarButton";
 
+import { WWS_Client } from "../../../constants/socket";
+
 let socket;
 
 @connect(state => ({
-  pick: state.pick
+  pick: state.pick,
+  clientID: state.user.info._id
 }))
 class PickScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -59,27 +64,30 @@ class PickScreen extends Component {
       isDateTimePickerVisible: false
     };
     const { dispatch } = this.props;
-    socket = io.connect("http://localhost:3000/client");
-    socket.on("connect_failed", () => {
-      console.log("====================================");
-      console.log("Ket noi that bai");
-      console.log("====================================");
-      this.setState({ isConnectSuccessfuly: true });
+    socket = io.connect(WWS_Client);
+    socket.on("connection", () => {
+      this.setState({
+        isConnectSuccessfuly: true
+      });
     });
-    console.log(socket);
-    dispatch(loadDataChuyenFromSocket(socket));
+    socket.on("connect_failed", () => {
+      this.setState({ isConnectSuccessfuly: false });
+    });
+    dispatch(loadDataChuyenFromSocket(socket, this.props.clientID));
+
+    /** reload phan tu cua chuyen thay doi */
+    socket.on("listChuyenChanged", res => {
+      dispatch(reloadDatachuyenChanged(res));
+    });
+    /** load chuyen xe kha dung tu socket */
     socket.on("updateListChuyenxe", res => {
       console.log(res);
+      dispatch(resultLoadingChuyen(res));
     });
-  }
-  componentWillUnmount() {
-    socket.disconnect();
   }
 
-  isShowSearchBox() {
-    this.setState({
-      isShowSearch: !this.state.isShowSearch
-    });
+  componentWillUnmount() {
+    socket.disconnect();
   }
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
@@ -92,38 +100,55 @@ class PickScreen extends Component {
   };
 
   render() {
+    if(this.props.pick.isLoading===false){
+      return(
+        <View style={{flex: 1, justifyContent:"center",alignItems:"center"}}>
+          <Text> Đang kết nối socket</Text>
+        </View>
+      )
+    }
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.searchConatiner}>
-          <ScrollView horizontal>
-            <TextInput
-              style={styles.textInput}
-              placeholder={"Lo trinh bat ky"}
-            />
-            <TouchableOpacity
-              style={styles.pickTime}
-              onPress={() => this._showDateTimePicker()}
+          <View style={styles.contentSearch}>
+            <ScrollView
+              horizontal
+              ref={ref => (this.scrollView = ref)}
+              onContentSizeChange={(contentWidth, contentHeight) => {
+                this.scrollView.scrollToEnd({ animated: false });
+              }}
             >
-              <Text style={{ color: "#FFF", fontSize: 15 }}>
-                {" "}
-                Chon thoi gian{" "}
-              </Text>
-            </TouchableOpacity>
-            <ModalDropdown
-              defaultValue={"Chieu di chuyen...."}
-              style={styles.dropChuyen}
-              options={["Di", "Ve"]}
-              dropdownStyle={{ width: "30%" }}
-              defaultIndex={0}
-              textStyle={{ color: "#FFF", fontSize: 15 }}
-            />
+              <TextInput
+                style={styles.textInput}
+                placeholder={"Lo trinh bat ky"}
+              />
+              <TouchableOpacity
+                style={styles.pickTime}
+                onPress={() => this._showDateTimePicker()}
+              >
+                <Text style={{ color: "#FFF", fontSize: 15 }}>
+                  {" "}
+                  Chon thoi gian{" "}
+                </Text>
+              </TouchableOpacity>
+              <ModalDropdown
+                defaultValue={"Chieu di chuyen...."}
+                style={styles.dropChuyen}
+                options={["Di", "Ve"]}
+                dropdownStyle={{ width: "30%" }}
+                defaultIndex={0}
+                textStyle={{ color: "#FFF", fontSize: 15 }}
+              />
+            </ScrollView>
+          </View>
+          <View style={styles.searchButtonContainer}>
             <TouchableOpacity style={styles.btnSearch}>
-              <Ionicons name="ios-search" size={15} color={"#FFF"}/>
+              <Ionicons name="ios-search" size={15} color={"#FFF"} />
             </TouchableOpacity>
-          </ScrollView>
+          </View>
         </View>
 
-        <ListChuyen />
+        <ListChuyen navigation={this.props.navigation} />
 
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}

@@ -22,14 +22,14 @@ class ListChuyenXeFake extends Component {
     return (
       <View style={styles.root}>
         <ScrollView>
-          <Itemchuyen />
-          <Itemchuyen />
-          <Itemchuyen />
-          <Itemchuyen />
-          <Itemchuyen />
-          <Itemchuyen />
-          <Itemchuyen />
-          <Itemchuyen />
+          <Itemchuyen navigation={this.props.navigation}/>
+          <Itemchuyen navigation={this.props.navigation}/>
+          <Itemchuyen navigation={this.props.navigation}/>
+          <Itemchuyen navigation={this.props.navigation}/>
+          <Itemchuyen navigation={this.props.navigation}/>
+          <Itemchuyen navigation={this.props.navigation}/>
+          <Itemchuyen navigation={this.props.navigation}/>
+          <Itemchuyen navigation={this.props.navigation}/>
         </ScrollView>
       </View>
     );

@@ -8,7 +8,7 @@ import {
 import { HomeScreen } from "./home";
 import { TrackingScreen } from "./tracking";
 import { RegisterScreen } from "./register";
-import { PickScreen,PickReducer } from "./pick";
+import { PickScreen,PickReducer, DetailChuyen, ResultSearch } from "./pick";
 import { PaymentScreen } from "./payment";
 import { ReportScreen } from "./report";
 import { TicketSVGScreen, TicketDetail, ScannerQRCode } from "./ticketSVG";
@@ -24,6 +24,8 @@ export {
   TrackingScreen,
   RegisterScreen,
   PickScreen,
+  DetailChuyen, 
+  ResultSearch,
   PickReducer,
   PaymentScreen,
   ReportScreen,

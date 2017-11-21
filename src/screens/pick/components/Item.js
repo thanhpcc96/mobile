@@ -16,7 +16,7 @@ import styles from "./styles/ListChuyen.style";
 
 const width = Dimensions.get("window").width * 70 / 100;
 
-const Itemchuyen = () => (
+const Itemchuyen = ({ navigation }) => (
   <View style={styles.root}>
     <View style={styles.chuyenxeItem}>
       <View style={styles.chuyenxeItemTitle}>
@@ -53,7 +53,7 @@ const Itemchuyen = () => (
         </View>
       </View>
       <View style={styles.buttonPick}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('DetailChuyen')}>
           <Text style={styles.buttonText}>Đặt vé</Text>
         </TouchableOpacity>
       </View>
