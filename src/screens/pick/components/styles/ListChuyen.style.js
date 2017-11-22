@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chuyenxeItem: {
-    height: 150,
+    height: 180,
     width: "96%",
     marginLeft: "2%",
     marginTop: 15,

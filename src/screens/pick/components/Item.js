@@ -53,7 +53,9 @@ const Itemchuyen = ({ navigation }) => (
         </View>
       </View>
       <View style={styles.buttonPick}>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('DetailChuyen')}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('DetailChuyen',{
+            idchuyen:"aaaaaaaaaa"
+        })}>
           <Text style={styles.buttonText}>Đặt vé</Text>
         </TouchableOpacity>
       </View>

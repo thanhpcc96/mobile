@@ -2,9 +2,34 @@ import React, { Component } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { ListItem, Left, Body, Right } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import io from "socket.io-client";
 
 import NavBarButton from "../../../common/NavBarButton";
+import moment from "../../../../i18n/TimeZoneVietNam";
+import Modal from "./Modal";
+import {
+  pickChuyenXe,
+  handlePickChuyenResult,
+  getChuyenDetailAction,
+  handleResultGetChuyenDeTail
+} from "../action";
+import { WWS_Client } from "../../../../constants/socket";
 
+const socket = io(WWS_Client, { transports: ["websocket"] });
+
+@connect(
+  state => ({
+    pick: state.pick,
+    clientID: state.user.info._id
+  }),
+  {
+    pickChuyenXe,
+    handlePickChuyenResult,
+    getChuyenDetailAction,
+    handleResultGetChuyenDeTail
+  }
+)
 class DetailChuyen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerStyle: {
@@ -25,7 +50,74 @@ class DetailChuyen extends Component {
       />
     )
   });
+  constructor(props) {
+    super(props);
+    //socket = io.connect(WWS_Client);
+    this.state = {
+      isConnectSuccessfuly: false,
+      isShowModal: false,
+      isLoadingChuyenDetail: true
+    };
+    socket.on("connection", () => {
+      this.setState({
+        isConnectSuccessfuly: true
+      });
+    });
+    socket.on("connect_failed", () => {
+      this.setState({ isConnectSuccessfuly: false });
+    });
+    socket.on("chuyenDetailResult", res => {
+      console.log("==================res==================");
+      console.log(res);
+      console.log("====================================");
+      this.props.handleResultGetChuyenDeTail(res);
+    });
+    this.props.getChuyenDetailAction(
+      socket,
+      this.props.navigation.state.params.idchuyen
+    );
+    socket.on("pickResult", res => {
+      this.props.handlePickChuyenResult(res);
+    });
+  }
+  componentWillUnmount() {
+    socket.disconnect();
+  }
+  componentWillReceiveProps(nextProp) {
+    if (nextProp.pick.isLoadingChuyenDetail === false) {
+      this.setState({
+        isLoadingChuyenDetail: false
+      });
+    }
+  }
+  _handleShowModal = () => {
+    this.setState({
+      isShowModal: true
+    });
+  };
+  _handleHideModal = () => {
+    this.setState({
+      isShowModal: false
+    });
+  };
+
   render() {
+    const userid = this.props.clientID;
+    const idchuyen = this.props.navigation.state.params.idchuyen;
+    const data = { userid, idchuyen, price: 0 };
+    console.log("================isLoadingChuyenDetail====================");
+    console.log(this.props.pick.isLoadingChuyenDetail);
+    console.log("====================================");
+    if (this.state.isLoadingChuyenDetail === true) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text> Đang load dữ liệu chuyến</Text>
+        </View>
+      );
+    }
+    const chuyen = this.props.pick.chuyenDetail;
     return (
       <View style={{ flex: 1 }}>
         <View
@@ -37,8 +129,7 @@ class DetailChuyen extends Component {
           }}
         >
           <Text style={{ fontSize: 28, color: "#FFF", fontWeight: "bold" }}>
-            {""}
-            HẢI PHÒNG-HÀ NỘI 6:00
+            {chuyen.tenchuyen}
           </Text>
         </View>
         <View style={{ flex: 0.7 }}>
@@ -53,10 +144,18 @@ class DetailChuyen extends Component {
             </ListItem>
             <ListItem style={{ marginLeft: 0 }}>
               <Left style={{ marginLeft: 10 }}>
+                <Text>Tình trạng chỗ ngồi</Text>
+              </Left>
+              <Right style={{ width: "35%" }}>
+                <Text>{`${chuyen.dadat}/${chuyen.choNgoi}`}</Text>
+              </Right>
+            </ListItem>
+            <ListItem style={{ marginLeft: 0 }}>
+              <Left style={{ marginLeft: 10 }}>
                 <Text>Điểm khởi hành</Text>
               </Left>
               <Right>
-                <Text> Hải Phòng </Text>
+                <Text> {chuyen.routeOfTrip.routeOfTrip.from} </Text>
               </Right>
             </ListItem>
             <ListItem style={{ marginLeft: 0 }}>
@@ -65,7 +164,7 @@ class DetailChuyen extends Component {
               </Left>
 
               <Right>
-                <Text> Hà Nội </Text>
+                <Text> {chuyen.routeOfTrip.routeOfTrip.to} </Text>
               </Right>
             </ListItem>
             <ListItem style={{ marginLeft: 0 }} on>
@@ -82,7 +181,7 @@ class DetailChuyen extends Component {
               </Left>
 
               <Body>
-                <Text> 22/11/2017, 6:00 </Text>
+                <Text> {moment(chuyen.timeStart).format("L, LT")} </Text>
               </Body>
             </ListItem>
 
@@ -127,10 +226,18 @@ class DetailChuyen extends Component {
             alignItems: "center"
           }}
         >
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this._handleShowModal()}>
             <Feather name="pocket" size={25} color={"#fff"} />
           </TouchableOpacity>
         </View>
+        <Modal
+          isShowModal={this.state.isShowModal}
+          socket={socket}
+          data={data}
+          hideModal={this._handleHideModal}
+          pickChuyenXe={this.props.pickChuyenXe}
+          disablePick={this.props.pick.isbooking}
+        />
       </View>
     );
   }

@@ -50,6 +50,12 @@ class ClientAPI {
       return err;
     }
   }
+  async getTicketAvaible() {
+    try {
+      const res = await axios.get(`${this.path}/ticket_avaible`);
+      return res;
+    } catch (err) {}
+  }
 }
 
 class UserAPI {

@@ -31,8 +31,7 @@ class Clock extends Component {
     this.state = {
       hours: 0,
       minutes: 0,
-      seconds: 0,
-      isHetgio: false
+      seconds: 0
     };
   }
 
@@ -48,12 +47,6 @@ class Clock extends Component {
 
   getTimeUntil(deadline) {
     const time = moment(deadline) - moment();
-    if (time < 0) {
-      this.setState({
-        isHetgio: true
-      });
-      return;
-    }
     const seconds = Math.floor((time / 1000) % 60);
     const minutes = Math.floor((time / 1000 / 60) % 60);
     const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
@@ -65,15 +58,6 @@ class Clock extends Component {
   }
 
   render() {
-    if (this.state.isHetgio) {
-      return (
-        <View style={this.props.styles.root}>
-          <View style={this.props.styles.item}>
-            <Text style={this.props.styles.text}>Hết giờ</Text>
-          </View>
-        </View>
-      );
-    }
     return (
       <View style={this.props.styles.root}>
         <View style={this.props.styles.item}>

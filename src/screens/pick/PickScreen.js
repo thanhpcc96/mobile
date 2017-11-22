@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
   Text,
   ScrollView,
-  TouchableOpacity, 
+  TouchableOpacity,
   NetInfo
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,23 +17,33 @@ import ModalDropdown from "react-native-modal-dropdown";
 
 import {
   loadDataChuyenFromSocket,
-  pickChuyenXe,
   resultLoadingChuyen,
   reloadDatachuyenChanged
 } from "./action";
-import ListChuyen from "./components/ListChuyen";
+import ListChuyen from "./components/ListChuyenTest";
 import styles from "./styles/PickScreen.style";
 import NavBar from "../../common/NavBar";
 import NavButton from "../../common/NavBarButton";
 
 import { WWS_Client } from "../../../constants/socket";
 
+import { getListVeAvaiable } from "../ticketSVG/actions";
+
 let socket;
 
-@connect(state => ({
-  pick: state.pick,
-  clientID: state.user.info._id
-}))
+@connect(
+  state => ({
+    pick: state.pick,
+    clientID: state.user.info._id
+  }),
+  {
+    getListVeAvaiable,
+    loadDataChuyenFromSocket,
+    resultLoadingChuyen,
+    reloadDatachuyenChanged
+
+  }
+)
 class PickScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: ({ state }) => (
@@ -63,8 +73,7 @@ class PickScreen extends Component {
       isShowSearch: false,
       isDateTimePickerVisible: false
     };
-    const { dispatch } = this.props;
-    socket = io.connect(WWS_Client);
+    socket = io.connect(WWS_Client,{ transports: ["websocket"] });
     socket.on("connection", () => {
       this.setState({
         isConnectSuccessfuly: true
@@ -73,18 +82,24 @@ class PickScreen extends Component {
     socket.on("connect_failed", () => {
       this.setState({ isConnectSuccessfuly: false });
     });
-    dispatch(loadDataChuyenFromSocket(socket, this.props.clientID));
+    this.props.loadDataChuyenFromSocket(socket, this.props.clientID);
 
     /** reload phan tu cua chuyen thay doi */
     socket.on("listChuyenChanged", res => {
-      dispatch(reloadDatachuyenChanged(res));
+      this.props.reloadDatachuyenChanged(res);
     });
     /** load chuyen xe kha dung tu socket */
     socket.on("updateListChuyenxe", res => {
       console.log(res);
-      dispatch(resultLoadingChuyen(res));
+      this.props.resultLoadingChuyen(res);
     });
   }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.pick.ticket !== null) {
+  //     this.props.getListVeAvaiable();
+  //     this.props.navigation.navigate("SVG");
+  //   }
+  // }
 
   componentWillUnmount() {
     socket.disconnect();
@@ -100,7 +115,7 @@ class PickScreen extends Component {
   };
 
   render() {
-    if(this.props.pick.isLoading===false){
+    if(this.props.pick.isLoading){
       return(
         <View style={{flex: 1, justifyContent:"center",alignItems:"center"}}>
           <Text> Đang kết nối socket</Text>
@@ -148,17 +163,17 @@ class PickScreen extends Component {
           </View>
         </View>
 
-        <ListChuyen navigation={this.props.navigation} />
+        <ListChuyen data={this.props.pick.chuyens} navigation={this.props.navigation} />
 
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this._handleDatePicked}
           onCancel={this._hideDateTimePicker}
           mode={"time"}
-          titleIOS={"Chon gio khoi hanh"}
+          titleIOS={"Chọn thời gian xe chạy"}
           is24Hour
-          confirmTextIOS={"Xac nhan"}
-          cancelTextIOS={"Huy bo"}
+          confirmTextIOS={"Xác nhận"}
+          cancelTextIOS={"Hủy bỏ"}
         />
       </View>
     );
