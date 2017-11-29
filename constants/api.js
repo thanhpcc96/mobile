@@ -4,9 +4,9 @@ import { Platform } from "react-native";
 let url;
 if (__DEV__) {
   if (Platform.OS !== "ios") {
-    url = "http://192.168.2.39:3000/api/v1";
+    url = "http://192.168.0.11:3000/api/v1";
   } else {
-    url = "http://localhost:3000/api/v1";
+    url = "http://192.168.0.11:3000/api/v1";
   }
 } else {
   url = "https://aws.com/nodeservice/thanhpham/api/v1";
@@ -66,6 +66,14 @@ class ClientAPI {
       throw err;
     }
   }
+  async loadHistoryPayMent() {
+    try {
+      const res = await axios.get(`${this.path}interact/history`);
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 class UserAPI {
@@ -76,6 +84,22 @@ class UserAPI {
   async postLogin(args) {
     try {
       const res = await axios.post(this.pathUserAcount + "login", { ...args });
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
+  async getInfoVe(id) {
+    try {
+      const res = await axios.post("/manager/ticket/info/id", { mave: id.toString() });
+      return res
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getInfoProfile() {
+    try {
+      const res = await axios.get(this.pathUserAcount + "profile");
       return res;
     } catch (err) {
       throw err;

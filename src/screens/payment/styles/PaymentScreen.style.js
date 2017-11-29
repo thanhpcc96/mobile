@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   /** Phần thông tin số dư */
   balaceContainer: {
-    width: '96%',
+    width: "96%",
     flex: 1,
     borderColor: "#D0CCCC",
     borderWidth: 0.5,
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
 
   /** * Phần thông tin lịch sử giao dịch*/
   historyTranferPayment: {
-    flex: 1,
-    width: '96%',
+    flex: 2,
+    width: "96%",
     backgroundColor: "#24EB8B",
     marginTop: 15
   },
@@ -100,12 +100,16 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   historyContentLeft: {
-    flex: 2,
+    flex: 1,
     borderRightColor: "#FFF",
     borderRightWidth: 1
   },
   scrollviewItem: {
+    justifyContent: "space-between",
+    flexDirection:'row',
+    alignItems: "center",
     borderBottomWidth: 0.5,
+    height: 40,
     borderBottomColor: "#FFF"
   },
   scrollviewItemText: {
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
   /** Phan danh muc thanh toan */
   MenuPaymentContainer: {
     flex: 1,
-    width: '96%',
+    width: "96%",
     marginTop: 15
   },
   MenuTitleContainer: {

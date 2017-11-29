@@ -1,5 +1,4 @@
-import PaymentScreen from './PaymentScreen';
+import PaymentScreen from "./PaymentScreen";
+import PaymentReducer from "./reducers";
 
-export {
-  PaymentScreen,
-};
+export { PaymentScreen, PaymentReducer };

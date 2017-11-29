@@ -1,2 +1,3 @@
 import CheckScreen from "./uCheckScreen";
-export { CheckScreen };
+import CheckScreenReducer from "./reducer";
+export { CheckScreen, CheckScreenReducer };

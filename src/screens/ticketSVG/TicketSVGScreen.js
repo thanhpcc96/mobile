@@ -43,13 +43,6 @@ class TicketSVGScreen extends Component {
         style={{ paddingLeft: 10 }}
       />
     ),
-    headerRight: (
-      <NavBarButton
-        icon="md-qr-scanner"
-        onPress={() => navigation.navigate("Scanner")}
-        style={{ paddingRight: 10 }}
-      />
-    )
   });
   constructor(props) {
     super(props);

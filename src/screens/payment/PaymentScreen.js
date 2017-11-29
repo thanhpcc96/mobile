@@ -1,31 +1,116 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Text,
   View,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+  Dimensions
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import SleekLoad from "react-native-sleek-loading-indicator";
 
-import styles from './styles/PaymentScreen.style';
+import moment from "../../../i18n/TimeZoneVietNam";
 
-const { width, height } = Dimensions.get('window');
+import styles from "./styles/PaymentScreen.style";
+import { loadHistoryPayMent } from "./actions";
 
+const { width, height } = Dimensions.get("window");
+
+@connect(
+  state => ({
+    paymentlist: state.payment.paymentlist,
+    isLoaded: state.payment.isLoaded,
+    error: state.payment.error
+  }),
+  {
+    loadHistoryPayMent
+  }
+)
 class PaymentScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerStyle: {
-      backgroundColor: '#4A90E2',
+      backgroundColor: "#4A90E2"
     },
-    headerTitle: 'Thanh toán',
+    headerTitle: "Thanh toán",
     headerTitleStyle: {
-      color: '#FFF',
+      color: "#FFF"
     },
     headerBackTitleStyle: {
-      color: '#FFF',
-    },
+      color: "#FFF"
+    }
   });
+
+  componentDidMount() {
+    this.props.loadHistoryPayMent();
+  }
+  renderItem() {
+    const data = this.props.paymentlist.acount_payment;
+    const newData = [];
+    data.history_recharge.forEach(n => {
+      const nap = {
+        name: "Nạp tiền",
+        time: moment(n.rechargeTime).format("LT, L"),
+        giatri: "+" + n.amountSend + " đ"
+      };
+      newData.push(nap);
+    });
+    data.history_transaction.forEach(n => {
+      const datve = {
+        name: "Đặt vé",
+        time: moment(n.createdAt).format("LT,L"),
+        giatri: "-" + n.price + " đ"
+      };
+      newData.push(datve);
+    });
+    data.history_pick_keep_seat.forEach(n => {
+      const giucho = {
+        name: "Giữ chỗ",
+        time: moment(n.createdAt).format("LT,L"),
+        giatri: "-" + 0 + " đ"
+      };
+      newData.push(giucho);
+    });
+    data.history_cancel_ticket.forEach(n => {
+      const huyve = {
+        name: "Hủy vé",
+        time: moment(n.updatedAt).format("LT,L"),
+        giatri: "-" + n.price + " đ"
+      };
+      newData.push(huyve);
+    });
+    console.log('====================================');
+    console.log(newData);
+    console.log('====================================');
+    return (
+      <ScrollView>
+        {newData.map((item, i) => (
+          <View key={i} style={styles.scrollviewItem}>
+            <Text style={styles.scrollviewItemText}> {item.name}</Text>
+            <Text style={styles.scrollviewItemText}> {item.time}</Text>
+            <Text style={styles.scrollviewItemText}> {item.giatri}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    );
+  }
+
   render() {
+    if (!this.props.isLoaded) {
+      return (
+        <SleekLoad loading={!this.props.isLoaded} text={"Đang load dữ liệu!"} />
+      );
+    }
+    if (this.props.error) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text> Lỗi! Không load được dữ liệu</Text>
+        </View>
+      );
+    }
+    const giaodich = this.props.paymentlist;
     return (
       <View style={styles.root}>
         <View style={styles.balaceContainer}>
@@ -36,18 +121,28 @@ class PaymentScreen extends Component {
           <View style={styles.balaceContentContainner}>
             <View style={styles.balaceContentLeft}>
               <View style={styles.balaceAmount}>
-                <Text style={styles.amountText}>100.000 VND</Text>
+                <Text style={styles.amountText}>
+                  {giaodich.acount_payment.balance} VND
+                </Text>
               </View>
 
               <View style={styles.balaceContentInfo}>
                 <View style={styles.buttonRechange}>
-                  <Ionicons name="md-git-compare" size={40} color={'#24EB8B'} />
+                  <Ionicons name="md-git-compare" size={40} color={"#24EB8B"} />
                 </View>
                 <View style={styles.infoLastHistory}>
-                  <Text style={{ color: '#BFBDC3' }}>
+                  <Text style={{ color: "#BFBDC3" }}>
                     Nạp tài khoản lần cuối
                   </Text>
-                  <Text style={{ color: '#929096' }}>22/09/2017 9:00 am</Text>
+                  <Text style={{ color: "#929096" }}>
+                    {giaodich.acount_payment.history_recharge.length > 0
+                      ? moment(
+                          giaodich.acount_payment.history_recharge[
+                            giaodich.acount_payment.history_recharge.length - 1
+                          ].rechargeTime
+                        ).format("L,LT")
+                      : "Không có"}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -65,34 +160,17 @@ class PaymentScreen extends Component {
             <Text style={styles.historyTextTitle}>Lịch sử giao dịch</Text>
           </View>
           <View style={styles.historyContentContainner}>
-            <View style={styles.historyContentLeft}>
-              <ScrollView>
-                <View style={styles.scrollviewItem}>
-                  <Text style={styles.scrollviewItemText}> fake 1</Text>
-                </View>
-                <View style={styles.scrollviewItem}>
-                  <Text style={styles.scrollviewItemText}> fake 1</Text>
-                </View>
-                <View style={styles.scrollviewItem}>
-                  <Text style={styles.scrollviewItemText}> fake 1</Text>
-                </View>
-                <View style={styles.scrollviewItem}>
-                  <Text style={styles.scrollviewItemText}> fake 1</Text>
-                </View>
-                <View style={styles.scrollviewItem}>
-                  <Text style={styles.scrollviewItemText}> fake 1</Text>
-                </View>
-              </ScrollView>
-            </View>
-            <View style={styles.historyContentRight}>
-              <TouchableOpacity style={styles.historyButton}>
-                <Text style={styles.historyButtonText}> Xem thêm</Text>
-              </TouchableOpacity>
-            </View>
+            <View style={styles.historyContentLeft}>{this.renderItem()}</View>
           </View>
         </View>
+      </View>
+    );
+  }
+}
+export default PaymentScreen;
 
-        <View style={styles.MenuPaymentContainer}>
+/**
+ * <View style={styles.MenuPaymentContainer}>
           <View style={styles.MenuTitleContainer}>
             <Text style={styles.menuTextTitle}> Danh mục thanh toán</Text>
           </View>
@@ -103,7 +181,7 @@ class PaymentScreen extends Component {
                   <Ionicons
                     name="ios-close-circle-outline"
                     size={35}
-                    color={'#FC9A7D'}
+                    color={"#FC9A7D"}
                   />
                 </View>
                 <View style={styles.menuItemInItem}>
@@ -116,7 +194,7 @@ class PaymentScreen extends Component {
                 <Ionicons
                   name="ios-checkmark-circle-outline"
                   size={35}
-                  color={'#80B9FB'}
+                  color={"#80B9FB"}
                 />
                 <Text>Lịch sử giữ chỗ</Text>
               </TouchableOpacity>
@@ -124,8 +202,4 @@ class PaymentScreen extends Component {
             <View style={styles.menuContentItem} />
           </View>
         </View>
-      </View>
-    );
-  }
-}
-export default PaymentScreen;
+ */

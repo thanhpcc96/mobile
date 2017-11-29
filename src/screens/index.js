@@ -9,7 +9,7 @@ import { HomeScreen } from "./home";
 import { TrackingScreen } from "./tracking";
 import { RegisterScreen } from "./register";
 import { PickScreen, PickReducer, DetailChuyen, ResultSearch } from "./pick";
-import { PaymentScreen } from "./payment";
+import { PaymentScreen,PaymentReducer } from "./payment";
 import { ReportScreen } from "./report";
 import {
   TicketSVGScreen,
@@ -33,6 +33,7 @@ export {
   ResultSearch,
   PickReducer,
   PaymentScreen,
+  PaymentReducer,
   ReportScreen,
   TicketSVGScreen,
   TicketDetail,

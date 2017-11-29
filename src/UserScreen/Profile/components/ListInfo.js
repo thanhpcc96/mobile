@@ -39,7 +39,7 @@ const ListInfo = ({ info, navigation, logout }) => {
           <TouchableHighlight
             style={styles.buttonEdit}
             underlayColor={"#B3E5FC"}
-            onPress={() => navigation.navigate("UpdateProfile")}
+            onPress={() => navigation.navigate("UserUpdateProfile")}
           >
             <Ionicons name="md-create" color={"#FFF"} size={20} />
           </TouchableHighlight>
@@ -59,7 +59,7 @@ const ListInfo = ({ info, navigation, logout }) => {
                 color={"#0288D1"}
                 size={25}
               />
-              <Text style={styles.textInfo}>{info.local.email}</Text>
+              <Text style={styles.textInfo}>{info.email}</Text>
             </View>
             <View style={styles.infoItem}>
               <MaterialCommunityIcons

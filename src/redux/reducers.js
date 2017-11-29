@@ -9,8 +9,10 @@ import {
   AuthReducer,
   ProfileReducer,
   PickReducer,
-  TicketReducer
+  TicketReducer,
+  PaymentReducer
 } from "../screens";
+import { CheckScreenReducer } from "../UserScreen";
 
 export default combineReducers({
   form,
@@ -19,5 +21,7 @@ export default combineReducers({
   user: AuthReducer,
   profile: ProfileReducer,
   pick: PickReducer,
-  ticket: TicketReducer
+  ticket: TicketReducer,
+  payment: PaymentReducer,
+  managerticket: CheckScreenReducer
 });

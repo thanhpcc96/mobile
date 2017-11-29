@@ -16,6 +16,8 @@ import TrackingTabs from "./TrackingTab";
 import PickTab from "./PickTab";
 import PaymentTab from "./PaymentTab";
 import ReportTab from "./ReportTab";
+
+import { HomeUserTab, TrackingUserTab ,UserScanTab, ProfileUserTab  } from "../router_user";
 import {
   AuthScreen,
   RegisterScreen,
@@ -111,7 +113,7 @@ const Tabs = TabNavigator(
 const UserTab = TabNavigator(
   {
     UserHomeTab: {
-      screen: HomeScreenUser,
+      screen: HomeUserTab,
       navigationOptions: {
         headerStyle: NavbarDefaultStyle,
         tabBarIcon: ({ tintColor }) => (
@@ -120,7 +122,7 @@ const UserTab = TabNavigator(
       }
     },
     UserTrackingTab: {
-      screen: CheckScreen,
+      screen: TrackingUserTab,
       navigationOptions: () => ({
         headerStyle: NavbarDefaultStyle,
         tabBarIcon: ({ tintColor }) => (
@@ -128,13 +130,26 @@ const UserTab = TabNavigator(
         )
       })
     },
-    UserTimelineTab: {
-      screen: PhanCongScreen,
+    UserScan: {
+      screen: UserScanTab,
       navigationOptions: () => ({
         headerStyle: NavbarDefaultStyle,
         tabBarIcon: ({ tintColor }) => (
           <MaterialCommunityIcons
-            name="table-edit"
+            name="barcode-scan"
+            size={30}
+            color={tintColor}
+          />
+        )
+      })
+    },
+    ProfileTab: {
+      screen: ProfileUserTab,
+      navigationOptions: () => ({
+        headerStyle: NavbarDefaultStyle,
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons
+            name="ios-contact"
             size={30}
             color={tintColor}
           />
@@ -159,27 +174,31 @@ const UserTab = TabNavigator(
     }
   }
 );
-export const NavClient= StackNavigator(
+export const NavClient = StackNavigator(
   {
     Tabs: {
       screen: Tabs
     }
   },
-  {headerMode: "none",
-  mode: "modal",
-  initialRouteName:'Tabs'}
+  {
+    headerMode: "none",
+    mode: "modal",
+    initialRouteName: "Tabs"
+  }
 );
 
-export const NavUser= StackNavigator(
+export const NavUser = StackNavigator(
   {
     UserTabs: {
       screen: UserTab
     }
   },
-  {headerMode: "none",
-  mode: "modal",
-  initialRouteName:'UserTabs'}
-)
+  {
+    headerMode: "none",
+    mode: "modal",
+    initialRouteName: "UserTabs"
+  }
+);
 
 // export default (Nav = DrawerNavigator(
 //   {

@@ -18,7 +18,7 @@ import LoadingScreen from "../../common/LoadingScreen";
 import ListInfo from "./components/ListInfo";
 import NavBarButton from "../../common/NavBarButton";
 import { getInfoProfileAction } from "./action";
-import { logOutAction } from "../auth/actions";
+import { logOutAction } from "../../screens/auth/actions";
 
 @connect(
   state => ({
@@ -58,7 +58,7 @@ class ProfileScreen extends Component {
 
   render() {
     console.log("====================================");
-    console.log(this.props.isLoading);
+    console.log(this.props);
     console.log("====================================");
     if (this.props.isLoading === true || this.props.profile.error) {
       return <LoadingScreen color={"#4E94E5"} />;
