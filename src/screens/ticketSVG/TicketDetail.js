@@ -10,9 +10,21 @@ import {
 } from "react-native";
 import { takeSnapshotAsync } from "expo";
 import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
 import NavBarButton from "../../common/NavBarButton";
 import QRcode from "../../common/QRcodehelper";
+import { getTicketInfo } from "./actions";
+import moment from "../../../i18n/TimeZoneVietNam";
+
+@connect(
+  state => ({
+    ticketinfo: state.ticket.ticketinfo,
+    isLoadedVe: state.ticket.isLoadedVe,
+    errorticket: state.ticket.errorticket
+  }),
+  { getTicketInfo }
+)
 class TicketDetail extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerStyle: {
@@ -35,6 +47,8 @@ class TicketDetail extends Component {
   });
   constructor(props) {
     super(props);
+    const idVe = this.props.navigation.state.params.idVe;
+    this.props.getTicketInfo(idVe);
   }
   _saveToCameraRollAsync = async () => {
     let result = await takeSnapshotAsync(this._containerCapture, {
@@ -51,6 +65,28 @@ class TicketDetail extends Component {
   };
 
   render() {
+    console.log("=============navigation=======================");
+    console.log(this.props.navigation);
+    console.log("====================================");
+    if (!this.props.isLoadedVe) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text> Đang tải thông tin vé</Text>
+        </View>
+      );
+    }
+    if (this.props.errorticket) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text> Tải thông tin vé Lỗi</Text>
+        </View>
+      );
+    }
+    const ticketinfo = this.props.ticketinfo;
     return (
       <View style={styles.root}>
         <View
@@ -61,20 +97,28 @@ class TicketDetail extends Component {
           }}
         >
           <View style={styles.QrcodeShow}>
-            <QRcode value="anhyeuem" size={200} />
+            <QRcode value={ticketinfo._id} size={200} />
           </View>
           <View style={styles.infoTextSave}>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>Mã vé</Text>
-              <Text style={styles.textPrimary}> HN-HP1234</Text>
               <Text style={styles.text}>Hành khách</Text>
-              <Text style={styles.textPrimary}>Pham Van Thanh</Text>
+              <Text style={styles.textPrimary}>
+                {ticketinfo ? ticketinfo.Customer.info.fullname : ""}
+              </Text>
               <Text style={styles.text}>Chuyến xe</Text>
-              <Text style={styles.textPrimary}>HN-HP:14:00</Text>
+              <Text style={styles.textPrimary}>
+                {ticketinfo ? ticketinfo.inChuyenXe.tenchuyen : ""}
+              </Text>
               <Text style={styles.text}>Thời gian</Text>
-              <Text style={styles.textPrimary}>14:00 22/11/2017</Text>
+              <Text style={styles.textPrimary}>
+                {ticketinfo
+                  ? moment(ticketinfo.inChuyenXe.timeStart).format("L,LT")
+                  : ""}
+              </Text>
               <Text style={styles.text}>Giá vé</Text>
-              <Text style={styles.textPrimary}>40.000 VND</Text>
+              <Text style={styles.textPrimary}>
+                {ticketinfo ? ticketinfo.price : ""}
+              </Text>
             </View>
 
             <TouchableOpacity
@@ -98,24 +142,83 @@ class TicketDetail extends Component {
           </View>
           <View style={styles.thongTinContentContainer}>
             <ScrollView>
-            <Text style={styles.text}>Lộ trình</Text>
-            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Từ Hưng Yên đến Hà Nội</Text>
-            <Text style={styles.text}>Thời gian đặt vé</Text>
-            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>6:39:50 22/11/2017</Text>
-            <Text style={styles.text}>Loại vé</Text>
-            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Vé giữ chỗ</Text>
-            <Text style={styles.text}>Trạng thái</Text>
-            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Chưa thanh toán</Text>
-            <Text style={styles.text}>Chuyến xe</Text>
-            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>HN-HP1234</Text>
-            <Text style={styles.text}>Biển số</Text>
-            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>16 K8-1737 </Text>
-            <Text style={styles.text}>Tài xé </Text>
-            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Bùi Đức Chiều</Text>
-            <Text style={styles.text}>Phụ xe </Text>
-            <Text style={[styles.textPrimary,{marginLeft:'5%',marginVertical:'1%'}]}>Bùi Đình Nghĩa</Text>
+              <Text style={styles.text}>Mã vé</Text>
+              <Text
+                style={[
+                  styles.textPrimary,
+                  { marginLeft: "5%", marginVertical: "1%" }
+                ]}
+              >
+                {ticketinfo ? ticketinfo._id : ""}
+              </Text>
+              <Text style={styles.text}>Lộ trình</Text>
+              <Text
+                style={[
+                  styles.textPrimary,
+                  { marginLeft: "5%", marginVertical: "1%" }
+                ]}
+              >
+                {ticketinfo.inChuyenXe.routeOfTrip.routeOfTrip.from +
+                  " ===> " +
+                  ticketinfo.inChuyenXe.routeOfTrip.routeOfTrip.to}
+              </Text>
+              <Text style={styles.text}>Chiều di chuyển</Text>
+              <Text
+                style={[
+                  styles.textPrimary,
+                  { marginLeft: "5%", marginVertical: "1%" }
+                ]}
+              >
+                {ticketinfo.inChuyenXe.loai === "DI" ? "Đi" : "Về"}
+              </Text>
+              <Text style={styles.text}>Thời gian đặt vé</Text>
+              <Text
+                style={[
+                  styles.textPrimary,
+                  { marginLeft: "5%", marginVertical: "1%" }
+                ]}
+              >
+                {moment(ticketinfo.createdAt).format("LT, L")}
+              </Text>
+              <Text style={styles.text}>Loại vé</Text>
+              <Text
+                style={[
+                  styles.textPrimary,
+                  { marginLeft: "5%", marginVertical: "1%" }
+                ]}
+              >
+                {ticketinfo.typeTicket === "DATVE" ? "Đặt vé" : "Vé giữ chỗ"}
+              </Text>
+              <Text style={styles.text}>Trạng thái</Text>
+              <Text
+                style={[
+                  styles.textPrimary,
+                  { marginLeft: "5%", marginVertical: "1%" }
+                ]}
+              >
+                {ticketinfo.isPayed === true
+                  ? "Đã thanh toán tiền"
+                  : "Chưa thanh toán"}
+              </Text>
+              <Text style={styles.text}>Chuyến xe</Text>
+              <Text
+                style={[
+                  styles.textPrimary,
+                  { marginLeft: "5%", marginVertical: "1%" }
+                ]}
+              >
+                {ticketinfo.inChuyenXe.tenchuyen}
+              </Text>
+              <Text style={styles.text}>Biển số</Text>
+              <Text
+                style={[
+                  styles.textPrimary,
+                  { marginLeft: "5%", marginVertical: "1%" }
+                ]}
+              >
+                {ticketinfo.inChuyenXe.coach.numberplate}
+              </Text>
             </ScrollView>
-            
           </View>
         </View>
       </View>
@@ -158,8 +261,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     left: 0,
-    right:5,
-    borderRadius:5
+    right: 5,
+    borderRadius: 5
   },
   iconDownload: {
     marginLeft: 5
@@ -177,7 +280,7 @@ const styles = StyleSheet.create({
   thongTinTitleContainer: {
     height: 20,
     paddingLeft: 10,
-    position: "relative",
+    position: "relative"
     //
   },
   thongTinTitleText: {
@@ -192,7 +295,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    paddingLeft: '10%',
+    paddingLeft: "10%",
     alignSelf: "stretch"
   }
 });

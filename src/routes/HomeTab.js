@@ -4,7 +4,7 @@ import { Text } from "react-native";
 
 import NavBar from "../common/NavBar";
 import NavButton from "../common/NavBarButton";
-import { logOutAction } from '../screens/auth/actions'
+import { logOutAction } from "../screens/auth/actions";
 
 // Import Screen
 import {
@@ -53,7 +53,8 @@ const HomeTab = StackNavigator(
       screen: TicketSVGScreen
     },
     Ticketdetail: {
-      screen: TicketDetail
+      screen: TicketDetail,
+      
     },
     Scanner: {
       screen: ScannerQRCode

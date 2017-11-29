@@ -11,38 +11,24 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
-import io from "socket.io-client";
+
 import DateTimePicker from "react-native-modal-datetime-picker";
 import ModalDropdown from "react-native-modal-dropdown";
 
-import {
-  loadDataChuyenFromSocket,
-  resultLoadingChuyen,
-  reloadDatachuyenChanged
-} from "./action";
+
 import ListChuyen from "./components/ListChuyenTest";
 import styles from "./styles/PickScreen.style";
 import NavBar from "../../common/NavBar";
 import NavButton from "../../common/NavBarButton";
 
-import { WWS_Client } from "../../../constants/socket";
 
-import { getListVeAvaiable } from "../ticketSVG/actions";
-
-let socket;
 
 @connect(
   state => ({
     pick: state.pick,
     clientID: state.user.info._id
-  }),
-  {
-    getListVeAvaiable,
-    loadDataChuyenFromSocket,
-    resultLoadingChuyen,
-    reloadDatachuyenChanged
-
-  }
+  })
+  
 )
 class PickScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -73,26 +59,15 @@ class PickScreen extends Component {
       isShowSearch: false,
       isDateTimePickerVisible: false
     };
-    socket = io.connect(WWS_Client,{ transports: ["websocket"] });
-    socket.on("connection", () => {
-      this.setState({
-        isConnectSuccessfuly: true
-      });
-    });
-    socket.on("connect_failed", () => {
-      this.setState({ isConnectSuccessfuly: false });
-    });
-    this.props.loadDataChuyenFromSocket(socket, this.props.clientID);
-
-    /** reload phan tu cua chuyen thay doi */
-    socket.on("listChuyenChanged", res => {
-      this.props.reloadDatachuyenChanged(res);
-    });
-    /** load chuyen xe kha dung tu socket */
-    socket.on("updateListChuyenxe", res => {
-      console.log(res);
-      this.props.resultLoadingChuyen(res);
-    });
+    
+    // socket.on("connection", () => {
+    //   this.setState({
+    //     isConnectSuccessfuly: true
+    //   });
+    // });
+    // socket.on("connect_failed", () => {
+    //   this.setState({ isConnectSuccessfuly: false });
+    // });
   }
   // componentWillReceiveProps(nextProps) {
   //   if (nextProps.pick.ticket !== null) {
@@ -101,9 +76,7 @@ class PickScreen extends Component {
   //   }
   // }
 
-  componentWillUnmount() {
-    socket.disconnect();
-  }
+  
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
@@ -113,15 +86,11 @@ class PickScreen extends Component {
     console.log("A date has been picked: ", date);
     this._hideDateTimePicker();
   };
+  componentDidMount() {
+    
+  }
 
   render() {
-    if(this.props.pick.isLoading){
-      return(
-        <View style={{flex: 1, justifyContent:"center",alignItems:"center"}}>
-          <Text> Đang kết nối socket</Text>
-        </View>
-      )
-    }
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.searchConatiner}>
@@ -163,7 +132,9 @@ class PickScreen extends Component {
           </View>
         </View>
 
-        <ListChuyen data={this.props.pick.chuyens} navigation={this.props.navigation} />
+        <ListChuyen
+          navigation={this.props.navigation}
+        />
 
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}

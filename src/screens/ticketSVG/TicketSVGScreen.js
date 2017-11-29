@@ -6,10 +6,24 @@ import {
   Text,
   TouchableOpacity
 } from "react-native";
+import { connect } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
+
 import QRCode from "../../common/QRcodehelper";
 import NavBarButton from "../../common/NavBarButton";
+import { getListVeAvaiable } from "./actions";
+import moment from "../../../i18n/TimeZoneVietNam";
 
+moment.locale("vi");
+
+@connect(
+  state => ({
+    ticket: state.ticket
+  }),
+  {
+    getListVeAvaiable
+  }
+)
 class TicketSVGScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerStyle: {
@@ -40,96 +54,77 @@ class TicketSVGScreen extends Component {
   constructor(props) {
     super(props);
     this.svg = null;
+    this.props.getListVeAvaiable();
   }
+  _renderItem = ({ data, i }) => {
+    console.log('=================iiiii===================');
+    console.log(i);
+    console.log('====================================');
+    return (
+      <View key={i}>
+        <View style={styles.scrollviewItem}>
+          <View style={styles.thumb}>
+            <Ionicons name="md-cash" color={"rgba(36,235,139,0.8)"} size={60} />
+          </View>
+          <View style={styles.scrollviewItemInfo}>
+            <View style={styles.Title}>
+              <Text style={styles.TitleText}>
+                {data.inChuyenXe ? data.inChuyenXe.tenchuyen : "Vé Lỗi"}
+              </Text>
+            </View>
+            <View style={styles.TimeStart}>
+              <Text style={styles.text}>
+                Xuất phát:{" "}
+                {data.inChuyenXe
+                  ? moment(data.inChuyenXe.TimeStart).format("LT,L")
+                  : "Vé Lỗi"}
+              </Text>
+            </View>
+            <View style={styles.price}>
+              <Text style={styles.text}> Giá cước: {data.price}</Text>
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              disabled={data.inChuyenXe ? false : true}
+              onPress={() =>
+                this.props.navigation.navigate("Ticketdetail", {
+                  tenve: data.inChuyenXe ? data.inChuyenXe.tenchuyen : "",
+                  idVe: data._id
+                })
+              }
+            >
+              <Text style={styles.textButton}> Chi tiết </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
 
   render() {
-    const logofromfile = require("../../../assets/logo.png");
+    console.log("====================================");
+    console.log(this.props.navigation);
+    console.log("====================================");
+    // const logofromfile = require("../../../assets/logo.png");
+    if (this.props.ticket.isLoading === true) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text> Đang loading danh sách vé</Text>
+        </View>
+      );
+    }
     return (
       <View style={styles.root}>
         <ScrollView>
-          <View style={styles.scrollviewItem}>
-            <View style={styles.thumb}>
-              <Ionicons
-                name="md-cash"
-                color={"rgba(36,235,139,0.8)"}
-                size={60}
-              />
-            </View>
-            <View style={styles.scrollviewItemInfo}>
-              <View style={styles.Title}>
-                <Text style={styles.TitleText}> Ha Noi Hai phong</Text>
-              </View>
-              <View style={styles.TimeStart}>
-                <Text style={styles.text}>Xuất phát: 2h40 22/11/2017</Text>
-              </View>
-              <View style={styles.price}>
-                <Text style={styles.text}> Giá cước: 70.000đ</Text>
-              </View>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                  this.props.navigation.navigate("Ticketdetail", {
-                    tenve: "Ha Noi Hai phong"
-                  })}
-              >
-                <Text style={styles.textButton}> Chi tiết </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <View style={styles.scrollviewItem}>
-            <View style={styles.thumb}>
-              <Ionicons
-                name="md-cash"
-                color={"rgba(36,235,139,0.8)"}
-                size={60}
-              />
-            </View>
-            <View style={styles.scrollviewItemInfo}>
-              <View style={styles.Title}>
-                <Text style={styles.TitleText}> Ha Noi Hai phong</Text>
-              </View>
-              <View style={styles.TimeStart}>
-                <Text style={styles.text}>Xuất phát: 2h40 22/11/2017</Text>
-              </View>
-              <View style={styles.price}>
-                <Text style={styles.text}> Giá cước: 70.000đ</Text>
-              </View>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.textButton}> Chi tiết </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <View style={styles.scrollviewItem}>
-            <View style={styles.thumb}>
-              <Ionicons
-                name="md-cash"
-                color={"rgba(36,235,139,0.8)"}
-                size={60}
-              />
-            </View>
-            <View style={styles.scrollviewItemInfo}>
-              <View style={styles.Title}>
-                <Text style={styles.TitleText}> Ha Noi Hai phong</Text>
-              </View>
-              <View style={styles.TimeStart}>
-                <Text style={styles.text}>Xuất phát: 2h40 22/11/2017</Text>
-              </View>
-              <View style={styles.price}>
-                <Text style={styles.text}> Giá cước: 70.000đ</Text>
-              </View>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.textButton}> Chi tiết </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          {this.props.ticket.listticket
+            ? this.props.ticket.listticket.result.map((data, i) =>
+                this._renderItem({ data, i })
+              )
+            : undefined}
         </ScrollView>
       </View>
     );
@@ -142,7 +137,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     // paddingTop: Constants.statusBarHeight,
     paddingTop: 5,
-    marginLeft: "1,5%"
+    marginLeft: "1.5%"
   },
   scrollviewItem: {
     flexDirection: "row",

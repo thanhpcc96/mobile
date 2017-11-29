@@ -1,16 +1,17 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { addNavigationHelpers } from 'react-navigation';
-import createNav from './Nav';
-import { AuthScreen } from '../screens';
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { addNavigationHelpers } from "react-navigation";
+import { NavClient, NavUser } from "./Nav";
+import { AuthScreen } from "../screens";
+import { setAuthHeader } from "../../constants/api";
 
 // @connect(state => ({
 //   navigation: state.navigation,
 //   user: state.user
 // }))
 
-const router = createNav().router;
-const Nav = createNav();
+const routerClient = NavClient.router;
+const routerUser = NavUser.router;
 class AppNavigator extends PureComponent {
   state = {};
   // ref={nav => {
@@ -18,24 +19,29 @@ class AppNavigator extends PureComponent {
   // }}
 
   render() {
-    const nav = addNavigationHelpers({
+    const navuser = addNavigationHelpers({
       dispatch: this.props.dispatch,
-      state: this.props.nav,
+      state: this.props.userNav
     });
-    
-    if (this.props.user.isLogged) {
-      console.log('====================================');
-      console.log(this.props.user);
-      console.log('====================================');
-      
-      return <Nav navigation={nav} />;
+    const navclient = addNavigationHelpers({
+      dispatch: this.props.dispatch,
+      state: this.props.clientNav
+    });
+
+    if (this.props.user.isLogged && this.props.user.typeUser === "client") {
+      setAuthHeader(this.props.user.token);
+      return <NavClient navigation={navclient} />;
     }
-    return <Nav navigation={nav} />;
-    // return <AuthScreen />;
+    if (this.props.user.isLogged && this.props.user.typeUser === "user") {
+      setAuthHeader(this.props.user.token);
+      return <NavUser navigation={navuser} />;
+    }
+    return <AuthScreen />;
   }
 }
 export default connect(state => ({
-  nav: state.nav,
-  user: state.user,
+  clientNav: state.clientNav,
+  userNav: state.userNav,
+  user: state.user
 }))(AppNavigator);
-export { router };
+export { routerUser, routerClient };

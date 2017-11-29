@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 let url;
 if (__DEV__) {
   if (Platform.OS !== "ios") {
-    url = "http://192.168.0.10:3000/api/v1";
+    url = "http://192.168.2.39:3000/api/v1";
   } else {
     url = "http://localhost:3000/api/v1";
   }
@@ -52,9 +52,19 @@ class ClientAPI {
   }
   async getTicketAvaible() {
     try {
-      const res = await axios.get(`${this.path}/ticket_avaible`);
+      const res = await axios.get(`${this.path}interact/ticket_avaible`);
       return res;
-    } catch (err) {}
+    } catch (err) {
+      throw err;
+    }
+  }
+  async getTicketInfo(id) {
+    try {
+      const res = await axios.get(`${this.path}interact/ticket/${id}`);
+      return res;
+    } catch (err) {
+      throw err;
+    }
   }
 }
 

@@ -29,6 +29,9 @@ export const GET_CHUYEN_DETAIL_SUCCESS = "GET_CHUYEN_DETAIL_SUCCESS";
           }
  */
 export const resultLoadingChuyen = res => {
+  console.log('=================resultLoadingChuyen===================');
+  console.log(res);
+  console.log('====================================');
   const { type } = res;
   return dispatch => {
     if (type === GET_LIST_CHUYEN_ERR) {
@@ -76,7 +79,7 @@ export const reloadDatachuyenChanged = res => {
 export const pickChuyenXe = (data, socket) => {
   return dispatch => {
     // const data = { idUser, idChuyen, vitribatdau, vitriketthuc };
-    socket.emit("pickchuyen", data);
+    socket.emit("pickchuyenxe", data);
     dispatch({ type: BOOKING_CHUYEN });
   };
 };
@@ -91,7 +94,7 @@ export const pickChuyenXe = (data, socket) => {
     
  */
 export const handlePickChuyenResult = res => {
-  const { type } = res.type;
+  const { type } = res;
   return dispatch => {
     if (type === BOOK_CHUYEN_ERROR) {
       return dispatch({

@@ -20,6 +20,7 @@ class ModalComment extends Component {
         isVisible={this.props.isShowModalComment}
         avoidKeyboard={true}
         onBackdropPress={this.props.onBackdropPress}
+        
         backdropColor={"transparent"}
         children={
           <View>

@@ -24,6 +24,8 @@ import {
   ChangePassScreen
 } from "../screens";
 
+import { CheckScreen, HomeScreenUser, PhanCongScreen } from "../UserScreen";
+
 // import components
 import NavBar from "../common/NavBar";
 import NavButton from "../common/NavBarButton";
@@ -35,6 +37,7 @@ const NavbarDefaultStyle = {
 };
 
 const Tabs = TabNavigator(
+  // cho client danh cho client
   {
     HomeTab: {
       screen: HomeTab,
@@ -108,7 +111,7 @@ const Tabs = TabNavigator(
 const UserTab = TabNavigator(
   {
     UserHomeTab: {
-      screen: HomeTab,
+      screen: HomeScreenUser,
       navigationOptions: {
         headerStyle: NavbarDefaultStyle,
         tabBarIcon: ({ tintColor }) => (
@@ -117,7 +120,7 @@ const UserTab = TabNavigator(
       }
     },
     UserTrackingTab: {
-      screen: TrackingTabs,
+      screen: CheckScreen,
       navigationOptions: () => ({
         headerStyle: NavbarDefaultStyle,
         tabBarIcon: ({ tintColor }) => (
@@ -126,7 +129,7 @@ const UserTab = TabNavigator(
       })
     },
     UserTimelineTab: {
-      screen: TrackingTabs,
+      screen: PhanCongScreen,
       navigationOptions: () => ({
         headerStyle: NavbarDefaultStyle,
         tabBarIcon: ({ tintColor }) => (
@@ -156,30 +159,27 @@ const UserTab = TabNavigator(
     }
   }
 );
-export default function createNav(typeUser) {
-  return StackNavigator({
+export const NavClient= StackNavigator(
+  {
     Tabs: {
       screen: Tabs
-    },
+    }
+  },
+  {headerMode: "none",
+  mode: "modal",
+  initialRouteName:'Tabs'}
+);
+
+export const NavUser= StackNavigator(
+  {
     UserTabs: {
       screen: UserTab
     }
-  },config(typeUser));
-}
-const config = typeUser => {
-  if (typeUser) {
-    return {
-      headerMode: "none",
-      mode: "modal",
-      initialRouteName: typeUser === "client" ? "Tabs" : "UserTabs"
-    };
-  }
-  return {
-    headerMode: "none",
-    mode: "modal",
-    //initialRouteName: typeUser === 'client' ? "Tabs" :'UserTabs'
-  }
-};
+  },
+  {headerMode: "none",
+  mode: "modal",
+  initialRouteName:'UserTabs'}
+)
 
 // export default (Nav = DrawerNavigator(
 //   {

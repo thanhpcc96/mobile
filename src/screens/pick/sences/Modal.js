@@ -31,20 +31,26 @@ class ModalPick extends Component {
     if (this.state.tu.length === 0 && this.state.den.length === 0) {
       alert("Vui long nhap du diem len va diem xuong");
     } else {
+      const { idchuyen, userid, price} = this.props.data
+      const { tu, den } = this.state;
       this.props.pickChuyenXe(
-        [...this.props.data, this.state.tu, this.state.den],
+        { idchuyen, userid, price, tu, den },
         this.props.socket
       );
     }
   };
 
   render() {
+    console.log('=====================this.props==============');
+    console.log(this.props);
+    console.log('====================================');
     const { idChuyen } = this.props;
     return (
       <Modal
         isVisible={this.props.isShowModal}
         avoidKeyboard={true}
         backdropColor={"rgba(219, 168, 92, 0.36)"}
+        onBackdropPress={this.props.onBackdropPress}
         children={
           <View>
             <View style={styles.titleModal}>

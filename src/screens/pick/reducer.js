@@ -87,12 +87,14 @@ const reducer = (state = initialState, action) => {
       };
     case GET_CHUYEN_DETAIL_SUCCESS:
       return {
+        ...state,
         isLoadingChuyenDetail: false,
         chuyenDetail: action.chuyenDetail,
         errorChuyenDetail: null
       };
     case GET_CHUYEN_DETAIL_ERROR:
       return {
+        ...state,
         isLoadingChuyenDetail: false,
         chuyenDetail: null,
         errorChuyenDetail: action.error

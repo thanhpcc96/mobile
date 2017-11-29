@@ -8,10 +8,15 @@ import {
 import { HomeScreen } from "./home";
 import { TrackingScreen } from "./tracking";
 import { RegisterScreen } from "./register";
-import { PickScreen,PickReducer, DetailChuyen, ResultSearch } from "./pick";
+import { PickScreen, PickReducer, DetailChuyen, ResultSearch } from "./pick";
 import { PaymentScreen } from "./payment";
 import { ReportScreen } from "./report";
-import { TicketSVGScreen, TicketDetail, ScannerQRCode } from "./ticketSVG";
+import {
+  TicketSVGScreen,
+  TicketDetail,
+  ScannerQRCode,
+  TicketReducer
+} from "./ticketSVG";
 import { ProfileScreen, UpdateProfileScreen, ProfileReducer } from "./profile";
 
 export {
@@ -24,7 +29,7 @@ export {
   TrackingScreen,
   RegisterScreen,
   PickScreen,
-  DetailChuyen, 
+  DetailChuyen,
   ResultSearch,
   PickReducer,
   PaymentScreen,
@@ -32,6 +37,7 @@ export {
   TicketSVGScreen,
   TicketDetail,
   ScannerQRCode,
+  TicketReducer,
   ProfileScreen,
   UpdateProfileScreen,
   ProfileReducer

@@ -28,6 +28,7 @@ import styles from "./styles/HomeScreen.style";
   }
 )
 class HomeScreen extends Component {
+  
   state={
     isLoadingData: true
   }

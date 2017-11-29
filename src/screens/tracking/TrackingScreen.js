@@ -6,7 +6,7 @@ import styles from "./styles/Tracking.style";
 import ModalStatus from "./components/BottomHeader";
 import io from "socket.io-client";
 
-const socketURL = "http://192.168.1.3:4000";
+const socketURL = "http://192.168.2.39:4000";
 
 export default class Tracking extends React.Component {
   constructor(props) {

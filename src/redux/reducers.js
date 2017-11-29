@@ -1,13 +1,23 @@
 import { combineReducers } from "redux";
 import { reducer as form } from "redux-form";
 
-import nav from "../routes/navigationReducer";
-import { AuthReducer, ProfileReducer, PickReducer } from "../screens";
+import {
+  navigationClientReducer,
+  navigationUserReducer
+} from "../routes/navigationReducer";
+import {
+  AuthReducer,
+  ProfileReducer,
+  PickReducer,
+  TicketReducer
+} from "../screens";
 
 export default combineReducers({
   form,
-  nav,
+  clientNav: navigationClientReducer,
+  userNav: navigationUserReducer,
   user: AuthReducer,
   profile: ProfileReducer,
-  pick: PickReducer
+  pick: PickReducer,
+  ticket: TicketReducer
 });

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { ListItem, Left, Body, Right } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { connect } from "react-redux";
@@ -67,28 +67,37 @@ class DetailChuyen extends Component {
       this.setState({ isConnectSuccessfuly: false });
     });
     socket.on("chuyenDetailResult", res => {
-      console.log("==================res==================");
-      console.log(res);
-      console.log("====================================");
       this.props.handleResultGetChuyenDeTail(res);
     });
+    socket.on("pickResult", result => {
+      this.props.handlePickChuyenResult(result);
+    });
+  }
+  componentDidMount() {
     this.props.getChuyenDetailAction(
       socket,
       this.props.navigation.state.params.idchuyen
     );
-    socket.on("pickResult", res => {
-      this.props.handlePickChuyenResult(res);
-    });
   }
-  componentWillUnmount() {
-    socket.disconnect();
-  }
+
   componentWillReceiveProps(nextProp) {
     if (nextProp.pick.isLoadingChuyenDetail === false) {
       this.setState({
         isLoadingChuyenDetail: false
       });
     }
+    if (nextProp.pick.ticket !== null) {
+      Alert.alert("Dang ky chuyen thanh cong");
+      this.props.navigation.goBack();
+      // this.props.navigation.navigate("SVG");
+    }
+    if (nextProp.pick.errorpick !== null) {
+      // Alert.alert("Pick ve khong thanh cong");
+      // this.props.navigation.navigate("PickScreen");
+    }
+  }
+  componentWillUnmount() {
+    socket.disconnect();
   }
   _handleShowModal = () => {
     this.setState({
@@ -100,11 +109,16 @@ class DetailChuyen extends Component {
       isShowModal: false
     });
   };
-
-  render() {
+  _pickChuyen = () => {
     const userid = this.props.clientID;
     const idchuyen = this.props.navigation.state.params.idchuyen;
-    const data = { userid, idchuyen, price: 0 };
+    const tu = this.props.pick.chuyenDetail.from;
+    const den = this.props.pick.chuyenDetail.to;
+    const data = { userid, idchuyen, price: 0, tu, den };
+    this.props.pickChuyenXe(data, socket);
+  };
+
+  render() {
     console.log("================isLoadingChuyenDetail====================");
     console.log(this.props.pick.isLoadingChuyenDetail);
     console.log("====================================");
@@ -129,7 +143,7 @@ class DetailChuyen extends Component {
           }}
         >
           <Text style={{ fontSize: 28, color: "#FFF", fontWeight: "bold" }}>
-            {chuyen.tenchuyen}
+            {chuyen ? chuyen.tenchuyen : "Network error"}
           </Text>
         </View>
         <View style={{ flex: 0.7 }}>
@@ -226,18 +240,19 @@ class DetailChuyen extends Component {
             alignItems: "center"
           }}
         >
-          <TouchableOpacity onPress={() => this._handleShowModal()}>
+          <TouchableOpacity onPress={() => this._pickChuyen()}>
             <Feather name="pocket" size={25} color={"#fff"} />
           </TouchableOpacity>
         </View>
-        <Modal
+        {/*<Modal
           isShowModal={this.state.isShowModal}
+          onBackdropPress={() => this.setState({ isShowModal: false })}
           socket={socket}
           data={data}
           hideModal={this._handleHideModal}
           pickChuyenXe={this.props.pickChuyenXe}
           disablePick={this.props.pick.isbooking}
-        />
+        />*/}
       </View>
     );
   }

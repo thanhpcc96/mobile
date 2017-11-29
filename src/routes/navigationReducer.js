@@ -1,6 +1,12 @@
-import { router } from './index';
+import { routerClient, routerUser } from "./index";
 
-export default function navigationReducer(state, action) {
-  const newState = router.getStateForAction(action, state);
+const navigationClientReducer = (state, action) => {
+  const newState = routerClient.getStateForAction(action, state);
   return newState || state;
-}
+};
+const navigationUserReducer = (state, action) => {
+  const newState = routerUser.getStateForAction(action, state);
+  return newState || state;
+};
+
+export { navigationClientReducer, navigationUserReducer };
