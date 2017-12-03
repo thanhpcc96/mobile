@@ -4,9 +4,9 @@ import { Platform } from "react-native";
 let url;
 if (__DEV__) {
   if (Platform.OS !== "ios") {
-    url = "http://192.168.0.17:3000/api/v1";
+    url = "http://192.168.0.10:3000/api/v1";
   } else {
-    url = "http://192.168.0.17:3000/api/v1";
+    url = "http://192.168.0.10:3000/api/v1";
   }
 } else {
   url = "https://aws.com/nodeservice/thanhpham/api/v1";

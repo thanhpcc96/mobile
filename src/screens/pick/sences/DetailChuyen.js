@@ -66,18 +66,16 @@ class DetailChuyen extends Component {
     socket.on("connect_failed", () => {
       this.setState({ isConnectSuccessfuly: false });
     });
+    socket.emit("chuyenDetail", this.props.navigation.state.params.idchuyen)
     socket.on("chuyenDetailResult", res => {
       this.props.handleResultGetChuyenDeTail(res);
     });
-    socket.on("pickResult", result => {
-      this.props.handlePickChuyenResult(result);
-    });
   }
-  componentDidMount() {
-    this.props.getChuyenDetailAction(
-      socket,
-      this.props.navigation.state.params.idchuyen
-    );
+  componentWillMount() {
+    // this.props.getChuyenDetailAction(
+    //   socket,
+    //   this.props.navigation.state.params.idchuyen
+    // );
   }
 
   componentWillReceiveProps(nextProp) {
@@ -85,11 +83,6 @@ class DetailChuyen extends Component {
       this.setState({
         isLoadingChuyenDetail: false
       });
-    }
-    if (nextProp.pick.ticket !== null) {
-      Alert.alert("Dang ky chuyen thanh cong");
-      this.props.navigation.goBack();
-      // this.props.navigation.navigate("SVG");
     }
     if (nextProp.pick.errorpick !== null) {
       // Alert.alert("Pick ve khong thanh cong");
@@ -109,15 +102,6 @@ class DetailChuyen extends Component {
       isShowModal: false
     });
   };
-  _pickChuyen = () => {
-    const userid = this.props.clientID;
-    const idchuyen = this.props.navigation.state.params.idchuyen;
-    const tu = this.props.pick.chuyenDetail.from;
-    const den = this.props.pick.chuyenDetail.to;
-    const data = { userid, idchuyen, price: 0, tu, den };
-    this.props.pickChuyenXe(data, socket);
-  };
-
   render() {
     console.log("================isLoadingChuyenDetail====================");
     console.log(this.props.pick.isLoadingChuyenDetail);

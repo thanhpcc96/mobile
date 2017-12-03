@@ -1,1 +1,1 @@
-export const WWS_Client = "http://192.168.0.17:3000/client"
+export const WWS_Client = "http://192.168.0.10:3000/client"

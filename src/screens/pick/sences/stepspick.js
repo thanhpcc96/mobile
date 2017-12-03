@@ -27,6 +27,7 @@ import {
 import ViewPager from "react-native-viewpager";
 import * as Progress from "react-native-progress";
 import { connect } from "react-redux";
+import io from "socket.io-client";
 import {
   PagerTabIndicator,
   IndicatorViewPager,
@@ -56,19 +57,31 @@ const firstIndicatorStyles = {
   labelSize: 12,
   currentStepLabelColor: "#4aae4f"
 };
-let chuyenDi;
-let diemxuong;
+import { WWS_Client } from "../../../../constants/socket";
 
+import { handlePickChuyenResult, pickChuyenXe } from "../action";
+
+const socket = io(WWS_Client, { transports: ["websocket"] });
+let chuyenDi = [];
+let diemxuong = [];
+let Gia = [];
 const Item = Picker.Item;
 const resetAction = NavigationActions.reset({
   index: 0,
   actions: [NavigationActions.navigate({ routeName: "PickScreen" })]
 });
 
-@connect(state => ({
-  chuyenchitiet: state.pick.chuyenDetail,
-  clientID: state.user.info._id
-}))
+@connect(
+  state => ({
+    chuyenchitiet: state.pick.chuyenDetail,
+    pick: state.pick,
+    clientID: state.user.info._id
+  }),
+  {
+    pickChuyenXe,
+    handlePickChuyenResult
+  }
+)
 class Steps extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerStyle: {
@@ -95,12 +108,20 @@ class Steps extends Component {
       currentPage: 0,
       diemlen: 0,
       diemxuong: 0,
-      isCaculator: false
+      isCaculator: false,
+      listXuong: [],
+      price: 0,
+      isPressXacNhan: false,
+      tendiemlen: "",
+      tendiemxuong: ""
     };
+    socket.on("pickResult",res=>{
+      this.props.handlePickChuyenResult(res);
+    })
   }
   onValueChange(value) {
     this.setState({
-      diemlen : value
+      diemlen: value
     });
   }
   onValueChange1(value) {
@@ -108,10 +129,81 @@ class Steps extends Component {
       diemxuong: value
     });
   }
+  _nextToTwo() {
+    const list = [];
+    for (let i = 0; i < chuyenDi.length; i++) {
+      if (i > this.state.diemlen) {
+        list.push(chuyenDi[i]);
+      }
+    }
+    this.setState({
+      listXuong: list,
+      currentPage: 1
+    });
+  }
+  _gotoThree() {
+    const tendiemxuong = this.state.listXuong[this.state.diemxuong];
+    const indexOfXuong = chuyenDi.indexOf(tendiemxuong);
+    const tendiemlen = chuyenDi[this.state.diemlen];
+    let tien = 0;
+    for (let i = this.state.diemlen; i < indexOfXuong; i++) {
+      tien += Gia[i];
+    }
+    this.setState({
+      price: tien,
+      currentPage: 2,
+      tendiemlen: tendiemlen,
+      tendiemxuong: tendiemxuong
+    });
+  }
+  _pickChuyen = () => {
+    const userid = this.props.clientID;
+    const idchuyen = this.props.chuyenchitiet._id;
+    const tu = this.state.tendiemlen;
+    const den = this.state.tendiemxuong;
+    const price= this.state.price;
+
+    const data = { userid, idchuyen, price, tu, den };
+    this.props.pickChuyenXe(data, socket);
+    this.setState({
+      isPressXacNhan: true
+    });
+  };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.pick.ticket !== null) {
+      this.setState({
+        currentPage: 3
+      });
+    }
+  }
   render() {
-    chuyenDi = this.props.chuyenchitiet.routeOfTrip.routeOfTrip.lotrinh;
-    diemxuong = this.props.chuyenchitiet.routeOfTrip.routeOfTrip.lotrinh;
-   // chuyenDi.splice(chuyenDi.length - 1, 1);
+    chuyenDi = [];
+    diemxuong = [];
+    Gia = [];
+    const loai = this.props.chuyenchitiet.loai;
+    if (loai === "VE") {
+      chuyenDi.push(
+        ...this.props.chuyenchitiet.routeOfTrip.routeOfTrip.lotrinh.reverse()
+      );
+      // diemxuong.push(...chuyenDi);
+      Gia.push(
+        ...this.props.chuyenchitiet.routeOfTrip.routeOfTrip.giacuoc.reverse()
+      );
+    }
+    if (loai == "DI") {
+      chuyenDi.push(
+        ...this.props.chuyenchitiet.routeOfTrip.routeOfTrip.lotrinh
+      );
+      diemxuong.push(
+        ...this.props.chuyenchitiet.routeOfTrip.routeOfTrip.lotrinh
+      );
+      Gia.push(...this.props.chuyenchitiet.routeOfTrip.routeOfTrip.giacuoc);
+    }
+    console.log("===============chuyenDi=====================");
+    console.log(this.props.chuyenchitiet.loai);
+    console.log(chuyenDi);
+    console.log("====================================");
+    // chuyenDi.splice(chuyenDi.length - 1, 1);
     return (
       <View style={styles.container}>
         <View style={styles.stepIndicator}>
@@ -207,9 +299,7 @@ class Steps extends Component {
                 alignItems: "center"
               }}
             >
-              <TouchableOpacity
-                onPress={() => this.setState({ currentPage: 1 })}
-              >
+              <TouchableOpacity onPress={() => this._nextToTwo()}>
                 <Text style={{ fontSize: 18, fontWeight: "600" }}>
                   Tiếp theo
                 </Text>
@@ -256,7 +346,7 @@ class Steps extends Component {
                 selectedValue={this.state.diemxuong}
                 onValueChange={this.onValueChange1.bind(this)}
               >
-                {diemxuong.map((item, i) => {
+                {this.state.listXuong.map((item, i) => {
                   return <Item label={item} value={i} key={i} />;
                 })}
               </Picker>
@@ -303,15 +393,14 @@ class Steps extends Component {
                 alignItems: "center"
               }}
             >
-              <TouchableOpacity
-                onPress={() => this.setState({ currentPage: 2 })}
-              >
+              <TouchableOpacity onPress={() => this._gotoThree()}>
                 <Text style={{ fontSize: 18, fontWeight: "600" }}>
                   Tiếp theo
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
+
           <View style={{ backgroundColor: "#42A5F5" }}>
             {this._renderSuccessCalculator()}
           </View>
@@ -351,9 +440,7 @@ class Steps extends Component {
     this.props.navigation.dispatch(resetAction);
     this.props.navigation.navigate("SVG");
   }
-  _renderDotIndicator() {
-    return <PagerDotIndicator pageCount={3} />;
-  }
+
   _renderSuccessCalculator() {
     if (this.state.isCaculator === true) {
       return (
@@ -428,8 +515,7 @@ class Steps extends Component {
             style={{ width: 100, height: 100, tintColor: "#FFF" }}
           />
           <Text style={{ color: "#FFF", fontWeight: "bold", fontSize: 18 }}>
-            {" "}
-            80.000 VNĐ
+            {this.state.price + " VNĐ"}
           </Text>
         </View>
         <View
@@ -460,7 +546,7 @@ class Steps extends Component {
             alignItems: "center"
           }}
         >
-          <TouchableOpacity onPress={() => this.setState({ currentPage: 3 })}>
+          <TouchableOpacity onPress={() => this._pickChuyen()}>
             <Text style={{ fontSize: 18, fontWeight: "600" }}>Xác nhận</Text>
           </TouchableOpacity>
         </View>
