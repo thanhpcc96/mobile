@@ -240,7 +240,9 @@ class DetailChuyen extends Component {
             alignItems: "center"
           }}
         >
-          <TouchableOpacity onPress={() => this._pickChuyen()}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Steps")}
+          >
             <Feather name="pocket" size={25} color={"#fff"} />
           </TouchableOpacity>
         </View>

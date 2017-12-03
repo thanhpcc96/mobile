@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import { Text } from 'react-native';
 
 // Import Screen
-import { PickScreen, ResultSearch, DetailChuyen} from '../screens';
+import { PickScreen, ResultSearch, DetailChuyen, Steps} from '../screens';
 
 
 const PickTab = StackNavigator(
@@ -16,6 +16,9 @@ const PickTab = StackNavigator(
     },
     DetailChuyen: {
       screen: DetailChuyen,
+    },
+    Steps: {
+      screen: Steps,
     },
   },
   {

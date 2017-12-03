@@ -1,4 +1,4 @@
 import DetailChuyen from "./DetailChuyen";
 import ResultSearch from "./ResultSearch";
-
-export { DetailChuyen, ResultSearch };
+import Steps from "./stepspick";
+export { DetailChuyen, ResultSearch, Steps };

@@ -8,7 +8,7 @@ import {
 import { HomeScreen } from "./home";
 import { TrackingScreen } from "./tracking";
 import { RegisterScreen } from "./register";
-import { PickScreen, PickReducer, DetailChuyen, ResultSearch } from "./pick";
+import { PickScreen, PickReducer, DetailChuyen, ResultSearch, Steps } from "./pick";
 import { PaymentScreen,PaymentReducer } from "./payment";
 import { ReportScreen } from "./report";
 import {
@@ -32,6 +32,7 @@ export {
   DetailChuyen,
   ResultSearch,
   PickReducer,
+  Steps,
   PaymentScreen,
   PaymentReducer,
   ReportScreen,

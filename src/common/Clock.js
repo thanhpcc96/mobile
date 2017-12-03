@@ -40,9 +40,7 @@ class Clock extends Component {
   }
 
   componentDidMount() {
-    if (this.state.isHetgio === false) {
-      setInterval(() => this.getTimeUntil(this.props.deadline), 1000);
-    }
+    setInterval(() => this.getTimeUntil(this.props.deadline), 1000);
   }
 
   getTimeUntil(deadline) {

@@ -61,9 +61,6 @@ class ListChuyenXeFake extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    console.log("=================componentWillUnmount===================");
-    console.log("componentWillUnmount");
-    console.log("====================================");
     socket.disconnect();
   }
   renderItem = ({ item, index }) => (
@@ -90,6 +87,7 @@ class ListChuyenXeFake extends React.PureComponent {
           data={this.props.chuyens}
           extraData={this.props.chuyens}
           renderItem={this.renderItem}
+          keyExtractor={(item, index) => index}          
           getItemLayout={(data, index) => ({
             length: 100,
             offset: 100 * index,
