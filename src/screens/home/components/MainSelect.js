@@ -9,7 +9,10 @@ import styles from "./styles/MainSelect.style";
 const MainSelect = ({ navigation }) => (
   <View style={styles.root}>
     <ScrollView>
-      <TouchableOpacity style={styles.selectItem}>
+      <TouchableOpacity
+        style={styles.selectItem}
+        onPress={() => navigation.navigate("PickTab")}
+      >
         <View style={styles.iconFirt}>
           <MaterialCommunityIcons
             color={"#3E3E3E"}

@@ -9,6 +9,8 @@ import { logOutAction } from "../screens/auth/actions";
 // Import Screen
 import {
   HomeScreen,
+  LinkScreen,
+  Notification,
   TicketSVGScreen,
   TicketDetail,
   ScannerQRCode,
@@ -27,7 +29,7 @@ const HomeTab = StackNavigator(
               <NavButton
                 icon="ios-log-in"
                 iconSize={33}
-                onPress={() => navigation.navigate("Login")}
+                onPress={() => navigation.navigate("Notification")}
                 style={{ paddingLeft: 10 }}
               />
             }
@@ -52,9 +54,14 @@ const HomeTab = StackNavigator(
     SVG: {
       screen: TicketSVGScreen
     },
+    LinkScreen: {
+      screen: LinkScreen
+    },
+    Notification: {
+      screen: Notification
+    },
     Ticketdetail: {
-      screen: TicketDetail,
-      
+      screen: TicketDetail
     },
     Scanner: {
       screen: ScannerQRCode

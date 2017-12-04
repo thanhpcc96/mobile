@@ -8,7 +8,7 @@ import {
 } from "./actions";
 
 const initState = {
-  isLoading: false,
+  isLoaded: false,
   listticket: null,
   error: null,
   isLoadedVe: false,
@@ -21,21 +21,21 @@ export default function(state = initState, action) {
     case GET_LIST_TICKET_AVAIABLE:
       return {
         ...state,
-        isLoading: true,
+        isLoaded: false,
         listticket: null,
         error: null
       };
     case GET_LIST_TICKET_AVAIABLE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isLoaded: true,
         listticket: action.tickets,
         error: null
       };
     case GET_LIST_TICKET_AVAIABLE_ERROR:
       return {
         ...state,
-        isLoading: false,
+        isLoadef: true,
         listticket: null,
         error: action.error
       };

@@ -4,10 +4,13 @@ import { AsyncStorage, UIManager, StatusBar } from "react-native";
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import EStyleSheet from "react-native-extended-stylesheet";
+
 import store from "./src/redux/store";
 
 import { fontAssets } from "./helper/cachedFonts";
 import Root from "./src/Root";
+
+import registerForPushNotificationsAsync from "./constants/resgiterNotification";
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);

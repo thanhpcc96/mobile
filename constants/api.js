@@ -4,9 +4,9 @@ import { Platform } from "react-native";
 let url;
 if (__DEV__) {
   if (Platform.OS !== "ios") {
-    url = "http://192.168.0.10:3000/api/v1";
+    url = "http://192.168.2.32:3000/api/v1";
   } else {
-    url = "http://192.168.0.10:3000/api/v1";
+    url = "http://192.168.2.32:3000/api/v1";
   }
 } else {
   url = "https://aws.com/nodeservice/thanhpham/api/v1";
@@ -28,6 +28,14 @@ class ClientAPI {
   async postLogin(args) {
     try {
       const res = await axios.post(this.path + "login", { ...args });
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
+  async postTokenPush(args) {
+    try {
+      const res = await axios.post(this.path + "updatepush", { ...args });
       return res;
     } catch (err) {
       throw err;
@@ -91,8 +99,10 @@ class UserAPI {
   }
   async getInfoVe(id) {
     try {
-      const res = await axios.post("/manager/ticket/info/id", { mave: id.toString() });
-      return res
+      const res = await axios.post("/manager/ticket/info/id", {
+        mave: id.toString()
+      });
+      return res;
     } catch (error) {
       throw error;
     }
@@ -103,6 +113,14 @@ class UserAPI {
       return res;
     } catch (err) {
       throw err;
+    }
+  }
+  async postXeVe(id) {
+    try {
+      const res = await axios.post("/manager/ticket/xeve", { mave: id });
+      return res;
+    } catch (error) {
+      throw error;
     }
   }
 }

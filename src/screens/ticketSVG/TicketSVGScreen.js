@@ -42,7 +42,7 @@ class TicketSVGScreen extends Component {
         onPress={() => navigation.goBack()}
         style={{ paddingLeft: 10 }}
       />
-    ),
+    )
   });
   constructor(props) {
     super(props);
@@ -50,9 +50,9 @@ class TicketSVGScreen extends Component {
     this.props.getListVeAvaiable();
   }
   _renderItem = ({ data, i }) => {
-    console.log('=================iiiii===================');
+    console.log("=================iiiii===================");
     console.log(i);
-    console.log('====================================');
+    console.log("====================================");
     return (
       <View key={i}>
         <View style={styles.scrollviewItem}>
@@ -61,16 +61,11 @@ class TicketSVGScreen extends Component {
           </View>
           <View style={styles.scrollviewItemInfo}>
             <View style={styles.Title}>
-              <Text style={styles.TitleText}>
-                {data.inChuyenXe ? data.inChuyenXe.tenchuyen : "Vé Lỗi"}
-              </Text>
+              <Text style={styles.TitleText}>{data.inChuyenXe.tenchuyen}</Text>
             </View>
             <View style={styles.TimeStart}>
               <Text style={styles.text}>
-                Xuất phát:{" "}
-                {data.inChuyenXe
-                  ? moment(data.inChuyenXe.TimeStart).format("LT,L")
-                  : "Vé Lỗi"}
+                Xuất phát: {moment(data.inChuyenXe.timeStart).format("LT,L")}
               </Text>
             </View>
             <View style={styles.price}>
@@ -101,7 +96,7 @@ class TicketSVGScreen extends Component {
     console.log(this.props.navigation);
     console.log("====================================");
     // const logofromfile = require("../../../assets/logo.png");
-    if (this.props.ticket.isLoading === true) {
+    if (!this.props.ticket.isLoaded) {
       return (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -110,14 +105,21 @@ class TicketSVGScreen extends Component {
         </View>
       );
     }
+    if (this.props.ticket.error) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text> Loading Lỗi..............</Text>
+        </View>
+      );
+    }
     return (
       <View style={styles.root}>
         <ScrollView>
-          {this.props.ticket.listticket
-            ? this.props.ticket.listticket.result.map((data, i) =>
-                this._renderItem({ data, i })
-              )
-            : undefined}
+          {this.props.ticket.listticket.result.map((data, i) =>
+            this._renderItem({ data, i })
+          )}
         </ScrollView>
       </View>
     );

@@ -36,9 +36,7 @@ const Itemchuyen = ({ data, index, navigation }) => {
               <Text style={{ color: "#FFF", fontWeight: "bold", fontSize: 15 }}>
                 Hết giờ
               </Text>
-            ) : (
-              <Clock deadline={data.timeStart} />
-            )}
+            ) : undefined}
           </View>
         </View>
         <View style={styles.cardContainer}>

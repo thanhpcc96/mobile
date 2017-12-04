@@ -5,6 +5,8 @@ import { NavClient, NavUser } from "./Nav";
 import { AuthScreen } from "../screens";
 import { setAuthHeader } from "../../constants/api";
 
+import resgiterNotification from '../../constants/resgiterNotification'
+
 // @connect(state => ({
 //   navigation: state.navigation,
 //   user: state.user
@@ -30,6 +32,7 @@ class AppNavigator extends PureComponent {
 
     if (this.props.user.isLogged && this.props.user.typeUser === "client") {
       setAuthHeader(this.props.user.token);
+      resgiterNotification(this.props.user.info._id);
       return <NavClient navigation={navclient} />;
     }
     if (this.props.user.isLogged && this.props.user.typeUser === "user") {

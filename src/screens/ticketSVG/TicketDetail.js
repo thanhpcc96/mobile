@@ -47,8 +47,7 @@ class TicketDetail extends Component {
   });
   constructor(props) {
     super(props);
-    const idVe = this.props.navigation.state.params.idVe;
-    this.props.getTicketInfo(idVe);
+    
   }
   _saveToCameraRollAsync = async () => {
     let result = await takeSnapshotAsync(this._containerCapture, {
@@ -63,7 +62,10 @@ class TicketDetail extends Component {
       Alert.alert("Thất bại", "Thiếu quyền truy cập");
     }
   };
-
+  componentDidMount() {
+    const idVe = this.props.navigation.state.params.idVe;
+    this.props.getTicketInfo(idVe);
+  }
   render() {
     console.log("=============navigation=======================");
     console.log(this.props.navigation);
@@ -117,7 +119,7 @@ class TicketDetail extends Component {
               </Text>
               <Text style={styles.text}>Giá vé</Text>
               <Text style={styles.textPrimary}>
-                {ticketinfo ? ticketinfo.price : ""}
+                {ticketinfo ? ticketinfo.price +" VNĐ" : ""}
               </Text>
             </View>
 
@@ -158,9 +160,9 @@ class TicketDetail extends Component {
                   { marginLeft: "5%", marginVertical: "1%" }
                 ]}
               >
-                {ticketinfo.inChuyenXe.routeOfTrip.routeOfTrip.from +
+                {ticketinfo.routeOfTicket.from +
                   " ===> " +
-                  ticketinfo.inChuyenXe.routeOfTrip.routeOfTrip.to}
+                  ticketinfo.routeOfTicket.to}
               </Text>
               <Text style={styles.text}>Chiều di chuyển</Text>
               <Text
@@ -216,7 +218,9 @@ class TicketDetail extends Component {
                   { marginLeft: "5%", marginVertical: "1%" }
                 ]}
               >
-                {ticketinfo.inChuyenXe.coach.numberplate}
+                {ticketinfo.inChuyenXe.coach
+                  ? ticketinfo.inChuyenXe.coach.numberplate
+                  : "Đang cập nhât......"}
               </Text>
             </ScrollView>
           </View>

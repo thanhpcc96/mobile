@@ -1,5 +1,5 @@
-import HomeScreen from './HomeScreen';
+import HomeScreen from "./HomeScreen";
+import LinkScreen from "./LinkScreen";
+import Notification from "./Notification";
 
-export {
-  HomeScreen,
-};
+export { HomeScreen, LinkScreen, Notification };

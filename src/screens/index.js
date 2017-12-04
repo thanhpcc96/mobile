@@ -5,11 +5,17 @@ import {
   ChangePassScreen,
   ConfirmCodeForgotScreen
 } from "./forgot";
-import { HomeScreen } from "./home";
+import { HomeScreen, LinkScreen, Notification } from "./home";
 import { TrackingScreen } from "./tracking";
 import { RegisterScreen } from "./register";
-import { PickScreen, PickReducer, DetailChuyen, ResultSearch, Steps } from "./pick";
-import { PaymentScreen,PaymentReducer } from "./payment";
+import {
+  PickScreen,
+  PickReducer,
+  DetailChuyen,
+  ResultSearch,
+  Steps
+} from "./pick";
+import { PaymentScreen, PaymentReducer } from "./payment";
 import { ReportScreen } from "./report";
 import {
   TicketSVGScreen,
@@ -26,6 +32,8 @@ export {
   ChangePassScreen,
   ConfirmCodeForgotScreen,
   HomeScreen,
+  LinkScreen,
+  Notification,
   TrackingScreen,
   RegisterScreen,
   PickScreen,

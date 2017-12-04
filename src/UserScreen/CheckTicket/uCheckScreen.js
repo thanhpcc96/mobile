@@ -10,14 +10,15 @@ import {
 import { BarCodeScanner, Permissions } from "expo";
 import { connect } from "react-redux";
 import NavBarButton from "../../common/NavBarButton";
-import { getInfoVe } from "./action";
+import { getInfoVe, xeVe } from "./action";
 
 @connect(
   state => ({
     managerticket: state.managerticket
   }),
   {
-    getInfoVe
+    getInfoVe,
+    xeVe
   }
 )
 class ScanQRCode extends Component {
@@ -72,6 +73,9 @@ class ScanQRCode extends Component {
       ketquaScanMoiNhat: null
     });
   };
+  _xeVe(){
+    this.props.xeVe(this.state.ketquaScanMoiNhat);
+  }
   _showresult = () => {
     if (!this.state.ketquaScanMoiNhat) {
       return (
@@ -100,6 +104,14 @@ class ScanQRCode extends Component {
               onPress={() => this._resetScan()}
             >
               <Text style={styles.buttonText}>Reset</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={!this.props.managerticket.isLoaded}
+              style={styles.headerButton}
+              onPress={() => this._xeVe()}
+
+            >
+              <Text style={styles.buttonText}>Xé vé</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.resultContent}>
