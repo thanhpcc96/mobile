@@ -19,13 +19,12 @@ const styles = StyleSheet.create({
   },
   searchConatiner: {
     marginTop:5,
-    height: 30,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    height: 60,
+    justifyContent: "center",
+   // alignItems: "center"
   },
   contentSearch: {
-    flex: 0.8,
+    flex: 0.6,
     borderRadius: 6
   },
   searchButtonContainer: {

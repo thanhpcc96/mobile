@@ -16,6 +16,10 @@ export const GET_CHUYEN_DETAIL = "GET_CHUYEN_DETAIL";
 export const GET_CHUYEN_DETAIL_ERROR = "GET_CHUYEN_DETAIL_ERROR";
 export const GET_CHUYEN_DETAIL_SUCCESS = "GET_CHUYEN_DETAIL_SUCCESS";
 
+export const CANCEL_CHUYEN = "CANCEL_CHUYEN";
+export const CANCEL_CHUYEN_SUCCESS = "CANCEL_CHUYEN_SUCCESS";
+export const CANCEL_CHUYEN_ERROR = "CANCEL_CHUYEN_ERROR";
+
 /**
  * 
  * @param {oject} res -- xu ly du lieu khi load ve client
@@ -29,9 +33,9 @@ export const GET_CHUYEN_DETAIL_SUCCESS = "GET_CHUYEN_DETAIL_SUCCESS";
           }
  */
 export const resultLoadingChuyen = res => {
-  console.log('=================resultLoadingChuyen===================');
+  console.log("=================resultLoadingChuyen===================");
   console.log(res);
-  console.log('====================================');
+  console.log("====================================");
   const { type } = res;
   return dispatch => {
     if (type === GET_LIST_CHUYEN_ERR) {
@@ -126,13 +130,39 @@ export const handleResultGetChuyenDeTail = res => {
     if (type === GET_CHUYEN_DETAIL_SUCCESS) {
       return dispatch({
         type: GET_CHUYEN_DETAIL_SUCCESS,
-        chuyenDetail: res.result,
+        chuyenDetail: res.result
       });
     }
     if (type === GET_CHUYEN_DETAIL_ERROR) {
       return dispatch({
         type: GET_CHUYEN_DETAIL_ERROR,
-        chuyenDetail: res.error,
+        chuyenDetail: res.error
+      });
+    }
+  };
+};
+export const emitCancelChuyen = (socket, chuyenxeID, clientID, ticketID) => {
+  return dispatch => {
+    socket.emit("cancelChuyen", { chuyenxeID, clientID, ticketID });
+    return dispatch({
+      type: CANCEL_CHUYEN
+    });
+  };
+};
+
+export const handleCancelPickResult = res => {
+  const { type } = res;
+  return dispatch => {
+    if (type === CANCEL_CHUYEN_SUCCESS) {
+      return dispatch({
+        type: CANCEL_CHUYEN_SUCCESS,
+        message: res.message
+      });
+    }
+    if (type === CANCEL_CHUYEN_ERROR) {
+      return dispatch({
+        type: CANCEL_CHUYEN_SUCCESS,
+        error: res.error
       });
     }
   };

@@ -9,7 +9,7 @@ import {
   Dimensions
 } from "react-native";
 import { connect } from "react-redux";
-import io from "socket.io-client";
+
 
 import Itemchuyen from "./ItemTest";
 import {
@@ -24,44 +24,44 @@ import { getListVeAvaiable } from "../../ticketSVG/actions";
 import { WWS_Client } from "../../../../constants/socket";
 let socket;
 
-@connect(
-  state => ({
-    chuyens: state.pick.chuyens,
-    isLoading: state.pick.isLoading,
-    clientID: state.user.info._id
-    // data={this.props.pick.chuyens}
-  }),
-  {
-    getListVeAvaiable,
-    loadDataChuyenFromSocket,
-    resultLoadingChuyen,
-    reloadDatachuyenChanged
-  }
-)
+// @connect(
+//   state => ({
+//     chuyens: state.pick.chuyens,
+//     isLoading: state.pick.isLoading,
+//     clientID: state.user.info._id
+//     // data={this.props.pick.chuyens}
+//   }),
+//   {
+//     getListVeAvaiable,
+//     loadDataChuyenFromSocket,
+//     resultLoadingChuyen,
+//     reloadDatachuyenChanged
+//   }
+// )
 class ListChuyenXeFake extends React.PureComponent {
   constructor(props) {
     super(props);
-    socket = io.connect(WWS_Client, { transports: ["websocket"] });
+   // socket = io.connect(WWS_Client, { transports: ["websocket"] });
   }
   componentDidMount() {
-    console.log("=================componentDidMount===================");
-    console.log("componentDidMount");
-    console.log("====================================");
-    this.props.loadDataChuyenFromSocket(socket, this.props.clientID);
+    // console.log("=================componentDidMount===================");
+    // console.log("componentDidMount");
+    // console.log("====================================");
+    // this.props.loadDataChuyenFromSocket(socket, this.props.clientID);
 
-    /** reload phan tu cua chuyen thay doi */
-    socket.on("listChuyenChanged", res => {
-      this.props.reloadDatachuyenChanged(res);
-    });
-    /** load chuyen xe kha dung tu socket */
-    socket.on("updateListChuyenxe", res => {
-      console.log(res);
-      this.props.resultLoadingChuyen(res);
-    });
+    // /** reload phan tu cua chuyen thay doi */
+    // socket.on("listChuyenChanged", res => {
+    //   this.props.reloadDatachuyenChanged(res);
+    // });
+    // /** load chuyen xe kha dung tu socket */
+    // socket.on("updateListChuyenxe", res => {
+    //   console.log(res);
+    //   this.props.resultLoadingChuyen(res);
+    // });
   }
 
   componentWillUnmount() {
-    socket.disconnect();
+    //socket.disconnect();
   }
   renderItem = ({ item, index }) => (
     <Itemchuyen data={item} index={index} navigation={this.props.navigation} />
@@ -70,24 +70,17 @@ class ListChuyenXeFake extends React.PureComponent {
     console.log("=================props flatlist===================");
     console.log(this.props);
     console.log("====================================");
-    if (this.props.isLoading) {
-      return (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Text> Đang kết nối socket</Text>
-        </View>
-      );
-    }
+    
     return (
       <View style={styles.root}>
         <FlatList
           initialNumToRender={5}
           removeClippedSubviews={true}
-          data={this.props.chuyens}
-          extraData={this.props.chuyens}
+          data={this.props.data}
+          extraData={this.props.data}
           renderItem={this.renderItem}
-          keyExtractor={(item, index) => index}          
+          keyExtractor={(item, index) => index}
+          disableVirtualization={false}
           getItemLayout={(data, index) => ({
             length: 100,
             offset: 100 * index,

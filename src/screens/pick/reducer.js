@@ -10,7 +10,10 @@ import {
   BOOK_CHUYEN_SUCCESS,
   GET_CHUYEN_DETAIL,
   GET_CHUYEN_DETAIL_ERROR,
-  GET_CHUYEN_DETAIL_SUCCESS
+  GET_CHUYEN_DETAIL_SUCCESS,
+  CANCEL_CHUYEN,
+  CANCEL_CHUYEN_ERROR,
+  CANCEL_CHUYEN_SUCCESS
 } from "./action";
 
 const initialState = {
@@ -22,7 +25,10 @@ const initialState = {
   errorpick: null,
   isLoadingChuyenDetail: false,
   chuyenDetail: null,
-  errorChuyenDetail: null
+  errorChuyenDetail: null,
+  isCanceled: false,
+  mesage: null,
+  errorCancel: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -98,6 +104,27 @@ const reducer = (state = initialState, action) => {
         isLoadingChuyenDetail: false,
         chuyenDetail: null,
         errorChuyenDetail: action.error
+      };
+    case CANCEL_CHUYEN:
+      return {
+        ...state,
+        isCanceled: false,
+        mesage: null,
+        errorCancel: null
+      };
+    case CANCEL_CHUYEN_SUCCESS:
+      return {
+        ...state,
+        isCanceled: true,
+        mesage: action.mesage,
+        errorCancel: null
+      };
+    case CANCEL_CHUYEN_ERROR:
+      return {
+        ...state,
+        isCanceled: true,
+        mesage: null,
+        errorCancel: action.error
       };
     default:
       return state;

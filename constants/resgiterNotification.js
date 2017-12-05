@@ -27,7 +27,7 @@ export default (async function registerForPushNotificationsAsync(idclient) {
   console.log(token);
   console.log("====================================");
 
-  return fetch("http://192.168.2.32:3000/api/v1/client/updatepush", {
+  return fetch("http://192.168.0.10:3000/api/v1/client/updatepush", {
     method: "POST",
     headers: {
       Accept: "application/json",

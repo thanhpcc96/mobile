@@ -35,11 +35,11 @@ export default class LinksScreen extends React.Component {
     };
   }
   componentDidMount() {
-    this._notificationSubscription = this._registerForPushNotifications();
+     this._notificationSubscription = this._registerForPushNotifications();
     // this._clearIconBadgeAsync();
   }
   componentWillUnmount() {
-    this._notificationSubscription && this._notificationSubscription.remove();
+    //this._notificationSubscription && this._notificationSubscription.remove();
   }
 
   // //use later for push notification description
@@ -57,7 +57,7 @@ export default class LinksScreen extends React.Component {
     // You can comment the following line out if you want to stop receiving
     // a notification every time you open the app. Check out the source
     // for this function in api/registerForPushNotificationsAsync.js
-   // registerForPushNotificationsAsync();
+   //registerForPushNotificationsAsync();
 
     // Watch for incoming notifications
     this._notificationSubscription = Notifications.addListener(
@@ -65,6 +65,9 @@ export default class LinksScreen extends React.Component {
     );
   }
   _handleNotification = notification => {
+    console.log('====================================');
+    console.log(notification);
+    console.log('====================================');
     this.setState({ notification: notification });
   };
 }

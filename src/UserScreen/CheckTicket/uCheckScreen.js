@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
   ScrollView
 } from "react-native";
+import { Toast } from "native-base";
+import { Entypo } from "@expo/vector-icons";
 import { BarCodeScanner, Permissions } from "expo";
 import { connect } from "react-redux";
 import NavBarButton from "../../common/NavBarButton";
+
 import { getInfoVe, xeVe } from "./action";
 
 @connect(
@@ -46,7 +49,8 @@ class ScanQRCode extends Component {
     super(props);
     this.state = {
       hasCameraPermission: null,
-      ketquaScanMoiNhat: null
+      ketquaScanMoiNhat: null,
+      isXeVeSuccess: false
     };
   }
 
@@ -70,10 +74,20 @@ class ScanQRCode extends Component {
 
   _resetScan = () => {
     this.setState({
-      ketquaScanMoiNhat: null
+      ketquaScanMoiNhat: null,
+      isXeVeSuccess: false
     });
   };
-  _xeVe(){
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.managerticket.vedaxe !== null) {
+      this.setState({
+        isXeVeSuccess: true
+      });
+    }
+  }
+
+  _xeVe() {
     this.props.xeVe(this.state.ketquaScanMoiNhat);
   }
   _showresult = () => {
@@ -105,14 +119,6 @@ class ScanQRCode extends Component {
             >
               <Text style={styles.buttonText}>Reset</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              disabled={!this.props.managerticket.isLoaded}
-              style={styles.headerButton}
-              onPress={() => this._xeVe()}
-
-            >
-              <Text style={styles.buttonText}>Xé vé</Text>
-            </TouchableOpacity>
           </View>
           <View style={styles.resultContent}>
             <View
@@ -137,12 +143,53 @@ class ScanQRCode extends Component {
       <View>
         <View style={styles.resultHeader}>
           <Text style={styles.HeaderText}>Kết quả</Text>
-          <TouchableOpacity
-            style={styles.headerButton}
-            onPress={() => this._resetScan()}
-          >
-            <Text style={styles.buttonText}>Reset</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row" }}>
+            {kq.isDoneCheck ? (
+              <View
+                style={{
+                  backgroundColor: "#FF3D00",
+                  marginRight: 8,
+                  padding: 3
+                }}
+              >
+                <Text style={{ color: "#FFF" }}> Vé đã được xé </Text>
+              </View>
+            ) : this.state.isXeVeSuccess ? (
+              <View
+                style={{
+                  backgroundColor: "#00E676",
+                  marginRight: 8,
+                  padding: 3
+                }}
+              >
+                <Text style={{ color: "#FFF" }}>Xé Thành công</Text>
+              </View>
+            ) : (
+              <TouchableOpacity
+                disabled={kq.isDoneCheck}
+                style={[
+                  styles.headerButton,
+                  {
+                    backgroundColor: "#EF6C00",
+                    paddingTop: 7,
+                    paddingBottom: 7,
+                    marginRight: 10,
+                    borderRadius: 5
+                  }
+                ]}
+                onPress={() => this._xeVe()}
+              >
+                <Entypo name="flat-brush" size={25} color={"#FFF"} />
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity
+              style={styles.headerButton}
+              onPress={() => this._resetScan()}
+            >
+              <Text style={styles.buttonText}>Reset</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.resultContent}>
           <ScrollView>
@@ -233,9 +280,11 @@ const styles = {
   },
   headerButton: {
     backgroundColor: "#FFF",
-    paddingLeft: 5,
-    paddingRight: 5,
-    marginRight: 10
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginRight: 10,
+    justifyContent: "center",
+    alignItems: "center"
   },
   buttonText: {
     color: "#283593",

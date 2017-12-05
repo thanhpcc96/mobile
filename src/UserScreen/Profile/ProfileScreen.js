@@ -24,6 +24,7 @@ import { logOutAction } from "../../screens/auth/actions";
   state => ({
     isLoading: state.profile.isLoading,
     profile: state.profile,
+   
   }),
   {
     getInfoProfileAction,
@@ -53,14 +54,17 @@ class ProfileScreen extends Component {
   state = {};
 
   componentDidMount() {
-    // this.props.getInfoProfileAction("client");
+// this.props.getInfoProfileAction(this.props.typeUser);
   }
 
   render() {
     console.log("====================================");
     console.log(this.props);
     console.log("====================================");
-    if (this.props.isLoading === true || this.props.profile.error) {
+    if (this.props.isLoading === true) {
+      return <LoadingScreen color={"#4E94E5"} />;
+    }
+    if (this.props.profile.error) {
       return <LoadingScreen color={"#4E94E5"} />;
     }
     return (

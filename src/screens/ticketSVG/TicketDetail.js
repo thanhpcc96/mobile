@@ -8,14 +8,20 @@ import {
   Alert,
   ScrollView
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { takeSnapshotAsync } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
-
+import io from "socket.io-client";
 import NavBarButton from "../../common/NavBarButton";
 import QRcode from "../../common/QRcodehelper";
-import { getTicketInfo } from "./actions";
+import { getTicketInfo, getListVeAvaiable } from "./actions";
 import moment from "../../../i18n/TimeZoneVietNam";
+
+import { WWS_Client } from "../../../constants/socket";
+import { emitCancelChuyen } from "../pick/action";
+
+let socket;
 
 @connect(
   state => ({
@@ -23,7 +29,7 @@ import moment from "../../../i18n/TimeZoneVietNam";
     isLoadedVe: state.ticket.isLoadedVe,
     errorticket: state.ticket.errorticket
   }),
-  { getTicketInfo }
+  { getTicketInfo, emitCancelChuyen, getListVeAvaiable }
 )
 class TicketDetail extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -47,7 +53,10 @@ class TicketDetail extends Component {
   });
   constructor(props) {
     super(props);
-    
+    this.state = {
+      enableDelete: false
+    };
+    socket = io.connect(WWS_Client, { transports: ["websocket"] });
   }
   _saveToCameraRollAsync = async () => {
     let result = await takeSnapshotAsync(this._containerCapture, {
@@ -62,9 +71,43 @@ class TicketDetail extends Component {
       Alert.alert("Thất bại", "Thiếu quyền truy cập");
     }
   };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.ticketinfo !== null) {
+      const newDate = moment(nextProps.ticketinfo.inChuyenXe.timeStart);
+      if (Date.now() <= newDate) {
+        this.setState({
+          enableDelete: true
+        });
+      }
+    }
+  }
+  componentWillMount(){
+    socket.on("cancelResult",res=>{
+      console.log('==================cancelResult==================');
+      console.log(res);
+      console.log(socket);
+      console.log('====================================');
+      if(res.type==="CANCEL_CHUYEN_SUCCESS"){
+          this.props.getListVeAvaiable();
+          this.props.navigation.goBack();
+      }
+    })
+  }
+  componentWillUnmount() {
+    socket.disconnect();
+  }
+  _handleCancel() {
+    this.props.emitCancelChuyen(
+      socket,
+      this.props.ticketinfo.inChuyenXe._id,
+      this.props.ticketinfo.Customer,
+      this.props.ticketinfo._id
+    );
+  }
   componentDidMount() {
     const idVe = this.props.navigation.state.params.idVe;
     this.props.getTicketInfo(idVe);
+    
   }
   render() {
     console.log("=============navigation=======================");
@@ -119,7 +162,7 @@ class TicketDetail extends Component {
               </Text>
               <Text style={styles.text}>Giá vé</Text>
               <Text style={styles.textPrimary}>
-                {ticketinfo ? ticketinfo.price +" VNĐ" : ""}
+                {ticketinfo ? ticketinfo.price + " VNĐ" : ""}
               </Text>
             </View>
 
@@ -225,6 +268,31 @@ class TicketDetail extends Component {
             </ScrollView>
           </View>
         </View>
+        {this.state.enableDelete === true ? (
+          <View
+            style={{
+              position: "absolute",
+              bottom: 30,
+              right: 15,
+              backgroundColor: "#e53935",
+              width: 60,
+              height: 60,
+              borderRadius: 30,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <TouchableOpacity onPress={() => this._handleCancel()}>
+              <MaterialCommunityIcons
+                name="delete-empty"
+                size={25}
+                color={"#fff"}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          undefined
+        )}
       </View>
     );
   }

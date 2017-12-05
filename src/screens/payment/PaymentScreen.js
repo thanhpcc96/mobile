@@ -40,7 +40,6 @@ class PaymentScreen extends Component {
       color: "#FFF"
     }
   });
-
   componentDidMount() {
     this.props.loadHistoryPayMent();
   }
@@ -75,13 +74,10 @@ class PaymentScreen extends Component {
       const huyve = {
         name: "Hủy vé",
         time: moment(n.updatedAt).format("LT,L"),
-        giatri: "-" + n.price + " đ"
+        giatri: "+" + (n.price * 0.8) + " đ"
       };
       newData.push(huyve);
     });
-    console.log('====================================');
-    console.log(newData);
-    console.log('====================================');
     return (
       <ScrollView>
         {newData.map((item, i) => (
