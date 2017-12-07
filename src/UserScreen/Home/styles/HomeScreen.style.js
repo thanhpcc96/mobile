@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mainContainer: {
-    flex: 0.9,
+    flex: 1,
     backgroundColor: '#466',
   },
   mainImageAvatar: {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   mainMenuPrimary: {
-    flex: 6,
+    flex: 7,
     backgroundColor: '#EDECE7',
   },
 });

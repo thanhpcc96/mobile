@@ -55,7 +55,6 @@ class HomeScreen extends Component {
               style={styles.avata}
             />
           </View>
-          <View />
           <View style={styles.statusClient}>
             <View style={styles.textItemStatus}>
               <Text style={styles.textItem}>

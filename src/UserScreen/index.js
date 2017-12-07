@@ -1,5 +1,10 @@
 import { CheckScreen, CheckScreenReducer } from "./CheckTicket";
-import { HomeScreenUser } from "./Home";
+import {
+  HomeScreenUser,
+  ControlChuyenXe,
+  Naptien,
+  HomeUserReducer
+} from "./Home";
 import { PhanCongScreen } from "./PhanCong";
 import { TrackingUser } from "./TrackingUser";
 import { ProfileScreen, UpdateProfileScreen } from "./Profile";
@@ -11,5 +16,8 @@ export {
   PhanCongScreen,
   TrackingUser,
   ProfileScreen,
-  UpdateProfileScreen
+  UpdateProfileScreen,
+  ControlChuyenXe,
+  Naptien,
+  HomeUserReducer
 };

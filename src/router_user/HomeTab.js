@@ -7,9 +7,7 @@ import NavButton from "../common/NavBarButton";
 import { logOutAction } from "../screens/auth/actions";
 
 // Import Screen
-import {
-  HomeScreenUser
-} from "../UserScreen";
+import { HomeScreenUser, ControlChuyenXe, Naptien} from "../UserScreen";
 
 const HomeUserTab = StackNavigator(
   {
@@ -44,6 +42,12 @@ const HomeUserTab = StackNavigator(
         )
       })
     },
+    ControlChuyenXe: {
+      screen: ControlChuyenXe
+    },
+    Naptien: {
+      screen: Naptien
+    }
   },
   {
     headerMode: "screen",

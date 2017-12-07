@@ -123,6 +123,22 @@ class UserAPI {
       throw error;
     }
   }
+  async postToGetInfoClient(email) {
+    try {
+      const res = await axios.post("/manager/client/info", { email });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async postNaptien(params) {
+    try {
+      const res = await axios.post("/manager/client/rechair", { ...params });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export { ClientAPI, UserAPI };

@@ -50,7 +50,8 @@ class ScanQRCode extends Component {
     this.state = {
       hasCameraPermission: null,
       ketquaScanMoiNhat: null,
-      isXeVeSuccess: false
+      isXeVeSuccess: false,
+      token: null
     };
   }
 
@@ -84,11 +85,33 @@ class ScanQRCode extends Component {
       this.setState({
         isXeVeSuccess: true
       });
+      if (this.state.token) {
+        const token = this.state.token;
+        fetch("https://exp.host/--/api/v2/push/send", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            to: token,
+            title: "Hải Âu! Trạng thái vé",
+            body: `Xé vé thành công! Bạn hoàn tất kiểm tra vé chuyến xe ${nextProps.managerticket.vedaxe.inChuyenXe.tenchuyen}!
+            chúc bạn thượng lộ bình an!`,
+            sound: "default"
+          })
+        });
+      }
     }
   }
 
-  _xeVe() {
+  _xeVe(token) {
     this.props.xeVe(this.state.ketquaScanMoiNhat);
+    if (token) {
+      this.setState({
+        token: token
+      });
+    }
   }
   _showresult = () => {
     if (!this.state.ketquaScanMoiNhat) {
@@ -177,7 +200,7 @@ class ScanQRCode extends Component {
                     borderRadius: 5
                   }
                 ]}
-                onPress={() => this._xeVe()}
+                onPress={() => this._xeVe(kq.Customer.tokenPush)}
               >
                 <Entypo name="flat-brush" size={25} color={"#FFF"} />
               </TouchableOpacity>

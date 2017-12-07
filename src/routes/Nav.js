@@ -121,15 +121,6 @@ const UserTab = TabNavigator(
         )
       }
     },
-    UserTrackingTab: {
-      screen: TrackingUserTab,
-      navigationOptions: () => ({
-        headerStyle: NavbarDefaultStyle,
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="ios-send" size={35} color={tintColor} />
-        )
-      })
-    },
     UserScan: {
       screen: UserScanTab,
       navigationOptions: () => ({
