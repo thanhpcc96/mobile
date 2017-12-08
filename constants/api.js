@@ -1,18 +1,19 @@
 import axios from "axios";
 import { Platform } from "react-native";
+import { url } from "./url";
 
-let url;
+let urll;
 if (__DEV__) {
   if (Platform.OS !== "ios") {
-    url = "http://192.168.0.10:3000/api/v1";
+    urll = `${url}:3000/api/v1`;
   } else {
-    url = "http://192.168.0.10:3000/api/v1";
+    urll = `${url}:3000/api/v1`;
   }
 } else {
-  url = "http://192.168.0.10:3000/api/v1";
+  urll = `${url}:3000/api/v1`;
 }
 
-axios.defaults.baseURL = url;
+axios.defaults.baseURL = urll;
 export function setAuthHeader(token) {
   if (token) {
     axios.defaults.headers.common["Authorization"] = token;

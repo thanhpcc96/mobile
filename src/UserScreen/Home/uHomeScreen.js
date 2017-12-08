@@ -39,7 +39,7 @@ class HomeScreen extends Component {
       return (
         <SleekLoad
           loading={this.state.isLoadingData}
-          text={"dang tai du lieu"}
+          text={"Đang đợi kết nối!"}
         />
       );
     }

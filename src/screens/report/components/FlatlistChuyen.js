@@ -56,7 +56,7 @@ class ListChuyen extends Component {
             alignItems: "center"
           }}
         >
-          <Text>Chuyen fake {item.key}</Text>
+          <Text>Hà Nội- Hải Phòng: {item.key}</Text>
         </View>
       }
       right={
@@ -71,7 +71,7 @@ class ListChuyen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <FlatList
-          data={[{ key: "a" }, { key: "b" }]}
+          data={[{ key: "8h 30p" }, { key: "15h 30p" }]}
           renderItem={({ item }) => {
             console.log(JSON.stringify(item));
             return this._renderRow(item);

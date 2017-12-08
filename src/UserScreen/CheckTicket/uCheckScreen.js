@@ -216,9 +216,9 @@ class ScanQRCode extends Component {
         </View>
         <View style={styles.resultContent}>
           <ScrollView>
-            <Text style={styles.text}>Ma ve</Text>
+            <Text style={styles.text}>Mã vé</Text>
             <Text style={styles.textPrimary}> {kq._id} </Text>
-            <Text style={styles.text}>Khach Hang</Text>
+            <Text style={styles.text}>Tên khách hàng</Text>
             <Text style={styles.textPrimary}>
               {" "}
               {kq.Customer.info.fullname}{" "}

@@ -1,6 +1,6 @@
 import { Permissions, Notifications } from "expo";
 import * as firebase from "firebase";
-import { ClientAPI, setAuthHeader } from "./api";
+import { url } from "./url";
 
 firebase.initializeApp({
   apiKey: "AIzaSyBqppz2JJrVw9J9nxjzu6Zr9mWP9wH8D7M",
@@ -27,7 +27,7 @@ export default (async function registerForPushNotificationsAsync(idclient) {
   console.log(token);
   console.log("====================================");
 
-  return fetch("http://192.168.0.10:3000/api/v1/client/updatepush", {
+  return fetch(`${url}:3000/api/v1/client/updatepush`, {
     method: "POST",
     headers: {
       Accept: "application/json",

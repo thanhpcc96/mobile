@@ -1,1 +1,3 @@
-export const WWS_Client = "http://192.168.0.10:3000"
+import { url } from "./url";
+
+export const WWS_Client = `${url}:3000`;

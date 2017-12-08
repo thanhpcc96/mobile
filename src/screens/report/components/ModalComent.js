@@ -37,7 +37,7 @@ class ModalComment extends Component {
                   style={styles.textinput}
                   placeholder={"Xin nhập ý kiến"}
                 />
-                <TouchableOpacity style={styles.commentButton}>
+                <TouchableOpacity style={styles.commentButton} onPress={this.props.onBackdropPress}>
                   <Entypo name="forward" color={"#fff"} size={30} />
                 </TouchableOpacity>
               </View>

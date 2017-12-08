@@ -37,7 +37,7 @@ class HomeScreen extends Component {
   }
   render() {
     if(this.state.isLoadingData){
-      return <SleekLoad loading={this.state.isLoadingData} text={"dang tai du lieu"}/>;
+      return <SleekLoad loading={this.state.isLoadingData} text={"Đang đợi kết nối!"}/>;
     }
     return (
       <View style={styles.root}>
